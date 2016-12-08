@@ -1,0 +1,54 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="utf-8">
+
+	<title>Čtyřiadvacítka | {include title|stripHtml}</title>
+
+        {block css}
+        <link rel="stylesheet" href="{$basePath}/css/style.css" type="text/css" />
+        {/block}
+        
+	<meta name="viewport" content="width=device-width">
+	{block head}{/block}
+    </head>
+
+    <body>
+        <header>
+           <h1>24. skautský oddíl Hradec Králové</h1>
+        </header>
+        {* Výpis zpráv.*}
+        <p n:foreach="$flashes as $flash" class="message">{$flash->message}</p>
+    
+        <nav>
+            <ul>
+                <li><a n:href=":Core:Article:">Úvod</a></li>
+                <li><a n:href=":Core:Article:list">Seznam článků</a></li>
+                <li><a n:href=":Core:User:list">Seznam uživatelů</a></li>
+                <li><a n:href=":Core:Contact:">Kontakt</a></li>
+                <li><a n:href=":Core:Administration:">Administrace</a></li>
+            </ul>
+        </nav>
+        <br clear="both" />
+    
+        <article>
+            <header>
+                <h1>{include title}</h1>
+            </header>
+            <section>
+                {include content} {* Vložení obsahu do šablony *}
+            </section>
+        </article>
+        
+        <footer>
+            <p>
+                Webové stránky 24. skautského oddílu Hradce Králové
+            </p>
+        </footer>
+        {block scripts}{/block}
+    </body>
+</html>

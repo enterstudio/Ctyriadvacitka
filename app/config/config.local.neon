@@ -1,0 +1,9 @@
+parameters:
+
+
+database:
+	dsn: 'mysql:host=localhost;dbname=basicrs'
+	user: 'basicrs'
+	password: 'basicrsp'
+	options:
+		lazy: yes

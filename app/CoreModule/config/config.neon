@@ -1,0 +1,9 @@
+# Konfigurační soubor pro CoreModule.
+
+parameters:
+
+# Nastavení služeb dále přístupných pomocí DI v rámci celé aplikace.
+services:
+	- App\CoreModule\Model\ArticleManager
+	- App\CoreModule\Model\UserManager
+	authenticator: App\CoreModule\Model\AuthenticatorManager

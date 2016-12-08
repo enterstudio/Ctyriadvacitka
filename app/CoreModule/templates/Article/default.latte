@@ -1,0 +1,5 @@
+{* Latte template *}
+{define title}{$article->title}{/define}
+{define description}{$article->description}{/define}
+{block content}
+{$article->content|noescape}

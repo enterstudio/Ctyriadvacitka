@@ -1,0 +1,14 @@
+{define title}Seznam uživatelů{/define}
+{define description}Seznam všech registrovaných uživatelů{/define}
+{block content}
+<table>
+    <tr n:foreach="$users as $user">
+        <td>
+            <h2><a n:href=":Core:User: $user->username">{$user->username}</a></h2>
+            <br />
+            <a n:href=":Core:User:editor $user->username">Editovat</a>
+            <a n:href=":Core:User:remove $user->username">Odstranit</a>
+        </td>
+    </tr>
+</table>
+{/block}
