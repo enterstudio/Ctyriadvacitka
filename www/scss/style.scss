@@ -15,12 +15,12 @@ $color_link_hover: rgb(23, 40, 130);
   margin: 0;
   padding: 0;
 }
+
 html{
   background: $color_background;
 
 }
 body {
-  //width: 960px;
   margin: 0px auto;
   background: inherit;
 }
@@ -76,12 +76,12 @@ h2{
   font-size: 1.8em;
 }
 
-@media only screen and (min-width: 960px)  {
+@media only screen and (min-width: 1080px)  {
   html{
     background: $color_background_html;
   }
   body{
-    width: 960px;
+    width: 1080px;
     background: $color_background;
   }
 

@@ -18,13 +18,14 @@
     </head>
 
     <body>
-        <header>
-           <h1>24. skautský oddíl Hradec Králové</h1>
+        <header class="header_body">
+            <a n:href=":Core:Article:"><img src="../../www/images/top.jpg"></a>
+            <!--<a n:href=":Core:Article:"><img src="../../www/images/Loga/Logo5-barevne.png"></a>-->
         </header>
         {* Výpis zpráv.*}
         <p n:foreach="$flashes as $flash" class="message">{$flash->message}</p>
     
-        <nav>
+        <nav class="">
             <ul>
                 <li><a n:href=":Core:Article:">Úvod</a></li>
                 <li><a n:href=":Core:Article:list">Seznam článků</a></li>
@@ -33,10 +34,9 @@
                 <li><a n:href=":Core:Administration:">Administrace</a></li>
             </ul>
         </nav>
-        <br clear="both" />
-    
+
         <article>
-            <header>
+            <header class="header_article">
                 <h1>{include title}</h1>
             </header>
             <section>
