@@ -55,7 +55,7 @@ class ArticlePresenter extends BasePresenter{
      * @param string $url
      */
     public function actionRemove(string $url){
-        $this->articleManager->removeArticle($url);
+        $this->articleManager->deleteArticle($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.');
         $this->redirect(':Core:Article:list');
     }
