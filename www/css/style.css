@@ -2229,6 +2229,9 @@ h1 { margin: 10px auto; font-size: 2em; }
 
 h2 { font-size: 1.8em; }
 
+@media only screen and (min-width: 720px) and (max-width: 1079px) { ul { flex-wrap: nowrap; }
+  ul li { width: auto; }
+  ul li a { padding: 8px 12px; } }
 @media only screen and (min-width: 1080px) { html { background: #f5ebd7; }
   body { width: 1080px; background: white; }
   ul { flex-wrap: nowrap; }

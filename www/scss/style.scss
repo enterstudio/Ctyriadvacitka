@@ -75,6 +75,17 @@ h1{
 h2{
   font-size: 1.8em;
 }
+@media only screen and (min-width: 720px) and (max-width: 1079px){
+  ul{
+    flex-wrap: nowrap;
+    li{
+      width: auto;
+      a{
+        padding: 8px 12px;
+      }
+    }
+  }
+}
 
 @media only screen and (min-width: 1080px)  {
   html{
