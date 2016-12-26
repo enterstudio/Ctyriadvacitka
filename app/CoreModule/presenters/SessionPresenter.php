@@ -9,6 +9,7 @@
 namespace App\CoreModule\Presenters;
 
 
+use App\CoreModule\Model\AuthenticatorManager;
 use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
@@ -23,14 +24,16 @@ class SessionPresenter extends BasePresenter {
 
     /** @var userManager Instance třídy pro práci s uživateli */
     protected $userManager;
+    protected $authenticator;
 
     /**
      * SessionPresenter constructor.
      * @param UserManager $userManager automaticky injectovaná třída pro práci s uživateli
      */
-    public function __construct(UserManager $userManager){
+    public function __construct(UserManager $userManager, AuthenticatorManager $authenticatorManager){
         parent::__construct();
         $this->userManager = $userManager;
+        $this->authenticator = $authenticatorManager;
     }
 
     /**
@@ -55,6 +58,10 @@ class SessionPresenter extends BasePresenter {
         return $form;
     }
 
+    /**
+     * @param $form instance formuláře
+     * @param ArrayHash $values data z formuláře
+     */
     public function singInFormSucceeded($form, ArrayHash $values){
         $passwordIsCorrect = ($values['password'] == $this->userManager->getUserByUsername($values['username'])->password);
 
