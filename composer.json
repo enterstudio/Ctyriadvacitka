@@ -1,6 +1,5 @@
 {
     "name":"krouma/Ctyriadvacitka",
-    "version":"0.0.1",
     "require": {
         "nette/nette": "~2.4.0"
     }
