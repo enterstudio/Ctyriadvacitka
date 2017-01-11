@@ -32,7 +32,7 @@ ul{
   background: $color_background_navbar;
   li{
     list-style-type: none;
-    width: 100%;
+    width: 50%;
     a{
       display: block;
       padding: 4px 0px 4px 15px;
@@ -83,6 +83,9 @@ h2{
       a{
         padding: 8px 12px;
       }
+      &.li_last{
+        margin-left: auto;
+      }
     }
   }
 }
@@ -95,13 +98,15 @@ h2{
     width: 1080px;
     background: $color_background;
   }
-
   ul{
     flex-wrap: nowrap;
     li{
       width: auto;
       a{
         padding: 5px 8px;
+      }
+      &.li_last{
+        margin-left: auto;
       }
     }
   }

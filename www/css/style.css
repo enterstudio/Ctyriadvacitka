@@ -2210,7 +2210,7 @@ html { background: white; }
 body { margin: 0px auto; background: inherit; }
 
 ul { display: flex; flex-wrap: wrap; margin: 0; background: #bed4df; }
-ul li { list-style-type: none; width: 100%; }
+ul li { list-style-type: none; width: 50%; }
 ul li a { display: block; padding: 4px 0px 4px 15px; color: #255c9e; }
 ul li a:hover { text-decoration: none; color: #172882; background: #87a0af; }
 
@@ -2231,11 +2231,13 @@ h2 { font-size: 1.8em; }
 
 @media only screen and (min-width: 720px) and (max-width: 1079px) { ul { flex-wrap: nowrap; }
   ul li { width: auto; }
-  ul li a { padding: 8px 12px; } }
+  ul li a { padding: 8px 12px; }
+  ul li.li_last { margin-left: auto; } }
 @media only screen and (min-width: 1080px) { html { background: #f5ebd7; }
   body { width: 1080px; background: white; }
   ul { flex-wrap: nowrap; }
   ul li { width: auto; }
-  ul li a { padding: 5px 8px; } }
+  ul li a { padding: 5px 8px; }
+  ul li.li_last { margin-left: auto; } }
 
 /*# sourceMappingURL=style.css.map */
