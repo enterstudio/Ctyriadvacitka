@@ -10,6 +10,7 @@ namespace App\CoreModule\Model;
 
 
 use App\Model\BaseManager;
+use Nette\Database\Context;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
@@ -30,6 +31,13 @@ class AuthenticatorManager extends BaseManager implements IAuthenticator
      * @return IIdentity
      * @throws AuthenticationException
      */
+    public $database;
+
+    function __construct(Context $database)
+    {
+        $this->database = $database;
+    }
+
     function authenticate(array $credentials)
     {
         list($username, $password) = $credentials;
@@ -39,7 +47,7 @@ class AuthenticatorManager extends BaseManager implements IAuthenticator
             throw new AuthenticationException('Uživatel nenalezen.');
         }
 
-        if (Passwords::verify($password, $row->password)){
+        if (!Passwords::verify($password, $row->password)){
             throw new AuthenticationException('Špatné heslo!');
         }
 
