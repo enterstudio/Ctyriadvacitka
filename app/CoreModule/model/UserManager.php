@@ -78,16 +78,11 @@ class UserManager extends BaseManager
     }
 
     /**
-     * Přihlásí uživatele
-     * @param $username jméno uživatele k přihlášení
+     * Vrátí databázi
+     * @return \App\Model\Content|\Nette\Database\Context databáze
      */
-    public function singInUser($username){
-        $user = $this->getUserByUsername($username);
-        $_SESSION[] = array(
-            'user_id' => $user->user_id,
-            'username' => $user->username,
-            'role' => $user->role
-        );
+    public function getDatabase(){
+        return $this->database;
     }
 
 }

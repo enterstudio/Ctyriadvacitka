@@ -40,8 +40,9 @@ class SessionPresenter extends BasePresenter {
      * Přihlásí uživatele, pokud je někdo přihlášen, přesměruje ho na jeho profil
      */
     public function actionSingIn(){
-        if (!empty($_SESSION['username'])){
-            $this->redirectUrl('/profil/' . $_SESSION['username']);
+        $user = $this->getUser();
+        if ($user->isLoggedIn()){
+            $this->redirectURL('profil/' . $this->userManager->getUserByID($user->getId())->username);
         }
     }
 
@@ -52,7 +53,7 @@ class SessionPresenter extends BasePresenter {
     public function createComponentSingInForm():Form{
         $form = new Form();
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
-        $form->addText('password', 'Heslo')->setRequired();
+        $form->addPassword('password', 'Heslo')->setRequired();
         $form->addSubmit('submit', 'Přihlásit');
         $form->onSuccess[] = [$this, 'singInFormSucceeded'];
         return $form;
@@ -63,15 +64,10 @@ class SessionPresenter extends BasePresenter {
      * @param ArrayHash $values data z formuláře
      */
     public function singInFormSucceeded($form, ArrayHash $values){
-        $passwordIsCorrect = ($values['password'] == $this->userManager->getUserByUsername($values['username'])->password);
-
-        if ($passwordIsCorrect) {
-            $this->userManager->singInUser($values['username']);
-            $this->flashMessage('Byl jste úspěšně přihlášen.');
-            $this->redirectUrl('/profil/' . $values['username']);
-        }
-        else{
-            $this->flashMessage('Nesprávné heslo.');
-        }
+        $user = $this->getUser();
+        $user->setAuthenticator(new AuthenticatorManager($this->userManager->getDatabase()));
+        $user->login($values['username'], $values['password']);
+        $this->flashMessage('Přihlášení proběhlo úspěšně.');
+        $this->redirectUrl('profil/' . $values['username']);
     }
 }
