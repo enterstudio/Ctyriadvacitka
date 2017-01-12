@@ -25,6 +25,7 @@ class SessionPresenter extends BasePresenter {
     /** @var userManager Instance třídy pro práci s uživateli */
     protected $userManager;
     protected $authenticator;
+    protected $user;
 
     /**
      * SessionPresenter constructor.
@@ -40,10 +41,7 @@ class SessionPresenter extends BasePresenter {
      * Přihlásí uživatele, pokud je někdo přihlášen, přesměruje ho na jeho profil
      */
     public function actionSingIn(){
-        $user = $this->getUser();
-        if ($user->isLoggedIn()){
-            $this->redirectURL('profil/' . $this->userManager->getUserByID($user->getId())->username);
-        }
+        $this->isLoggedUser();
     }
 
     /**
@@ -64,10 +62,20 @@ class SessionPresenter extends BasePresenter {
      * @param ArrayHash $values data z formuláře
      */
     public function singInFormSucceeded($form, ArrayHash $values){
-        $user = $this->getUser();
-        $user->setAuthenticator(new AuthenticatorManager($this->userManager->getDatabase()));
-        $user->login($values['username'], $values['password']);
+        $this->user = $this->getUser();
+        $this->user->setAuthenticator(new AuthenticatorManager($this->userManager->getDatabase()));
+        $this->user->login($values['username'], $values['password']);
         $this->flashMessage('Přihlášení proběhlo úspěšně.');
         $this->redirectUrl('profil/' . $values['username']);
+    }
+
+    /**
+     * Pokud je přihlášen uživatel, přesměruje na jeho profil
+     */
+    public function isLoggedUser(){
+        $this->user = $this->getUser();
+        if ($this->user->isLoggedIn()){
+            $this->redirectURL('profil/' . $this->userManager->getUserByID($this->user->getId())->username);
+        }
     }
 }
