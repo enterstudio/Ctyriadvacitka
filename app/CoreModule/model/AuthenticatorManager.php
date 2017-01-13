@@ -33,11 +33,21 @@ class AuthenticatorManager extends BaseManager implements IAuthenticator
      */
     public $database;
 
+    /**
+     * AuthenticatorManager constructor.
+     * @param Context $database gets database connection from DI
+     */
     function __construct(Context $database)
     {
         $this->database = $database;
     }
 
+    /**
+     * Přihlásí uživatele pokud existuje a zadal správné heslo
+     * @param array $credentials username and password of user
+     * @return Identity instance of user
+     * @throws AuthenticationException
+     */
     function authenticate(array $credentials)
     {
         list($username, $password) = $credentials;
