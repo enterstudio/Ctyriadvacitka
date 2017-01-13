@@ -23,7 +23,9 @@
             <!--<a n:href=":Core:Article:"><img src="../../www/images/Loga/Logo5-barevne.png"></a>-->
         </header>
         {* Výpis zpráv.*}
-        <p n:foreach="$flashes as $flash" class="message">{$flash->message}</p>
+        {foreach $flashes as $flash}
+            <p class="message">{$flash->message}</p>
+        {/foreach}
     
         <nav class="">
             <ul>
