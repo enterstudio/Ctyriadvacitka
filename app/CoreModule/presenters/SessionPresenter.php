@@ -48,12 +48,12 @@ class SessionPresenter extends BasePresenter {
      * Formulář k přihlášení
      * @return Form přihlašovací formulář
      */
-    public function createComponentSingInForm():Form{
+    public function createComponentSignInForm():Form{
         $form = new Form();
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
         $form->addSubmit('submit', 'Přihlásit');
-        $form->onSuccess[] = [$this, 'singInFormSucceeded'];
+        $form->onSuccess[] = [$this, 'signInFormSucceeded'];
         return $form;
     }
 
@@ -61,12 +61,49 @@ class SessionPresenter extends BasePresenter {
      * @param $form instance formuláře
      * @param ArrayHash $values data z formuláře
      */
-    public function singInFormSucceeded($form, ArrayHash $values){
+    public function signInFormSucceeded($form, ArrayHash $values){
         $this->user = $this->getUser();
         $this->user->setAuthenticator(new AuthenticatorManager($this->userManager->getDatabase()));
         $this->user->login($values['username'], $values['password']);
         $this->flashMessage('Přihlášení proběhlo úspěšně.');
         $this->redirectUrl('profil/' . $values['username']);
+    }
+
+    /**
+     * Odhlásí uživatele
+     */
+    public function actionSignOut(){
+        $this->setLayout(false);
+        $this->user = $this->getUser();
+        if (!$this->user->isLoggedIn()){
+            $this->flashMessage('Není přihlášen žádný uživatel.');
+            $this->redirect(':Core:Article:');
+        }
+        else{
+            $this->user->logout();
+            $this->flashMessage('Uživatel úspěšně odhlášen.');
+            $this->redirect(':Core:Article:');
+        }
+    }
+
+    /**
+     * Zaregistruje nového uživatele
+     */
+    public function actionSignUp(){
+        $this->user = $this->getUser();
+    }
+
+    /**
+     * Vytvoří komponentu registrovacího formuláře
+     * @return Form formulář k registraci
+     */
+    public function createComponentSignUpForm():Form{
+        $form = new Form();
+        $form->addText('username', 'Přihlašovací jméno')->setRequired();
+        $form->addPassword('password', 'Heslo')->setRequired();
+        $form->addSubmit('submit', 'Registrovat');
+        $form->onSuccess[] = [$this, 'signUpFormSucceeded'];
+        return $form;
     }
 
     /**

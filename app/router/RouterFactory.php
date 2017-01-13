@@ -21,7 +21,9 @@ class RouterFactory
 		$router = new RouteList();
         $router[] = new Route('kontakt/', 'Core:Contact:default');
         $router[] = new Route('administrace/', 'Core:Administration:default');
-        $router[] = new Route('prihlasit', 'Core:Session:singIn');
+        $router[] = new Route('prihlasit', 'Core:Session:signIn');
+        $router[] = new Route('odhlasit', 'Core:Session:signOut');
+        $router[] = new Route('registrovat', 'Core:Session:signUp');
         $router[] = new Route('seznam-uzivatelu/', 'Core:User:list');
         $router[] = new Route('profil/[<action>/][<username>]', array(
             'presenter' => 'Core:User',
