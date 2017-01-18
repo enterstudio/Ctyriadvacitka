@@ -104,7 +104,7 @@ class ArticlePresenter extends BasePresenter{
         try{
             $this->articleManager->saveArticle($values);
             $this->flashMessage('Článek byl úspěšně uložen.');
-            $this->redirectUrl($values['url']);
+            $this->redirect(":Core:Article:", $values['url']);
         }
         catch (UniqueConstraintViolationException $exception){
             $this->flashMessage('Článek s touto URL adresou již existuje.');

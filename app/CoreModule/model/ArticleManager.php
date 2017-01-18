@@ -25,7 +25,10 @@ class ArticleManager extends BaseManager{
     const 
             TABLE_NAME = 'article',
             COLUMN_ID = 'article_id',
-            COLUMN_URL = 'url';
+            COLUMN_TITLE = 'title',
+            COLUMN_CONTENT = 'content',
+            COLUMN_URL = 'url',
+            COLUMN_DESCRIPTION = 'description';
     
     /**
      * Vrátí seznam článků v databázi
@@ -51,9 +54,25 @@ class ArticleManager extends BaseManager{
      */
     public function saveArticle(array $article){
         if (!$article[self::COLUMN_ID])
-            $this->database->table(self::TABLE_NAME)->insert($article);
-        else
-            $this->database->table(self::TABLE_NAME)->where(self::COLUMN_URL, $article[self::COLUMN_ID])->update($article);
+            $this->database->table(self::TABLE_NAME)->insert(
+                array(
+                    self::COLUMN_TITLE => $article['title'],
+                    self::COLUMN_CONTENT => $article['content'],
+                    self::COLUMN_URL => $article['url'],
+                    self::COLUMN_DESCRIPTION => $article['description']
+                )
+            );
+        else {
+            $this->database->table(self::TABLE_NAME)->wherePrimary($article[self::COLUMN_ID])->update(
+                array(
+                    self::COLUMN_ID => $article['article_id'],
+                    self::COLUMN_TITLE => $article['title'],
+                    self::COLUMN_CONTENT => $article['content'],
+                    self::COLUMN_URL => $article['url'],
+                    self::COLUMN_DESCRIPTION => $article['description']
+                )
+            );
+        }
     }
     
     /**

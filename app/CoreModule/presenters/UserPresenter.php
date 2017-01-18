@@ -13,6 +13,7 @@ use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
+use Nette\Security\Passwords;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -57,7 +58,7 @@ class UserPresenter extends BasePresenter {
     public function actionRemove(string $username){
         $this->userManager->removeUser($username);
         $this->flashMessage('Uživatel byl úspěšně odstraněn.');
-        $this->redirect(':Core:Article:list');
+        $this->redirect(':Core:User:list');
     }
 
     /**
@@ -87,7 +88,7 @@ class UserPresenter extends BasePresenter {
         $form = new Form();
         $form->addHidden('user_id');
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
-        $form->addText('password', 'Heslo')->setRequired();
+        $form->addPassword('password', 'Heslo')->setRequired();
         $form->addHidden('role');
         $form->addSubmit('submit', 'Uložit');
         $form->onSuccess[] = [$this,'editorFormSucceeded'];
@@ -100,11 +101,12 @@ class UserPresenter extends BasePresenter {
      * @param Form $form formulář editoru
      * @param ArrayHash $values odeslané hodnoty formuláře
      */
-    public function editorFormSucceeded($form, ArrayHash $values){
+    public function editorFormSucceeded($form, array $values){
         try{
+            $values['password'] = Passwords::hash($values['password']);
             $this->userManager->saveUser($values);
             $this->flashMessage('Uživatel byl úspěšně editován.');
-            $this->redirectUrl('/profil/' . $values->username);
+            $this->redirect(':Core:User:', $values['username']);
         }
         catch (UniqueConstraintViolationException $exception){
             $this->flashMessage('Článek s touto URL adresou již existuje.');

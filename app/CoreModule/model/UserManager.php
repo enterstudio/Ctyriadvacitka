@@ -72,17 +72,23 @@ class UserManager extends BaseManager
      * Uloží uživatele do databáze. Pokud není nastaveno ID, vytvoří nového, jinak provede editaci.
      * @param array $user uživatel k uložení
      */
-    public function saveUser ($user){
+    public function saveUser (array $user){
         if (empty($user[self::COLUMN_ID])){
             $this->database->table(self::TABLE_NAME)->insert(
                 array(
-                self::COLUMN_USERNAME => $user[0],
-                self::COLUMN_PASSWORD_HASH => $user[1],
-                self::COLUMN_ROLE => $user[2])
+                    self::COLUMN_USERNAME => $user[0],
+                    self::COLUMN_PASSWORD_HASH => $user[1],
+                    self::COLUMN_ROLE => $user[2])
             );
         }
         else{
-            $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user[self::COLUMN_ID])->update($user);
+            $this->database->table(self::TABLE_NAME)->wherePrimary($user[self::COLUMN_ID])->update(
+                array(
+                    self::COLUMN_ID => $user['user_id'],
+                    self::COLUMN_USERNAME => $user['username'],
+                    self::COLUMN_PASSWORD_HASH => $user['password'],
+                    self::COLUMN_ROLE => $user['role'])
+            );
         }
     }
 
@@ -90,8 +96,8 @@ class UserManager extends BaseManager
      * Smaže uživatele
      * @param int $id id uživatele
      */
-    public function removeUser (int $id){
-        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id)->delete();
+    public function removeUser (string $username){
+        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_USERNAME, $username)->delete();
     }
 
     /**
