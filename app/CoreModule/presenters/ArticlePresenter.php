@@ -10,7 +10,6 @@ namespace App\CoreModule\Presenters;
 
 use App\CoreModule\Model\ArticleManager;
 use App\Presenters\BasePresenter;
-use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
@@ -38,7 +37,6 @@ class ArticlePresenter extends BasePresenter{
     /**
      * Načte a vykreslí článek do šablony podle jeho URL
      * @param string $url URL článku
-     * @throws BadRequestException jestliže článek s danou URL nebyl nalezen
      */
     public function renderDefault(string $url = NULL){
         if (!$url)
@@ -46,7 +44,7 @@ class ArticlePresenter extends BasePresenter{
         
         //Pokusí se načíst článek s danou URL a pokud nebude nalezen, vyhodí chybu 404
         if (!($article = $this->articleManager->getArticle($url)))
-            throw new BadRequestException();
+            $article = $this->articleManager->getArticle('chyba');
         $this->template->article = $article; //Předá článek do šablony
     }
 

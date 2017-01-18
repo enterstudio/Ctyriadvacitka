@@ -11,7 +11,6 @@ namespace App\CoreModule\Presenters;
 
 use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
-use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Security\Passwords;
 use Nette\Utils\ArrayHash;
@@ -38,14 +37,14 @@ class UserPresenter extends BasePresenter {
     /**
      * Načte a vykreslí uživatele do šablony podle username
      * @param string|null $username jméno uživatele
-     * @throws BadRequestException jestliže uživatel s daným username nebyl nalezen
      */
     public function renderDefault(string $username = null){
         if (!$username)
             $this->redirect(':Core:Article:default');
         //Pokusí se najít uživatele s daným jménem, pokud nebude nalezen, vyhodí chybu 404
         if (!($user = $this->userManager->getUserByUsername($username))){
-            throw new BadRequestException();
+            $this->flashMessage('Uživatel nebyl nalezen.');
+            $this->redirect(':Core:Article:');
         }
         $this->template->user = $user;
 

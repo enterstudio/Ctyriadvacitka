@@ -13,6 +13,7 @@ use App\CoreModule\Model\AuthenticatorManager;
 use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
+use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
 use Nette\Utils\ArrayHash;
 
@@ -65,9 +66,14 @@ class SessionPresenter extends BasePresenter {
     public function signInFormSucceeded($form, ArrayHash $values){
         $this->user = $this->getUser();
         $this->user->setAuthenticator(new AuthenticatorManager($this->userManager->getDatabase()));
-        $this->user->login($values['username'], $values['password']);
-        $this->flashMessage('Přihlášení proběhlo úspěšně.');
-        $this->redirectUrl('profil/' . $values['username']);
+        try {
+            $this->user->login($values['username'], $values['password']);
+            $this->flashMessage('Přihlášení proběhlo úspěšně.');
+            $this->redirectUrl('profil/' . $values['username']);
+        }
+        catch (AuthenticationException $e){
+            $this->flashMessage($e->getMessage());
+        }
     }
 
     /**
