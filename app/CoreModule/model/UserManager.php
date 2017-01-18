@@ -57,12 +57,29 @@ class UserManager extends BaseManager
     }
 
     /**
+     * Zkontroluje, jestli existuje uživatel v databázi
+     * @param string $username uživatelské jméno uživatele
+     * @return bool existuje/neexistuje
+     */
+    public function userExists(string $username):bool {
+        if ($this->getUserByUsername($username) != false)
+            return true;
+        else
+            return false;
+    }
+
+    /**
      * Uloží uživatele do databáze. Pokud není nastaveno ID, vytvoří nového, jinak provede editaci.
      * @param array $user uživatel k uložení
      */
     public function saveUser ($user){
-        if (!$user[self::COLUMN_ID]){
-            $this->database->table(self::TABLE_NAME)->insert($user);
+        if (empty($user[self::COLUMN_ID])){
+            $this->database->table(self::TABLE_NAME)->insert(
+                array(
+                self::COLUMN_USERNAME => $user[0],
+                self::COLUMN_PASSWORD_HASH => $user[1],
+                self::COLUMN_ROLE => $user[2])
+            );
         }
         else{
             $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user[self::COLUMN_ID])->update($user);

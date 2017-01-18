@@ -13,6 +13,7 @@ use App\CoreModule\Model\AuthenticatorManager;
 use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
+use Nette\Security\Passwords;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -101,9 +102,31 @@ class SessionPresenter extends BasePresenter {
         $form = new Form();
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
+        $form->addPassword('password_again', 'Heslo znovu')->setRequired()
+            ->addRule(Form::EQUAL, 'Hesla se neschodují!', $form['password']);
         $form->addSubmit('submit', 'Registrovat');
         $form->onSuccess[] = [$this, 'signUpFormSucceeded'];
         return $form;
+    }
+
+    /**
+     * @param $form instance formuláře
+     * @param ArrayHash $values hodnoty z formuláře
+     */
+    public function signUpFormSucceeded($form, ArrayHash $values){
+        $this->user = $this->getUser();
+        $username = $values['username'];
+        $password = Passwords::hash($values['password']);
+        $user = array($username, $password, 'user');
+        if ($this->userManager->userExists($username)){
+            $this->flashMessage('Uživatel s tímto přihlašovacím jménem již existuje.');
+        }
+        else{
+            $this->userManager->saveUser($user);
+            $this->flashMessage('Registrace proběhla úspěšně.');
+            $this->redirect(':Core:Session:signIn');
+        }
+
     }
 
     /**
