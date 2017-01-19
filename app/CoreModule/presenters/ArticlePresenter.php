@@ -53,6 +53,10 @@ class ArticlePresenter extends BasePresenter{
     public function actionEditor(string $url = NULL){
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($url) ($article = $this->articleManager->getArticle($url)) ? $this['editorForm']->setDefaults($article) : $this->flashMessage('Článek nebyl nalezen');
+        if (!$this->user->isAllowed('article', 'edit'));{
+            $this->flashMessage('Nemůžete upravovat články!');
+            $this->redirect(':Core:Article:', $url);
+        }
     }
 
     /**

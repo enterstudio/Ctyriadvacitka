@@ -101,7 +101,7 @@ class SessionPresenter extends BasePresenter {
     public function signUpFormSucceeded($form, ArrayHash $values){
         $username = $values['username'];
         $password = Passwords::hash($values['password']);
-        $user = array($username, $password, 'user');
+        $user = array($username, $password, 'registered');
         if ($this->userManager->userExists($username)){
             $this->flashMessage('Uživatel s tímto přihlašovacím jménem již existuje.');
         }
