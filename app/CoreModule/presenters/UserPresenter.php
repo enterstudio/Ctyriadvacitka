@@ -9,7 +9,6 @@
 namespace App\CoreModule\Presenters;
 
 
-use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
 use Nette\Security\Passwords;
@@ -21,18 +20,6 @@ use Nette\Utils\ArrayHash;
  * $author matyas
  */
 class UserPresenter extends BasePresenter {
-
-    /** @var  UserManager Instance třídy UserManager pro práci s uživateli */
-    protected $userManager;
-
-    /**
-     * UserPresenter constructor.
-     * @param UserManager $userManager automaticky injectovaná třída modelu pro práci s uživateli
-     */
-    public function __construct(UserManager $userManager){
-        parent::__construct();
-        $this->userManager = $userManager;
-    }
 
     /**
      * Načte a vykreslí uživatele do šablony podle username

@@ -8,7 +8,6 @@
 
 namespace App\CoreModule\Presenters;
 
-use App\CoreModule\Model\ArticleManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
@@ -22,18 +21,7 @@ use Nette\Utils\ArrayHash;
 class ArticlePresenter extends BasePresenter{
     /** Konstanta s hodnotou URL výchozího článku */
     const DEFAULT_ARTICLE_URL = 'uvod';
-    
-    /** @var ArticleManager Instance třídy modelu pro práci s články */
-    protected $articleManager;
-    
-    /**
-     * @param ArticleManager $articleManager automaticky injektovaná třída modelu pro práci s články
-     */
-    public function __construct(ArticleManager $articleManager) {
-        parent::__construct();
-        $this->articleManager = $articleManager;
-    }
-    
+
     /**
      * Načte a vykreslí článek do šablony podle jeho URL
      * @param string $url URL článku

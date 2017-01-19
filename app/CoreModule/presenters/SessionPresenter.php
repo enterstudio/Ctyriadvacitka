@@ -9,8 +9,6 @@
 namespace App\CoreModule\Presenters;
 
 
-use App\CoreModule\Model\AuthenticatorManager;
-use App\CoreModule\Model\UserManager;
 use App\Presenters\BasePresenter;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
@@ -23,21 +21,6 @@ use Nette\Utils\ArrayHash;
  * @author matyas
  */
 class SessionPresenter extends BasePresenter {
-
-    /** @var userManager Instance třídy pro práci s uživateli */
-    protected $userManager;
-    protected $authenticator;
-    protected $user;
-
-    /**
-     * SessionPresenter constructor.
-     * @param UserManager $userManager automaticky injectovaná třída pro práci s uživateli
-     */
-    public function __construct(UserManager $userManager, AuthenticatorManager $authenticatorManager){
-        parent::__construct();
-        $this->userManager = $userManager;
-        $this->authenticator = $authenticatorManager;
-    }
 
     /**
      * Přihlásí uživatele, pokud je někdo přihlášen, přesměruje ho na jeho profil
@@ -64,8 +47,6 @@ class SessionPresenter extends BasePresenter {
      * @param ArrayHash $values data z formuláře
      */
     public function signInFormSucceeded($form, ArrayHash $values){
-        $this->user = $this->getUser();
-        $this->user->setAuthenticator(new AuthenticatorManager($this->userManager->getDatabase()));
         try {
             $this->user->login($values['username'], $values['password']);
             $this->flashMessage('Přihlášení proběhlo úspěšně.');
@@ -81,7 +62,6 @@ class SessionPresenter extends BasePresenter {
      */
     public function actionSignOut(){
         $this->setLayout(false);
-        $this->user = $this->getUser();
         if (!$this->user->isLoggedIn()){
             $this->flashMessage('Není přihlášen žádný uživatel.');
             $this->redirect(':Core:Article:');
@@ -97,7 +77,6 @@ class SessionPresenter extends BasePresenter {
      * Zaregistruje nového uživatele
      */
     public function actionSignUp(){
-        $this->user = $this->getUser();
     }
 
     /**
@@ -120,7 +99,6 @@ class SessionPresenter extends BasePresenter {
      * @param ArrayHash $values hodnoty z formuláře
      */
     public function signUpFormSucceeded($form, ArrayHash $values){
-        $this->user = $this->getUser();
         $username = $values['username'];
         $password = Passwords::hash($values['password']);
         $user = array($username, $password, 'user');
@@ -139,7 +117,6 @@ class SessionPresenter extends BasePresenter {
      * Pokud je přihlášen uživatel, přesměruje na jeho profil
      */
     public function isLoggedUser(){
-        $this->user = $this->getUser();
         if ($this->user->isLoggedIn()){
             $this->redirectURL('profil/' . $this->userManager->getUserByID($this->user->getId())->username);
         }
