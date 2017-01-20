@@ -42,6 +42,14 @@ class UserPresenter extends BasePresenter {
      * @param string $username jméno uživatele
      */
     public function actionRemove(string $username){
+        if (!$this->user->isLoggedIn()){
+            $this->flashMessage('Nejste přihlášen!');
+            $this->redirect(':Core:Session:signIn');
+        }
+        if (!$this->user->isAllowed('article', 'edit')){
+            $this->flashMessage('Nemůžete mazat uživatele!');
+            $this->redirect(':Core:Article:', $url);
+        }
         $this->userManager->removeUser($username);
         $this->flashMessage('Uživatel byl úspěšně odstraněn.');
         $this->redirect(':Core:User:list');

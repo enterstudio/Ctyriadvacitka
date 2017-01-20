@@ -41,6 +41,14 @@ class ArticlePresenter extends BasePresenter{
      * @param string $url
      */
     public function actionRemove(string $url){
+        if (!$this->user->isLoggedIn()){
+            $this->flashMessage('Nejste přihlášen!');
+            $this->redirect(':Core:Session:signIn');
+        }
+        if (!$this->user->isAllowed('article', 'edit')){
+            $this->flashMessage('Nemůžete mazat články!');
+            $this->redirect(':Core:Article:', $url);
+        }
         $this->articleManager->deleteArticle($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.');
         $this->redirect(':Core:Article:list');
@@ -53,6 +61,10 @@ class ArticlePresenter extends BasePresenter{
     public function actionEditor(string $url = NULL){
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($url) ($article = $this->articleManager->getArticle($url)) ? $this['editorForm']->setDefaults($article) : $this->flashMessage('Článek nebyl nalezen');
+        if (!$this->user->isLoggedIn()){
+            $this->flashMessage('Nejste přihlášen!');
+            $this->redirect(':Core:Session:signIn');
+        }
         if (!$this->user->isAllowed('article', 'edit'));{
             $this->flashMessage('Nemůžete upravovat články!');
             $this->redirect(':Core:Article:', $url);
