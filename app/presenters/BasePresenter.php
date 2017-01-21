@@ -5,6 +5,8 @@ namespace App\Presenters;
 use App\CoreModule\Model\ArticleManager;
 use App\CoreModule\Model\AuthenticatorManager;
 use App\CoreModule\Model\AuthorizatorManager;
+use App\CoreModule\Model\NewsManager;
+use App\CoreModule\Model\ResourceManager;
 use App\CoreModule\Model\UserManager;
 use Nette\Application\UI\Presenter;
 use Nette\Security\User;
@@ -22,15 +24,21 @@ abstract class BasePresenter extends Presenter{
     protected $userManager;
     /** @var  ArticleManager instance of ArticleManager */
     protected $articleManager;
+    /** @var  NewsManager instance of NewsManager */
+    protected $newsManager;
+    /** @var  ResourceManager instance of ResourceManager */
+    protected $resourceManager;
 
     /**
      * Gets instances of Services from DI
      * @param UserManager $userManager instance of UserManager
      * @param ArticleManager $articleManager instance of ArticleManager
+     * @param NewsManager $newsManager instance of ArticleManager
      */
-    public function injectServices(UserManager $userManager, ArticleManager $articleManager){
+    public function injectServices(UserManager $userManager, ArticleManager $articleManager, NewsManager $newsManager){
         $this->userManager = $userManager;
         $this->articleManager = $articleManager;
+        $this->newsManager = $newsManager;
     }
 
     public function startup()

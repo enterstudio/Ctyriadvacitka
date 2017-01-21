@@ -22,6 +22,12 @@ class ArticlePresenter extends BasePresenter{
     /** Konstanta s hodnotou URL výchozího článku */
     const DEFAULT_ARTICLE_URL = 'uvod';
 
+    public function startup()
+    {
+        parent::startup();
+        $this->resourceManager = $this->articleManager;
+    }
+
     /**
      * Načte a vykreslí článek do šablony podle jeho URL
      * @param string $url URL článku
@@ -31,8 +37,8 @@ class ArticlePresenter extends BasePresenter{
             $url = self::DEFAULT_ARTICLE_URL;
         
         //Pokusí se načíst článek s danou URL a pokud nebude nalezen, vyhodí chybu 404
-        if (!($article = $this->articleManager->getArticle($url)))
-            $article = $this->articleManager->getArticle('chyba');
+        if (!($article = $this->resourceManager->getArticle($url)))
+            $article = $this->resourceManager->getArticle('chyba');
         $this->template->article = $article; //Předá článek do šablony
     }
 
@@ -49,7 +55,7 @@ class ArticlePresenter extends BasePresenter{
             $this->flashMessage('Nemůžete mazat články!');
             $this->redirect(':Core:Article:', $url);
         }
-        $this->articleManager->deleteArticle($url);
+        $this->resourceManager->deleteArticle($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.');
         $this->redirect(':Core:Article:list');
     }
@@ -60,7 +66,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionEditor(string $url = NULL){
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
-        if ($url) ($article = $this->articleManager->getArticle($url)) ? $this['editorForm']->setDefaults($article) : $this->flashMessage('Článek nebyl nalezen');
+        if ($url) ($article = $this->resourceManager->getArticle($url)) ? $this['editorForm']->setDefaults($article) : $this->flashMessage('Článek nebyl nalezen');
         if (!$this->user->isLoggedIn()){
             $this->flashMessage('Nejste přihlášen!');
             $this->redirect(':Core:Session:signIn');
@@ -76,7 +82,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionList(){
         //Načte články z databáze a předá je šabloně
-        $articles = $this->articleManager->getArticles();
+        $articles = $this->resourceManager->getArticles();
         $this->template->articles = $articles;
     }
 
@@ -104,7 +110,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function editorFormSucceeded($form, array $values){
         try{
-            $this->articleManager->saveArticle($values);
+            $this->resourceManager->saveArticle($values);
             $this->flashMessage('Článek byl úspěšně uložen.');
             $this->redirect(":Core:Article:", $values['url']);
         }
