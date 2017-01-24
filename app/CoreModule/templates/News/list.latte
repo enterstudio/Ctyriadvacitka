@@ -1,0 +1,14 @@
+{define title}Novinky{/define}
+{define description}Seznam novinek{/define}
+{block content}
+<table>
+    <tr n:foreach="$articles as $article">
+        <td>
+            <h2><a n:href=":Core:News: $article->url">{$article->title}</a></h2>
+            {$article->description}
+            <br />
+            <a n:href=":Core:News:editor $article->url">Editovat</a>
+            <a n:href=":Core:News:remove $article->url">Odstranit</a>
+        </td>
+    </tr>
+</table>

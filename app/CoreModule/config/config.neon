@@ -6,4 +6,5 @@ parameters:
 services:
 	- App\CoreModule\Model\ArticleManager
 	- App\CoreModule\Model\UserManager
+	- App\CoreModule\Model\NewsManager
 	authenticator: App\CoreModule\Model\AuthenticatorManager
