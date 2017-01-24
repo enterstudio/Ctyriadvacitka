@@ -37,8 +37,12 @@
                 <li><a href="/tabor">Tábor</a></li>
                 <li><a href="/odkazy">Odkazy</a></li>
                 <li><a n:href=":Core:Contact:">Kontakty</a></li>
-                <li class="li_last"><a n:href=":Core:Session:signIn">Přihlásit</a></li>
-                <li><a n:href=":Core:Session:signUp">Registrovat</a></li>
+                {if !$isLoggedIn}
+                    <li class="li_last"><a n:href=":Core:Session:signIn">Přihlásit</a></li>
+                    <li><a n:href=":Core:Session:signUp">Registrovat</a></li>
+                {else}
+                    <li class="li_last"><a n:href=":Core:User: $loggedUser->username">{$loggedUser->username}</a></li>
+                {/if}
             </ul>
         </nav>
 

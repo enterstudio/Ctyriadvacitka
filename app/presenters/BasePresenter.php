@@ -49,4 +49,11 @@ abstract class BasePresenter extends Presenter{
         $this->user->setAuthorizator(new AuthorizatorManager());
     }
 
+    public function beforeRender()
+    {
+        parent::beforeRender();
+        $this->template->isLoggedIn = $this->user->isLoggedIn();
+        $this->template->loggedUser = $this->user->getIdentity();
+    }
+
 }
