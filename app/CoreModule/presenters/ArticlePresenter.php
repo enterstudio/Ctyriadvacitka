@@ -39,8 +39,10 @@ class ArticlePresenter extends BasePresenter{
             $url = self::DEFAULT_ARTICLE_URL;
         
         //Pokusí se načíst článek s danou URL a pokud nebude nalezen, vyhodí chybu 404
-        if (!($article = $this->resourceManager->getArticle($url)))
+        if (!($article = $this->resourceManager->getArticle($url))) {
             $article = $this->resourceManager->getArticle('chyba');
+            $this->template->originalUrl = $url;
+        }
         $this->template->article = $article; //Předá článek do šablony
     }
 
