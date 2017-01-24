@@ -94,7 +94,7 @@ class ArticlePresenter extends BasePresenter{
      */
     protected function createComponentEditorForm():Form{
         $form = new Form();
-        $form->addHidden('article_id');
+        $form->addHidden($this->resourceManager->getColumnID());
         $form->addText('title', 'Titilek')->setRequired();
         $form->addText('url', 'URL')->setRequired();
         $form->addText('description', 'Popisek')->setRequired();

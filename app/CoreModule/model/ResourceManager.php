@@ -24,6 +24,14 @@ class ResourceManager extends BaseManager
 
     protected $tableName;
     protected $columnID;
+
+    /**
+     * @return mixed name of column with ID
+     */
+    public function getColumnID()
+    {
+        return $this->columnID;
+    }
     const
         COLUMN_TITLE = 'title',
         COLUMN_CONTENT = 'content',
