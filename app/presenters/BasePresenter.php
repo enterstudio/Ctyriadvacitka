@@ -53,6 +53,7 @@ abstract class BasePresenter extends Presenter{
     {
         parent::beforeRender();
         $this->template->isLoggedIn = $this->user->isLoggedIn();
+        $this->template->isUserAdmin = $this->user->isInRole('administrator');
         $this->template->loggedUser = $this->user->getIdentity();
     }
 

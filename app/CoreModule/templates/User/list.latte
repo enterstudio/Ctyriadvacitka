@@ -6,8 +6,12 @@
         <td>
             <h2><a n:href=":Core:User: $user->username">{$user->username}</a></h2>
             <br />
-            <a n:href=":Core:User:editor $user->username">Editovat</a>
-            <a n:href=":Core:User:remove $user->username">Odstranit</a>
+            {if $loggedUser->username == $user->username}
+                <a n:href=":Core:User:editor $user->username">Editovat</a>
+            {/if}
+            {if ($loggedUser->username == $user->username)||$isUserAdmin}
+                <a n:href=":Core:User:remove $user->username">Odstranit</a>
+            {/if}
         </td>
     </tr>
 </table>
