@@ -52,7 +52,7 @@ class ResourceManager extends BaseManager
      * @param array|ArrayHash $article
      */
     public function saveArticle(array $article){
-        if (!$article[$this->columnID])
+        if (empty($article[$this->columnID]))
             $this->database->table($this->tableName)->insert(
                 array(
                     self::COLUMN_TITLE => $article[self::COLUMN_TITLE],

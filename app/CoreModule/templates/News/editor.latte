@@ -1,0 +1,13 @@
+{define title}Editor{/define}
+{define description}Editor novinek{/define}
+{block content}
+    {* Formulář pro editaci. *}
+    {control editorForm}
+{/block}
+
+{block scripts}
+{include parent}
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('content');
+</script>

@@ -39,6 +39,20 @@ class RouterFactory
             'username' => null,
         ));
         $router[] = new Route('profil/[<username>]', 'Core:User:default');
+        $router[] = new Route('novinky/[<action>/][<url>]', array(
+            'presenter' => 'Core:News',
+            'action' => array(
+                Route::VALUE => 'list',
+                Route::FILTER_TABLE => array(
+                    //řetězec v URL=> akce presenteru
+                    'editor' => 'editor',
+                    'odstranit' => 'remove'
+                ),
+                Route::FILTER_STRICT => true
+            ),
+            'username' => null,
+        ));
+        $router[] = new Route('novinky/[<url>]', 'Core:News:default');
         $router[] = new Route('[<action>/][<url>]', array(
             'presenter' => 'Core:Article',
             'action' => array(
