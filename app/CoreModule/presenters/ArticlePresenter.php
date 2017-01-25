@@ -70,7 +70,14 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionEditor(string $url = NULL){
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
-        if ($url) ($article = $this->resourceManager->getArticle($url)) ? $this['editorForm']->setDefaults($article) : $this->flashMessage('Článek nebyl nalezen');
+        if ($url && $article = $this->resourceManager->getArticle($url)) {
+            $this['editorForm']->setDefaults($article);
+        } else {
+            $this->flashMessage('Článek nebyl nalezen');
+            $article = new ArrayHash();
+            $article->url = $url;
+            $this['editorForm']->setDefaults($article);
+        }
         if (!$this->user->isLoggedIn()){
             $this->flashMessage('Nejste přihlášen!');
             $this->redirect(':Core:Session:signIn');
