@@ -62,6 +62,13 @@ class UserPresenter extends BasePresenter {
     public function actionEditor(string $username = NULL){
         //Pokud bylo zadáno jméno, pokusí se uživatele načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($username) ($user = $this->userManager->getUserByUsername($username)) ? $this['editorForm']->setDefaults($user) : $this->flashMessage('Uživatel nebyl nalezen');
+
+        //Pokud je přihášen uživatel, ale nevyplní paremetr username, bude editovat sebe
+        if (!$username && $this->user->isLoggedIn()){
+            $user = $this->userManager->getUserByID($this->user->getId());
+            $this['editorForm']->setDefaults($user);
+        }
+
         if (!$this->user->isLoggedIn()){
             $this->flashMessage('Nejste přihlášen!');
             $this->redirect(':Core:Session:signIn');
