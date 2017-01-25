@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+    config.vm.provider "virtualbox"
+    config.vm.box = "ctyriadvacitka"
+    config.vm.network "private_network", ip: "192.168.33.24"
+    config.vm.hostname = "Ctyriadvacitka"
+    config.vm.synced_folder "/home/krouma/Ctyriadvacitka", "/var/www", :mount_options => ["dmode=777", "fmode=666"]
+    config.vm.synced_folder "/mnt/Data/web/adminer", "/var/www/adminer", :mount_options => ["dmode=777", "fmode=666"]
+    #config.vm.synced_folder ".", "/var/www", :mount_options => ["dmode=777", "fmode=666"]
+    #config.vm.synced_folder "/home/krouma/BasicRSVagrant/etc", "/etc", :mount_options => ["dmode=777", "fmode=666"], owner: "root"
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+    #config.vm.network "forwarded_port", guest: 81, host: 81
+    #config.vm.network "forwarded_port", guest: 3306, host: 3307
+    
+    # Optional NFS. Make sure to remove other synced_folder line too
+    #config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
+
+end

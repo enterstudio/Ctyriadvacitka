@@ -13,7 +13,7 @@ Vlastní CMS založený na frameworku Nette.
     mkdir log   
     mkdir -p temp/cache   
 ### 5. Přidání Vagrant boxu   
-    vagrant box add --name fedora cesta/k/jmeno_boxu.box   
+    vagrant box add --name ctyriadvacitka cesta/k/jmeno_boxu.box   
 ### 6. Přidání souboru s přístupovými údaji k databázi   
 #### 6.1. Zkopírování souboru do app/cofig/config.local.neon   
     cp config.local.neon app/config/   
