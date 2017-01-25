@@ -1,4 +1,14 @@
 {define title}{$user->username}{/define}
 {define description}Podrobnosti uživatele {$user->username}{/define}
 {block content}
-<a href="/odhlasit">Odhlásit</a>
+
+{if $loggedUser->username == $user->username}
+    <a n:href=":Core:User:editor $user->username">Upravit údaje</a>
+    <br />
+    <a href="/odhlasit">Odhlásit</a>
+    <br />
+{/if}
+
+{if $isUserAdmin}
+    <a n:href=":Core:Administration:">Administrace webu</a>
+{/if}
