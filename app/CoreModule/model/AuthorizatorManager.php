@@ -24,7 +24,8 @@ class AuthorizatorManager extends Permission
 
         $this->allow('guest', ['article', 'user', 'comment'], 'view');
         $this->allow('registered', 'comment', 'add');
-        $this->allow('administrator', ['article', 'user', 'comment'], ['edit', 'add']);
+        $this->allow('administrator', ['article', 'comment'], ['edit', 'add']);
+        $this->allow('administrator', 'user', 'remove');
     }
 
 }

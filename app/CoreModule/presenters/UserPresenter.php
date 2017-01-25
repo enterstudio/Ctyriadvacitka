@@ -46,9 +46,9 @@ class UserPresenter extends BasePresenter {
             $this->flashMessage('Nejste přihlášen!');
             $this->redirect(':Core:Session:signIn');
         }
-        if (!$this->user->isAllowed('article', 'edit')){
+        if (!$this->user->isAllowed('user', 'remove')){
             $this->flashMessage('Nemůžete mazat uživatele!');
-            $this->redirect(':Core:Article:', $url);
+            $this->redirect(':Core:User:', $username);
         }
         $this->userManager->removeUser($username);
         $this->flashMessage('Uživatel byl úspěšně odstraněn.');
