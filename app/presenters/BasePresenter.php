@@ -52,9 +52,10 @@ abstract class BasePresenter extends Presenter{
     public function beforeRender()
     {
         parent::beforeRender();
-        $this->template->isLoggedIn = $this->user->isLoggedIn();
+        if ($this->template->isLoggedIn = $this->user->isLoggedIn()){
+            $this->template->loggedUser = $this->user->getIdentity();
+        }
         $this->template->isUserAdmin = $this->user->isInRole('administrator');
-        $this->template->loggedUser = $this->user->getIdentity();
     }
 
 }

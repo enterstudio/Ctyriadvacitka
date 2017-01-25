@@ -67,7 +67,7 @@ class SessionPresenter extends BasePresenter {
             $this->redirect(':Core:Article:');
         }
         else{
-            $this->user->logout();
+            $this->user->logout(true);
             $this->flashMessage('Uživatel úspěšně odhlášen.');
             $this->redirect(':Core:Article:');
         }

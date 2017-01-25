@@ -2,7 +2,7 @@
 {define description}Podrobnosti uživatele {$user->username}{/define}
 {block content}
 
-{if $loggedUser->username == $user->username}
+{if $isLoggedIn && $loggedUser->username == $user->username}
     <a n:href=":Core:User:editor $user->username">Upravit údaje</a>
     <br />
     <a href="/odhlasit">Odhlásit</a>
