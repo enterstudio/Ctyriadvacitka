@@ -1,0 +1,10 @@
+parameters:
+
+# Template for database connection
+# Copy this to app/config and edit
+database:
+	dsn: 'mysql:host=server;dbname=jmeno_databaze'
+	user: 'uzivatel'
+	password: 'heslo'
+	options:
+		lazy: yes
