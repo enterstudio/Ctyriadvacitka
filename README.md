@@ -12,7 +12,13 @@ Vlastní CMS založený na frameworku Nette.
 ### 4. Vytvoření složek log a temp/cache    
     mkdir log   
     mkdir -p temp/cache   
-### 5. Přidání Vagrant boxu   
+### 5. Konfigurace Vagrantu   
+#### 5.1 Instalace Vagrantu   
+##### 5.1.a Fedora, RHEL, CentOS   
+    sudo dnf install vagrant VirtualBox    
+#### 5.2 Stažení boxu    
+https://drive.google.com/file/d/0B3gkX69GnkCqRnEyWXZhenpOQms/view?usp=sharing   
+#### 5.3 Přidání boxu do Vagrantu
     vagrant box add --name ctyriadvacitka cesta/k/jmeno_boxu.box   
 ### 6. Přidání souboru s přístupovými údaji k databázi   
 #### 6.1. Zkopírování souboru do app/cofig/config.local.neon   
