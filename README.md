@@ -22,6 +22,24 @@ Vlastní CMS založený na frameworku Nette.
 ### 7. Přidání záznamu do lokálního DNS serveru.   
 ##### V Linuxu do souboru /etc/hosts přidat řádek   
     192.168.33.24 ctyriadvacitka.vagrant   
+### 8. Konfigurace Sass preprocesoru
+#### 8.1 Instalace Ruby    
+##### 8.1.a Fedora, RHEL, CentOS    
+    sudo dnf install ruby   
+##### 8.1.b Debian, Ubuntu, Mint   
+    sudo apt-get install ruby   
+#### 8.2 Instalace Sass   
+    sudo gem install sass    
+#### 8.3 Konfigurace IDE   
+##### 8.3.a PHPStorm   
+1. Otevři Settings/Tools/File Watchers
+2. Přidej nový
+3. Zvol si název (např. SCSS)
+4. Nastav "File type" na SCSS   
+5. Nastav cestu k Sassu v "Program" (výchozí v linuxech je /usr/local/bin/scss)
+6. Do "Arguments" dej: --no-cache --style compact --update $FileName$:$ProjectFileDir$/www/css/$FileNameWithoutExtension$.css
+7. Do "Output paths to refresh" dej: $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
+
 ## Spuštění webu ve Vagrantu
 ### 1. Ve kořenové složce projektu spustit příkaz   
     vagrant up   
