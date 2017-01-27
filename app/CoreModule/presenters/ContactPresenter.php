@@ -30,7 +30,7 @@ class ContactPresenter extends BasePresenter {
      * @return Form kontaktní formulář
      */
     protected function createComponentContactForm():Form{
-        $form = new Form();
+        $form = $this->formFactory->create();
         $form->addText('email', 'Vaše e-mailová adresa')->setType('email')->setRequired();
         $form->addText('y', 'Zadejte aktuální rok')->setRequired()
             ->addRule(Form::EQUAL, 'Chybně vyplněný antispam.', date("Y"));

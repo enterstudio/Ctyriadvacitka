@@ -8,3 +8,4 @@ services:
 	- App\CoreModule\Model\UserManager
 	- App\CoreModule\Model\NewsManager
 	authenticator: App\CoreModule\Model\AuthenticatorManager
+	formFactory: Instante\Bootstrap3Renderer\BootstrapFormFactory

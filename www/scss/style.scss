@@ -15,6 +15,11 @@ footer{
 img{
   width: 1140px;
 }
+@media screen and (min-width: $grid-float-breakpoint){
+  #frm-signUpForm, #frm-signInForm, #frm-userEditorForm, #frm-contactForm{
+    width: 33%;
+  }
+}
 
 /*
 $color_background: white;

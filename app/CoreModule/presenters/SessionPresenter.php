@@ -34,7 +34,7 @@ class SessionPresenter extends BasePresenter {
      * @return Form přihlašovací formulář
      */
     public function createComponentSignInForm():Form{
-        $form = new Form();
+        $form = $this->formFactory->create();
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
         $form->addSubmit('submit', 'Přihlásit');
@@ -84,7 +84,7 @@ class SessionPresenter extends BasePresenter {
      * @return Form formulář k registraci
      */
     public function createComponentSignUpForm():Form{
-        $form = new Form();
+        $form = $this->formFactory->create();
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
         $form->addPassword('password_again', 'Heslo znovu')->setRequired()
