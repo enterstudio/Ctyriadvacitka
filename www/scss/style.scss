@@ -1,9 +1,22 @@
-/* 
+/*
     Created on : 9.10.2016, 10:46:23
     Author     : matyas
 */
 @import "bootstrap";
+@import "bootswatch_lumen";
 
+footer{
+  border-top: 2px solid $gray;
+  margin-top: 15px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+img{
+  width: 1140px;
+}
+
+/*
 $color_background: white;
 $color_background_html: rgb(245, 235, 215);
 $color_background_navbar: rgb(190, 212, 223);
@@ -53,12 +66,6 @@ section{
 }
 header{
   padding: 0px 10px;
-}
-footer{
-  border-top: 1px solid #333333;
-  margin: 15px 5px 0 5px;
-  padding-top: 5px;
-  text-align: center;
 }
 h1{
   margin: 10px auto;
@@ -116,3 +123,4 @@ h2{
     }
   }
 }
+*/
