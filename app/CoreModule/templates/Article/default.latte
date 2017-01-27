@@ -5,6 +5,6 @@
 {$article->content|noescape}
 {if $isUserAdmin && $article->title == 'Stránka nebyla nalezena'}
 
-    <a n:href=":Core:Article:editor $originalUrl">Vytvořit stránku</a>
+    <a n:href=":Core:Article:editor $originalUrl" class="btn btn-success">Vytvořit stránku</a>
 
 {/if}

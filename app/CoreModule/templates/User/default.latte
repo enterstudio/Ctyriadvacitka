@@ -3,12 +3,12 @@
 {block content}
 
 {if $isLoggedIn && $loggedUser->username == $user->username}
-    <a n:href=":Core:User:editor $user->username">Upravit údaje</a>
+    <a n:href=":Core:User:editor $user->username" class="btn btn-primary">Upravit údaje</a>
     <br />
-    <a href="/odhlasit">Odhlásit</a>
+    <a href="/odhlasit" class="btn btn-primary">Odhlásit</a>
     <br />
 {/if}
 
 {if $isUserAdmin}
-    <a n:href=":Core:Administration:">Administrace webu</a>
+    <a n:href=":Core:Administration:" class="btn btn-default">Administrace webu</a>
 {/if}
