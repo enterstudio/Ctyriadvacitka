@@ -102,7 +102,7 @@ class ArticlePresenter extends BasePresenter{
      * @return Form formulář pro editor článků
      */
     protected function createComponentEditorForm():Form{
-        $form = new Form();
+        $form = $this->formFactory->create();
         $form->addHidden($this->resourceManager->getColumnID());
         $form->addText('title', 'Titilek')->setRequired();
         $form->addText('url', 'URL')->setRequired();

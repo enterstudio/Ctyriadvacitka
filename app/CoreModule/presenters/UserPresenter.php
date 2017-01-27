@@ -61,12 +61,12 @@ class UserPresenter extends BasePresenter {
      */
     public function actionEditor(string $username = NULL){
         //Pokud bylo zadáno jméno, pokusí se uživatele načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
-        if ($username) ($user = $this->userManager->getUserByUsername($username)) ? $this['editorForm']->setDefaults($user) : $this->flashMessage('Uživatel nebyl nalezen');
+        if ($username) ($user = $this->userManager->getUserByUsername($username)) ? $this['userEditorForm']->setDefaults($user) : $this->flashMessage('Uživatel nebyl nalezen');
 
         //Pokud je přihášen uživatel, ale nevyplní paremetr username, bude editovat sebe
         if (!$username && $this->user->isLoggedIn()){
             $user = $this->userManager->getUserByID($this->user->getId());
-            $this['editorForm']->setDefaults($user);
+            $this['userEditorForm']->setDefaults($user);
         }
 
         if (!$this->user->isLoggedIn()){
@@ -93,14 +93,14 @@ class UserPresenter extends BasePresenter {
      * Vrátí formulář pro editor článků.
      * @return Form formulář pro editor článků
      */
-    protected function createComponentEditorForm():Form{
-        $form = new Form();
+    protected function createComponentUserEditorForm():Form{
+        $form = $this->formFactory->create();
         $form->addHidden('user_id');
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
         $form->addHidden('role');
         $form->addSubmit('submit', 'Uložit');
-        $form->onSuccess[] = [$this,'editorFormSucceeded'];
+        $form->onSuccess[] = [$this,'userEditorFormSucceeded'];
         return $form;
 
     }
@@ -110,7 +110,7 @@ class UserPresenter extends BasePresenter {
      * @param Form $form formulář editoru
      * @param ArrayHash $values odeslané hodnoty formuláře
      */
-    public function editorFormSucceeded($form, array $values){
+    public function userEditorFormSucceeded($form, array $values){
         try{
             $values['password'] = Passwords::hash($values['password']);
             $this->userManager->saveUser($values);
