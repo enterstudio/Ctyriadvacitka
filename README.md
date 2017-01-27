@@ -1,5 +1,13 @@
 # Čtyřiadvacítka
-Vlastní CMS založený na frameworku Nette.
+Vlastní CMS založený na frameworku Nette.   
+## O aplikaci   
+V aplikaci se vyskytují 3 druhy webových stránek   
+1. Stránka - má vlastní presenter, není jen statická (např. odesílá formulář)   
+2. Článek - statická stránka, pro jejíž aktualizaci není potřeba upravovat zdroják (např. termíny, FAQ),
+   jsou uložené v databázi
+3. Novinka - speciální druh článku, který se ukládá do vlastní tabulky databáze (např. informace o nadcházející
+   výpravě)   
+
 ## Instalace
 ### 1. Vytvoření složky projektu   
     mkdir Ctyriadvacitka   
