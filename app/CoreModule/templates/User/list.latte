@@ -1,7 +1,7 @@
 {define title}Seznam uživatelů{/define}
 {define description}Seznam všech registrovaných uživatelů{/define}
 {block content}
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped table-condensed table-responsive">
     <tr n:foreach="$users as $user">
         <td>
             <h2>{$user->username}</h2>

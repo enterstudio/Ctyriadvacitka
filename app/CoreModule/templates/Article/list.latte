@@ -1,7 +1,7 @@
 {define title}Výpis článků{/define}
 {define description}Výpis všech článků{/define}
 {block content}
-<table class="table table-striped table-hover table-responsive">
+<table class="table table-striped table-hover table-responsive table-condensed">
     <tr n:foreach="$articles as $article">
         <td>
             <h3>{$article->title}</h3>
