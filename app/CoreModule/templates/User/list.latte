@@ -1,18 +1,23 @@
 {define title}Seznam uživatelů{/define}
 {define description}Seznam všech registrovaných uživatelů{/define}
 {block content}
-<table>
+<table class="table table-hover table-striped">
     <tr n:foreach="$users as $user">
         <td>
-            <h2><a n:href=":Core:User: $user->username">{$user->username}</a></h2>
-            <br />
-            {if $loggedUser->username == $user->username}
-                <a n:href=":Core:User:editor $user->username">Editovat</a>
-            {/if}
-            {if ($loggedUser->username == $user->username)||$isUserAdmin}
-                <a n:href=":Core:User:remove $user->username">Odstranit</a>
-            {/if}
+            <h2>{$user->username}</h2>
+        </td><td>
+            <a n:href=":Core:User: $user->username" class="btn btn-default">Zobrazit</a>
         </td>
+        {if $loggedUser->username == $user->username}
+            <td>
+                <a n:href=":Core:User:editor $user->username" class="btn btn-primary">Editovat</a>
+            </td>
+        {/if}
+        {if ($loggedUser->username == $user->username)||$isUserAdmin}
+            <td>
+                <a n:href=":Core:User:remove $user->username" class="btn btn-danger">Odstranit</a>
+            </td>
+        {/if}
     </tr>
 </table>
 {/block}

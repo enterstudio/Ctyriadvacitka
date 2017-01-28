@@ -1,16 +1,22 @@
 {define title}Novinky{/define}
 {define description}Seznam novinek{/define}
 {block content}
-<table>
+<table class="table table-striped table-hover table-responsive">
     <tr n:foreach="$articles as $article">
         <td>
-            <h2><a n:href=":Core:News: $article->url">{$article->title}</a></h2>
+            <h3>{$article->title}</h3>
+            {*</td><td>*}
             {$article->description}
-            <br />
-            {if $isUserAdmin}
-                <a n:href=":Core:News:editor $article->url">Editovat</a>
-                <a n:href=":Core:News:remove $article->url">Odstranit</a>
-            {/if}
         </td>
+        <td>
+            <a n:href=":Core:News: $article->url" class="btn btn-default">Zobrazit</a>
+        </td>
+        {if $isUserAdmin}
+            <td>
+                <a n:href=":Core:News:editor $article->url" class="btn btn-primary">Editovat</a>
+            </td><td>
+            <a n:href=":Core:News:remove $article->url" class="btn btn-danger">Odstranit</a>
+        </td>
+        {/if}
     </tr>
 </table>
