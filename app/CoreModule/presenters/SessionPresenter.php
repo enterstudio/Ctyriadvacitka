@@ -49,11 +49,11 @@ class SessionPresenter extends BasePresenter {
     public function signInFormSucceeded($form, ArrayHash $values){
         try {
             $this->user->login($values['username'], $values['password']);
-            $this->flashMessage('Přihlášení proběhlo úspěšně.');
-            $this->redirectUrl('profil/' . $values['username']);
+            $this->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
+            $this->redirect(':Core:User:', $values['username']);
         }
         catch (AuthenticationException $e){
-            $this->flashMessage($e->getMessage());
+            $this->flashMessage($e->getMessage(), 'warning');
         }
     }
 
@@ -63,12 +63,12 @@ class SessionPresenter extends BasePresenter {
     public function actionSignOut(){
         $this->setLayout(false);
         if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Není přihlášen žádný uživatel.');
+            $this->flashMessage('Není přihlášen žádný uživatel.', 'info');
             $this->redirect(':Core:Article:');
         }
         else{
             $this->user->logout(true);
-            $this->flashMessage('Uživatel úspěšně odhlášen.');
+            $this->flashMessage('Uživatel úspěšně odhlášen.', 'success');
             $this->redirect(':Core:Article:');
         }
     }
@@ -103,11 +103,11 @@ class SessionPresenter extends BasePresenter {
         $password = Passwords::hash($values['password']);
         $user = array($username, $password, 'registered');
         if ($this->userManager->userExists($username)){
-            $this->flashMessage('Uživatel s tímto přihlašovacím jménem již existuje.');
+            $this->flashMessage('Uživatel s tímto přihlašovacím jménem již existuje.', 'warning');
         }
         else{
             $this->userManager->saveUser($user);
-            $this->flashMessage('Registrace proběhla úspěšně.');
+            $this->flashMessage('Registrace proběhla úspěšně, nyní se přihlašte.', 'success');
             $this->redirect(':Core:Session:signIn');
         }
 

@@ -55,11 +55,11 @@ class ContactPresenter extends BasePresenter {
                 ->setBody($values->message);
             $mailer = new SendmailMailer();
             $mailer->send($mail);
-            $this->flashMessage('E-mail byl úspěšně odeslán.');
+            $this->flashMessage('E-mail byl úspěšně odeslán.', 'success');
             $this->redirect('this');
         }
         catch (InvalidStateException $exception){
-            $this->flashMessage('E-mail se nepodařilo odeslat.');
+            $this->flashMessage('E-mail se nepodařilo odeslat.', 'danger');
         }
     }
 }

@@ -52,15 +52,15 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionRemove(string $url){
         if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!');
+            $this->flashMessage('Nejste přihlášen!', 'warning');
             $this->redirect(':Core:Session:signIn');
         }
         if (!$this->user->isAllowed('article', 'edit')){
-            $this->flashMessage('Nemůžete mazat články!');
+            $this->flashMessage('Nemůžete mazat články!', 'danger');
             $this->redirect($this->presenter, $url);
         }
         $this->resourceManager->deleteArticle($url);
-        $this->flashMessage('Článek byl úspěšně odstraněn.');
+        $this->flashMessage('Článek byl úspěšně odstraněn.', 'success');
         $this->redirect($this->presenter . 'list');
     }
 
@@ -73,17 +73,17 @@ class ArticlePresenter extends BasePresenter{
         if ($url && $article = $this->resourceManager->getArticle($url)) {
             $this['editorForm']->setDefaults($article);
         } else if ($url) {
-            $this->flashMessage('Článek nebyl nalezen');
+            $this->flashMessage('Článek nebyl nalezen, bude vytvořen nový.', 'info');
             $article = new ArrayHash();
             $article->url = $url;
             $this['editorForm']->setDefaults($article);
         }
         if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!');
+            $this->flashMessage('Nejste přihlášen!', 'warning');
             $this->redirect(':Core:Session:signIn');
         }
         if (!$this->user->isAllowed('article', 'edit')){
-            $this->flashMessage('Nemůžete upravovat články!');
+            $this->flashMessage('Nemůžete upravovat články!', 'danger');
             $this->redirect($this->presenter, $url);
         }
     }
@@ -122,11 +122,11 @@ class ArticlePresenter extends BasePresenter{
     public function editorFormSucceeded($form, array $values){
         try{
             $this->resourceManager->saveArticle($values);
-            $this->flashMessage('Článek byl úspěšně uložen.');
+            $this->flashMessage('Článek byl úspěšně uložen.', 'success');
             $this->redirect($this->presenter, $values['url']);
         }
         catch (UniqueConstraintViolationException $exception){
-            $this->flashMessage('Článek s touto URL adresou již existuje.');
+            $this->flashMessage('Článek s touto URL adresou již existuje.', 'warning');
         }
     }
 }

@@ -30,7 +30,7 @@ class UserPresenter extends BasePresenter {
             $this->redirect(':Core:Article:default');
         //Pokusí se najít uživatele s daným jménem, pokud nebude nalezen, vyhodí chybu 404
         if (!($user = $this->userManager->getUserByUsername($username))){
-            $this->flashMessage('Uživatel nebyl nalezen.');
+            $this->flashMessage('Uživatel nebyl nalezen.', 'warning');
             $this->redirect(':Core:Article:');
         }
         $this->template->user = $user;
@@ -43,15 +43,15 @@ class UserPresenter extends BasePresenter {
      */
     public function actionRemove(string $username){
         if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!');
+            $this->flashMessage('Nejste přihlášen!', 'warning');
             $this->redirect(':Core:Session:signIn');
         }
         if (!$this->user->isAllowed('user', 'remove')){
-            $this->flashMessage('Nemůžete mazat uživatele!');
+            $this->flashMessage('Nemůžete mazat uživatele!', 'danger');
             $this->redirect(':Core:User:', $username);
         }
         $this->userManager->removeUser($username);
-        $this->flashMessage('Uživatel byl úspěšně odstraněn.');
+        $this->flashMessage('Uživatel byl úspěšně odstraněn.', 'success');
         $this->redirect(':Core:User:list');
     }
 
@@ -70,11 +70,11 @@ class UserPresenter extends BasePresenter {
         }
 
         if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!');
+            $this->flashMessage('Nejste přihlášen!', 'warning');
             $this->redirect(':Core:Session:signIn');
         }
         if ($this->user->id != $user['user_id']){
-            $this->flashMessage('Nemůžete upravovat jiné uživatele!');
+            $this->flashMessage('Nemůžete upravovat jiné uživatele!', 'danger');
             $this->redirect(':Core:User:', $this->user->getIdentity()->username);
         }
         $this->template->user = $user;
@@ -114,11 +114,11 @@ class UserPresenter extends BasePresenter {
         try{
             $values['password'] = Passwords::hash($values['password']);
             $this->userManager->saveUser($values);
-            $this->flashMessage('Uživatel byl úspěšně editován.');
+            $this->flashMessage('Uživatel byl úspěšně editován.', 'success');
             $this->redirect(':Core:User:', $values['username']);
         }
         catch (UniqueConstraintViolationException $exception){
-            $this->flashMessage('Článek s touto URL adresou již existuje.');
+            $this->flashMessage('Článek s touto URL adresou již existuje.', 'warning');
         }
     }
 
