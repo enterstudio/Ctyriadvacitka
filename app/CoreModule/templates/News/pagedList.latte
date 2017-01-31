@@ -1,0 +1,16 @@
+{define title}Novinky{/define}
+{define description}Novinky s náhledem zobrazené po stránkách{/define}
+{block content}
+<div class="container-fluid">
+    <div n:foreach="$articles as $article" class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3>{$article->title}</h3>
+                {$article->description}
+            </div>
+            <div class="panel-body">
+                {$article->content|noescape}
+            </div>
+        </div>
+    </div>
+</div>

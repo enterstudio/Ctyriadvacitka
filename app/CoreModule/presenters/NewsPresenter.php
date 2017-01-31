@@ -23,4 +23,10 @@ class NewsPresenter extends ArticlePresenter
         $this->presenter = ':Core:News:';
     }
 
+    public function renderPagedList(int $page = 1){
+        $news = $this->resourceManager->getArticles();
+        $selectedNews = $news;
+        $this->template->articles = $selectedNews;
+    }
+
 }

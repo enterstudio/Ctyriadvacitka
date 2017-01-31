@@ -41,7 +41,7 @@ class ResourceManager extends BaseManager
      * Vrátí seznam článků v databázi
      * @return Selection seznam článků
      */
-    public function getArticles(){
+    public function getArticles():Selection{
         return $this->database->table($this->tableName)->order($this->columnID . " " . 'DESC');
     }
 

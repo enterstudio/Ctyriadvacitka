@@ -25,6 +25,7 @@ class RouterFactory
         $router[] = new Route('odhlasit', 'Core:Session:signOut');
         $router[] = new Route('registrovat', 'Core:Session:signUp');
         $router[] = new Route('seznam-uzivatelu/', 'Core:User:list');
+        $router[] = new Route('novinky/seznam', 'Core:News:list');
         $router[] = new Route('profil/[<action>/][<username>]', array(
             'presenter' => 'Core:User',
             'action' => array(
@@ -39,6 +40,7 @@ class RouterFactory
             'username' => null,
         ));
         $router[] = new Route('profil/[<username>]', 'Core:User:default');
+        $router[] = new Route('novinky/[<page [0-9]+>]', 'Core:News:pagedList');
         $router[] = new Route('novinky/[<action>/][<url>]', array(
             'presenter' => 'Core:News',
             'action' => array(
