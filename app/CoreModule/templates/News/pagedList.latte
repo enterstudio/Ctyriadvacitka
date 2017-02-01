@@ -14,3 +14,14 @@
         </div>
     </div>
 </div>
+<ul class="pagination">
+    <li {if $activePage == 1}class="disabled"{/if}>
+        <a n:href=":Core:News:pagedList">&laquo;</a>
+    </li>
+    <li n:for="$i = 1; $i <= $pages; $i++" {if $activePage == $i}class="active"{/if}>
+        <a n:href=":Core:News:pagedList $i">{$i}</a>
+    </li>
+    <li {if $activePage == $pages}class="disabled"{/if}>
+        <a n:href=":Core:News:pagedList $pages">&raquo;</a>
+    </li>
+</ul>
