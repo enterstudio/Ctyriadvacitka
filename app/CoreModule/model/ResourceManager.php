@@ -36,7 +36,8 @@ class ResourceManager extends BaseManager
         COLUMN_TITLE = 'title',
         COLUMN_CONTENT = 'content',
         COLUMN_URL = 'url',
-        COLUMN_DESCRIPTION = 'description';
+        COLUMN_DESCRIPTION = 'description',
+        COLUMN_REQUESTABLE = 'requestable';
     /**
      * Vrátí seznam článků v databázi
      * @param $limit amount of articles

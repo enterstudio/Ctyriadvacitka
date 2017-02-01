@@ -2,7 +2,7 @@
 {define description}Novinky s náhledem zobrazené po stránkách{/define}
 {block content}
 <div class="container-fluid">
-    <div n:foreach="$articles as $article" class="col-lg-6">
+    <div n:foreach="$articles as $article" class="col-lg-6" n:if="$article->requestable || $isUserAdmin">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3>{$article->title}</h3>

@@ -2,7 +2,7 @@
 {define description}Kompletní seznam novinek{/define}
 {block content}
 <table class="table table-striped table-hover table-responsive table-condensed">
-    <tr n:foreach="$articles as $article">
+    <tr n:foreach="$articles as $article" n:if="$article->requestable || $isUserAdmin">
         <td>
             <h3>{$article->title}</h3>
             {*</td><td>*}

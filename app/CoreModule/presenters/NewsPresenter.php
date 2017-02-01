@@ -7,6 +7,7 @@
  */
 
 namespace App\CoreModule\Presenters;
+use App\CoreModule\Model\ResourceManager;
 
 
 /**
@@ -28,15 +29,16 @@ class NewsPresenter extends ArticlePresenter
      * @param int $page page of list
      */
     public function renderPagedList(int $page = 1){
+        $news = $this->resourceManager->getArticles()->where(ResourceManager::COLUMN_REQUESTABLE, 1);
         $offset = ($page - 1) * 4;
-        $pages = ceil($this->resourceManager->getTable()->count()/4);
+        $pages = ceil($news->count()/4);
 
         if ($page > $pages){
             $this->flashMessage('Tolik stránek tu nemáme.', 'warning');
             $this->redirect(':Core:News:pagedList');
         }
 
-        $this->template->articles = $this->resourceManager->getArticles(4, $offset);
+        $this->template->articles = $news->limit(4, $offset);
         $this->template->activePage = $page;
         $this->template->pages = $pages;
     }
