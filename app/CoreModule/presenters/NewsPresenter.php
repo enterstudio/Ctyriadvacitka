@@ -29,8 +29,15 @@ class NewsPresenter extends ArticlePresenter
      */
     public function renderPagedList(int $page = 1){
         $offset = ($page - 1) * 4;
+        $pages = ceil($this->resourceManager->getTable()->count()/4);
+
+        if ($page > $pages){
+            $this->flashMessage('Tolik stránek tu nemáme.', 'warning');
+            $this->redirect(':Core:News:pagedList');
+        }
+
         $this->template->articles = $this->resourceManager->getArticles(4, $offset);
         $this->template->activePage = $page;
-        $this->template->pages = ceil($this->resourceManager->getTable()->count()/4);
+        $this->template->pages = $pages;
     }
 }
