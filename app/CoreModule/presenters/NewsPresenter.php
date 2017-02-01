@@ -23,10 +23,12 @@ class NewsPresenter extends ArticlePresenter
         $this->presenter = ':Core:News:';
     }
 
+    /**
+     * Renders list of news on pages. There are 4 news in ine page
+     * @param int $page page of list
+     */
     public function renderPagedList(int $page = 1){
-        $news = $this->resourceManager->getArticles();
-        $selectedNews = $news;
-        $this->template->articles = $selectedNews;
+        $offset = ($page - 1) * 4;
+        $this->template->articles = $this->resourceManager->getArticles(4, $offset);
     }
-
 }

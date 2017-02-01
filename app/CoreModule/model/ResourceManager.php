@@ -39,10 +39,13 @@ class ResourceManager extends BaseManager
         COLUMN_DESCRIPTION = 'description';
     /**
      * Vrátí seznam článků v databázi
+     * @param $limit amount of articles
+     * @param $offset first article to fetch
      * @return Selection seznam článků
      */
-    public function getArticles():Selection{
-        return $this->database->table($this->tableName)->order($this->columnID . " " . 'DESC');
+    public function getArticles(int $limit = null, int $offset = null):Selection{
+        return $this->database->table($this->tableName)->order($this->columnID . " " . 'DESC')
+            ->limit($limit, $offset);
     }
 
     /**
@@ -88,5 +91,12 @@ class ResourceManager extends BaseManager
      */
     public function deleteArticle(string $url){
         $this->database->table($this->tableName)->where(self::COLUMN_URL, $url)->delete();
+    }
+
+    /**
+     * @return Selection table which belongs to presenter
+     */
+    public function getTable(){
+        return $this->database->table($this->tableName);
     }
 }
