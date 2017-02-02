@@ -70,7 +70,8 @@ class ResourceManager extends BaseManager
                     self::COLUMN_TITLE => $article[self::COLUMN_TITLE],
                     self::COLUMN_CONTENT => $article[self::COLUMN_CONTENT],
                     self::COLUMN_URL => $article[self::COLUMN_URL],
-                    self::COLUMN_DESCRIPTION => $article[self::COLUMN_DESCRIPTION]
+                    self::COLUMN_DESCRIPTION => $article[self::COLUMN_DESCRIPTION],
+                    self::COLUMN_REQUESTABLE => $article[self::COLUMN_REQUESTABLE]
                 )
             );
         else {
@@ -80,7 +81,8 @@ class ResourceManager extends BaseManager
                     self::COLUMN_TITLE => $article[self::COLUMN_TITLE],
                     self::COLUMN_CONTENT => $article[self::COLUMN_CONTENT],
                     self::COLUMN_URL => $article[self::COLUMN_URL],
-                    self::COLUMN_DESCRIPTION => $article[self::COLUMN_DESCRIPTION]
+                    self::COLUMN_DESCRIPTION => $article[self::COLUMN_DESCRIPTION],
+                    self::COLUMN_REQUESTABLE => $article[self::COLUMN_REQUESTABLE]
                 )
             );
         }

@@ -9,8 +9,8 @@
 namespace App\CoreModule\Presenters;
 
 use App\Presenters\BasePresenter;
-use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
+use Nette\Forms\Form;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -110,6 +110,7 @@ class ArticlePresenter extends BasePresenter{
         $form->addText('title', 'Titilek')->setRequired();
         $form->addText('url', 'URL')->setRequired();
         $form->addText('description', 'Popisek')->setRequired();
+        $form->addCheckbox('requestable', 'Zobrazovat v seznamu');
         $form->addTextArea('content', 'Obsah')->setRequired();
         $form->addSubmit('submit', 'Uložit článek');
         $form->onSuccess[] = [$this,'editorFormSucceeded'];
