@@ -28,7 +28,11 @@ class UserManager extends BaseManager
         COLUMN_ID = 'user_id',
         COLUMN_USERNAME = 'username',
         COLUMN_PASSWORD_HASH = 'password',
-        COLUMN_ROLE = 'role';
+        COLUMN_ROLE = 'role',
+        COLUMN_NAME = 'name',
+        COLUMN_SURNAME = 'surname',
+        COLUMN_NICKNAME = 'nickname',
+        COLUMN_EMAIL = 'email';
 
     /**
      * Vrátí seznam uživatelů v databázi
@@ -82,12 +86,20 @@ class UserManager extends BaseManager
             );
         }
         else{
+            foreach ($user as $key => $column){
+                if (empty($user[$key])){
+                    $user[$key] = '';
+                }
+            }
             $this->database->table(self::TABLE_NAME)->wherePrimary($user[self::COLUMN_ID])->update(
                 array(
-                    self::COLUMN_ID => $user['user_id'],
-                    self::COLUMN_USERNAME => $user['username'],
-                    self::COLUMN_PASSWORD_HASH => $user['password'],
-                    self::COLUMN_ROLE => $user['role'])
+                    self::COLUMN_ID => $user[self::COLUMN_ID],
+                    self::COLUMN_USERNAME => $user[self::COLUMN_USERNAME],
+                    self::COLUMN_ROLE => $user[self::COLUMN_ROLE],
+                    self::COLUMN_NAME => $user[self::COLUMN_NAME],
+                    self::COLUMN_SURNAME => $user[self::COLUMN_SURNAME],
+                    self::COLUMN_NICKNAME => $user[self::COLUMN_NICKNAME],
+                    self::COLUMN_EMAIL => $user[self::COLUMN_EMAIL])
             );
         }
     }

@@ -1,13 +1,15 @@
 {define title}{$user->username}{/define}
 {define description}Podrobnosti uživatele {$user->username}{/define}
 {block content}
-
+<p>Jméno: {$user->name} {$user->surname}</p>
+<p>Přezdívka: {$user->nickname}</p>
+<p>E-mail: {$user->email}</p>
 {if $isLoggedIn && $loggedUser->username == $user->username}
     <h3>Akce:</h3>
     <a n:href=":Core:User:editor $user->username" class="btn btn-default">Upravit údaje</a>
     <a n:href=":Core:Session:signOut" class="btn btn-default">Odhlásit</a>
 {/if}
 
-{if $isUserAdmin}
+{if $isUserAdmin && $loggedUser->username == $user->username}
     <a n:href=":Core:Administration:" class="btn btn-primary">Administrace webu</a>
 {/if}

@@ -10,8 +10,7 @@ namespace App\CoreModule\Presenters;
 
 
 use App\Presenters\BasePresenter;
-use Nette\Application\UI\Form;
-use Nette\Security\Passwords;
+use Nette\Forms\Form;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -96,8 +95,11 @@ class UserPresenter extends BasePresenter {
     protected function createComponentUserEditorForm():Form{
         $form = $this->formFactory->create();
         $form->addHidden('user_id');
+        $form->addText('name', 'Jméno');
+        $form->addText('surname', 'Příjmení');
+        $form->addText('nickname', 'Přezdívka');
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
-        $form->addPassword('password', 'Heslo')->setRequired();
+        $form->addEmail('email', 'E-mail')->setRequired();
         $form->addHidden('role');
         $form->addSubmit('submit', 'Uložit');
         $form->onSuccess[] = [$this,'userEditorFormSucceeded'];
@@ -112,13 +114,12 @@ class UserPresenter extends BasePresenter {
      */
     public function userEditorFormSucceeded($form, array $values){
         try{
-            $values['password'] = Passwords::hash($values['password']);
             $this->userManager->saveUser($values);
             $this->flashMessage('Uživatel byl úspěšně editován.', 'success');
             $this->redirect(':Core:User:', $values['username']);
         }
         catch (UniqueConstraintViolationException $exception){
-            $this->flashMessage('Článek s touto URL adresou již existuje.', 'warning');
+            $this->flashMessage('Uživatel s tímto jménem již existuje.', 'warning');
         }
     }
 
