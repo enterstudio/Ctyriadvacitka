@@ -1,22 +1,3 @@
-{define title}Výpis článků{/define}
+{layout '../@list.latte'}
+{define title}Seznam článků{/define}
 {define description}Výpis všech článků{/define}
-{block content}
-<table class="table table-striped table-hover table-responsive table-condensed">
-    <tr n:foreach="$articles as $article" n:if="$article->requestable || $isUserAdmin">
-        <td>
-            <h3>{$article->title}</h3>
-        {*</td><td>*}
-            {$article->description}
-        </td>
-        <td>
-            <a n:href=":Core:Article: $article->url" class="btn btn-default">Zobrazit</a>
-        </td>
-        {if $isUserAdmin}
-            <td>
-                <a n:href=":Core:Article:editor $article->url" class="btn btn-primary">Editovat</a>
-            </td><td>
-                <a n:href=":Core:Article:remove $article->url" class="btn btn-danger">Odstranit</a>
-            </td>
-        {/if}
-    </tr>
-</table>

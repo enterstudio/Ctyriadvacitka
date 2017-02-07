@@ -61,6 +61,9 @@ abstract class BasePresenter extends Presenter{
             $this->template->loggedUser = $this->user->getIdentity();
         }
         $this->template->isUserAdmin = $this->user->isInRole('administrator');
+        if (!empty($this->presenter)){
+            $this->template->presenter = $this->presenter;
+        }
     }
 
 }

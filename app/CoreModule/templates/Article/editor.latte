@@ -1,13 +1,3 @@
-{define title}Editor{/define}
+{layout '../@editor.latte'}
+{define title}Editor článků{/define}
 {define description}Editor článků{/define}
-{block content}
-{* Formulář pro editaci. *}
-{control editorForm}
-{/block}
-
-{block scripts}
-{include parent}
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('content');
-</script>
