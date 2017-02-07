@@ -10,7 +10,7 @@ namespace App\CoreModule\Presenters;
 
 
 use App\Presenters\BasePresenter;
-use Nette\Application\UI\Form;
+use Nette\Forms\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
 use Nette\Utils\ArrayHash;
@@ -25,8 +25,8 @@ class SessionPresenter extends BasePresenter {
     /**
      * Přihlásí uživatele, pokud je někdo přihlášen, přesměruje ho na jeho profil
      */
-    public function actionSingIn(){
-        $this->isLoggedUser();
+    public function renderSignIn(){
+        $this->redirectIfLoggedUser();
     }
 
     /**
@@ -77,6 +77,7 @@ class SessionPresenter extends BasePresenter {
      * Zaregistruje nového uživatele
      */
     public function actionSignUp(){
+        $this->redirectIfLoggedUser();
     }
 
     /**
@@ -114,11 +115,13 @@ class SessionPresenter extends BasePresenter {
     }
 
     /**
-     * Pokud je přihlášen uživatel, přesměruje na jeho profil
+     * It will redirect to user profile if user is logged in
      */
-    public function isLoggedUser(){
-        if ($this->user->isLoggedIn()){
-            $this->redirectURL('profil/' . $this->userManager->getUserByID($this->user->getId())->username);
+    public function redirectIfLoggedUser(){
+        if($this->user->isLoggedIn()){
+            $username = $this->user->getIdentity()->username;
+            $this->flashMessage("Už je přihlášen uživatel $username.", 'info');
+            $this->redirect(':Core:User:', $username);
         }
     }
 }
