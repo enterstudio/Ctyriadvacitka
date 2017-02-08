@@ -8,6 +8,8 @@
 
 namespace App\CoreModule\Presenters;
 use App\CoreModule\Model\ResourceManager;
+use app\CoreModule\model\TableRow;
+use Nette\Utils\Strings;
 
 
 /**
@@ -38,7 +40,16 @@ class NewsPresenter extends ArticlePresenter
             $this->redirect(':Core:News:pagedList');
         }
 
-        $this->template->articles = $news->limit(4, $offset);
+        $news = $news->limit(4, $offset);
+        $tableRows = [];
+
+        foreach ($news as $new){
+            $tableRow = new TableRow($new);
+            $tableRow->setContent(Strings::truncate($tableRow->getContent(), 80));
+            $tableRows[] = $tableRow;
+        }
+
+        $this->template->articles = $tableRows;
         $this->template->activePage = $page;
         $this->template->pages = $pages;
     }
