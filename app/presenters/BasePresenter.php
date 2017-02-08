@@ -17,7 +17,8 @@ use Nette\Security\User;
  * Base presenter for all application presenters.
  * @package App\Presenters
  */
-abstract class BasePresenter extends Presenter{
+abstract class BasePresenter extends Presenter
+{
 
     /** @var  User instance of User */
     protected $user;
@@ -39,7 +40,8 @@ abstract class BasePresenter extends Presenter{
      * @param NewsManager $newsManager instance of ArticleManager
      * @param BootstrapFormFactory $formFactory instance of FormFactory
      */
-    public function injectServices(UserManager $userManager, ArticleManager $articleManager, NewsManager $newsManager, BootstrapFormFactory $formFactory){
+    public function injectServices(UserManager $userManager, ArticleManager $articleManager, NewsManager $newsManager, BootstrapFormFactory $formFactory)
+    {
         $this->userManager = $userManager;
         $this->articleManager = $articleManager;
         $this->newsManager = $newsManager;
@@ -57,12 +59,20 @@ abstract class BasePresenter extends Presenter{
     public function beforeRender()
     {
         parent::beforeRender();
-        if ($this->template->isLoggedIn = $this->user->isLoggedIn()){
+        if ($this->template->isLoggedIn = $this->user->isLoggedIn()) {
             $this->template->loggedUser = $this->user->getIdentity();
         }
         $this->template->isUserAdmin = $this->user->isInRole('administrator');
-        if (!empty($this->presenter)){
+        if (!empty($this->presenter)) {
             $this->template->presenter = $this->presenter;
+        }
+    }
+
+    public function logInRequired()
+    {
+        if (!$this->user->isLoggedIn()) {
+            $this->flashMessage('Nejste přihlášen!', 'warning');
+            $this->redirect(':Core:Session:signIn');
         }
     }
 

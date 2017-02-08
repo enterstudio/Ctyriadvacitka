@@ -12,6 +12,8 @@ namespace App\CoreModule\Model;
 use App\Model\BaseManager;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
+use Nette\Security\AuthenticationException;
+use Nette\Security\Passwords;
 
 /**
  * User management
@@ -38,7 +40,8 @@ class UserManager extends BaseManager
      * Vrátí seznam uživatelů v databázi
      * @return Selection seznam uživatelů
      */
-    public function getUsers(){
+    public function getUsers()
+    {
         return $this->database->table(self::TABLE_NAME)->order(self::COLUMN_ID . " " . "DESC");
     }
 
@@ -47,7 +50,8 @@ class UserManager extends BaseManager
      * @param int $id id uživatele
      * @return bool|mixed|IRow
      */
-    public function getUserByID (int $id){
+    public function getUserByID(int $id)
+    {
         return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id)->fetch();
     }
 
@@ -56,7 +60,8 @@ class UserManager extends BaseManager
      * @param string $username jmeno uživatele
      * @return bool|mixed|IRow
      */
-    public function getUserByUsername (string $username){
+    public function getUserByUsername(string $username)
+    {
         return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_USERNAME, $username)->fetch();
     }
 
@@ -65,7 +70,8 @@ class UserManager extends BaseManager
      * @param string $username uživatelské jméno uživatele
      * @return bool existuje/neexistuje
      */
-    public function userExists(string $username):bool {
+    public function userExists(string $username): bool
+    {
         if ($this->getUserByUsername($username) != false)
             return true;
         else
@@ -76,18 +82,18 @@ class UserManager extends BaseManager
      * Uloží uživatele do databáze. Pokud není nastaveno ID, vytvoří nového, jinak provede editaci.
      * @param array $user uživatel k uložení
      */
-    public function saveUser (array $user){
-        if (empty($user[self::COLUMN_ID])){
+    public function saveUser(array $user)
+    {
+        if (empty($user[self::COLUMN_ID])) {
             $this->database->table(self::TABLE_NAME)->insert(
                 array(
                     self::COLUMN_USERNAME => $user[0],
                     self::COLUMN_PASSWORD_HASH => $user[1],
                     self::COLUMN_ROLE => $user[2])
             );
-        }
-        else{
-            foreach ($user as $key => $column){
-                if (empty($user[$key])){
+        } else {
+            foreach ($user as $key => $column) {
+                if (empty($user[$key])) {
                     $user[$key] = '';
                 }
             }
@@ -105,10 +111,30 @@ class UserManager extends BaseManager
     }
 
     /**
+     * Changes password of user
+     * @param string $username of user to change password
+     * @param string $currentPassword
+     * @param string $newPassword
+     * @throws AuthenticationException if current password is not correct
+     */
+    public function changePassword(string $username, string $currentPassword, string $newPassword)
+    {
+        $row = $this->database->table('user')->where('username', $username)->fetch();
+        if (Passwords::verify($currentPassword, $row->password)) {
+            $this->database->table('user')->where('username', $username)->update(array(
+                self::COLUMN_PASSWORD_HASH => Passwords::hash($newPassword)
+            ));
+        } else {
+            throw new AuthenticationException('Současné heslo neodpovídá zadanému současnému heslu!');
+        }
+    }
+
+    /**
      * Smaže uživatele
      * @param int $id id uživatele
      */
-    public function removeUser (string $username){
+    public function removeUser(string $username)
+    {
         $this->database->table(self::TABLE_NAME)->where(self::COLUMN_USERNAME, $username)->delete();
     }
 
@@ -116,7 +142,8 @@ class UserManager extends BaseManager
      * Vrátí databázi
      * @return \App\Model\Content|\Nette\Database\Context databáze
      */
-    public function getDatabase(){
+    public function getDatabase()
+    {
         return $this->database;
     }
 

@@ -7,6 +7,7 @@
 {if $isLoggedIn && $loggedUser->username == $user->username}
     <h3>Akce:</h3>
     <a n:href=":Core:User:editor $user->username" class="btn btn-default">Upravit údaje</a>
+    <a n:href=":Core:User:changePassword $user->username" class="btn btn-default">Změnit heslo</a>
     <a n:href=":Core:Session:signOut" class="btn btn-default">Odhlásit</a>
 {/if}
 

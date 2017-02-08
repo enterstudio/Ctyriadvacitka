@@ -11,6 +11,7 @@ namespace App\CoreModule\Presenters;
 
 use App\Presenters\BasePresenter;
 use Nette\Forms\Form;
+use Nette\Security\AuthenticationException;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -18,17 +19,24 @@ use Nette\Utils\ArrayHash;
  * @package App\CoreModule\Presenters
  * $author matyas
  */
-class UserPresenter extends BasePresenter {
+class UserPresenter extends BasePresenter
+{
 
     /**
      * Načte a vykreslí uživatele do šablony podle username
      * @param string|null $username jméno uživatele
      */
-    public function renderDefault(string $username = null){
-        if (!$username)
-            $this->redirect(':Core:Article:default');
+    public function renderDefault(string $username = null)
+    {
+        if (!$username) {
+            if ($this->user->isLoggedIn()) {
+                $this->redirect(':Core:User:', $this->user->getIdentity()->username);
+            } else {
+                $this->redirect(':Core:Article:default');
+            }
+        }
         //Pokusí se najít uživatele s daným jménem, pokud nebude nalezen, vyhodí chybu 404
-        if (!($user = $this->userManager->getUserByUsername($username))){
+        if (!($user = $this->userManager->getUserByUsername($username))) {
             $this->flashMessage('Uživatel nebyl nalezen.', 'warning');
             $this->redirect(':Core:Article:');
         }
@@ -40,12 +48,10 @@ class UserPresenter extends BasePresenter {
      * Odstraní uživatele
      * @param string $username jméno uživatele
      */
-    public function actionRemove(string $username){
-        if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!', 'warning');
-            $this->redirect(':Core:Session:signIn');
-        }
-        if (!$this->user->isAllowed('user', 'remove')){
+    public function actionRemove(string $username)
+    {
+        $this->logInRequired();
+        if (!$this->user->isAllowed('user', 'remove')) {
             $this->flashMessage('Nemůžete mazat uživatele!', 'danger');
             $this->redirect(':Core:User:', $username);
         }
@@ -58,21 +64,19 @@ class UserPresenter extends BasePresenter {
      * Vykresluje editaci uživatele podle jeho username
      * @param string $username jméno uživatele, kterého editujeme
      */
-    public function actionEditor(string $username = NULL){
+    public function actionEditor(string $username = NULL)
+    {
+        $this->logInRequired();
         //Pokud bylo zadáno jméno, pokusí se uživatele načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($username) ($user = $this->userManager->getUserByUsername($username)) ? $this['userEditorForm']->setDefaults($user) : $this->flashMessage('Uživatel nebyl nalezen');
 
         //Pokud je přihášen uživatel, ale nevyplní paremetr username, bude editovat sebe
-        if (!$username && $this->user->isLoggedIn()){
+        if (!$username && $this->user->isLoggedIn()) {
             $user = $this->userManager->getUserByID($this->user->getId());
             $this['userEditorForm']->setDefaults($user);
         }
 
-        if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!', 'warning');
-            $this->redirect(':Core:Session:signIn');
-        }
-        if ($this->user->id != $user['user_id']){
+        if ($this->user->id != $user['user_id']) {
             $this->flashMessage('Nemůžete upravovat jiné uživatele!', 'danger');
             $this->redirect(':Core:User:', $this->user->getIdentity()->username);
         }
@@ -82,7 +86,8 @@ class UserPresenter extends BasePresenter {
     /**
      * Načte uživatele z databáze
      */
-    public function actionList(){
+    public function actionList()
+    {
         //Načte uživatele z databáze a předá je šabloně
         $users = $this->userManager->getUsers();
         $this->template->users = $users;
@@ -92,7 +97,8 @@ class UserPresenter extends BasePresenter {
      * Vrátí formulář pro editor článků.
      * @return Form formulář pro editor článků
      */
-    protected function createComponentUserEditorForm():Form{
+    protected function createComponentUserEditorForm(): Form
+    {
         $form = $this->formFactory->create();
         $form->addHidden('user_id');
         $form->addText('name', 'Jméno');
@@ -102,7 +108,7 @@ class UserPresenter extends BasePresenter {
         $form->addEmail('email', 'E-mail')->setRequired();
         $form->addHidden('role');
         $form->addSubmit('submit', 'Uložit');
-        $form->onSuccess[] = [$this,'userEditorFormSucceeded'];
+        $form->onSuccess[] = [$this, 'userEditorFormSucceeded'];
         return $form;
 
     }
@@ -112,15 +118,62 @@ class UserPresenter extends BasePresenter {
      * @param Form $form formulář editoru
      * @param ArrayHash $values odeslané hodnoty formuláře
      */
-    public function userEditorFormSucceeded($form, array $values){
-        try{
+    public function userEditorFormSucceeded($form, array $values)
+    {
+        try {
             $this->userManager->saveUser($values);
             $this->flashMessage('Uživatel byl úspěšně editován.', 'success');
             $this->redirect(':Core:User:', $values['username']);
-        }
-        catch (UniqueConstraintViolationException $exception){
+        } catch (UniqueConstraintViolationException $exception) {
             $this->flashMessage('Uživatel s tímto jménem již existuje.', 'warning');
         }
     }
 
+    /**
+     * Changes password of user
+     * @param $username
+     */
+    public function renderChangePassword($username)
+    {
+        $this->logInRequired();
+        if ($this->user->getIdentity()->username != $username) {
+            $this->flashMessage('Změna hesla je možná jen u sebe.');
+            $this->redirect(':Core:User:', $username);
+        }
+    }
+
+    /**
+     * Creates form for changing password of logged user
+     * @return Form
+     */
+    public function createComponentChangePasswordForm(): Form
+    {
+        $form = $this->formFactory->create();
+        $form->addPassword('currentPassword', 'Aktuální heslo')
+            ->setRequired();
+        $form->addPassword('newPassword', 'Nové heslo')
+            ->setRequired();
+        $form->addPassword('newPasswordAgain', 'Nové heslo znovu')
+            ->setRequired()
+            ->addRule(Form::EQUAL, 'Hesla se neschodují!', $form['newPassword']);
+        $form->addSubmit('submit', 'Změnit heslo');
+        $form->onSuccess[] = [$this, 'changePasswordFormSucceeded'];
+        return $form;
+    }
+
+    /**
+     * @param Form $form succeeded form
+     * @param array $values values of form
+     */
+    public function changePasswordFormSucceeded(Form $form, array $values)
+    {
+        try {
+            $username = $this->user->getIdentity()->username;
+            $this->userManager->changePassword($username, $values['currentPassword'], $values['newPassword']);
+            $this->flashMessage('Heslo bylo úspěšně změněno.', 'success');
+            $this->redirect(':Core:User:');
+        } catch (AuthenticationException $e) {
+            $this->flashMessage($e->getMessage(), 'danger');
+        }
+    }
 }

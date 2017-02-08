@@ -33,7 +33,8 @@ class RouterFactory
                 Route::FILTER_TABLE => array(
                     //řetězec v URL=> akce presenteru
                     'editor' => 'editor',
-                    'odstranit' => 'remove'
+                    'odstranit' => 'remove',
+                    'zmenit-heslo' => 'changePassword'
                 ),
                 Route::FILTER_STRICT => true
             ),
