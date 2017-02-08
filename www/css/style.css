@@ -2316,7 +2316,7 @@ footer { border-top: 1px solid #999999; margin-top: 15px; padding-top: 5px; text
 
 img { width: 1140px; }
 
-@media screen and (min-width: 768px) { #frm-signUpForm, #frm-signInForm, #frm-userEditorForm, #frm-contactForm { width: 33%; } }
+@media screen and (min-width: 768px) { form input { width: 33% !important; } }
 /*
 $color_background: white;
 $color_background_html: rgb(245, 235, 215);
