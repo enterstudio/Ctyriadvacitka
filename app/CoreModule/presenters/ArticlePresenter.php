@@ -43,7 +43,7 @@ class ArticlePresenter extends BasePresenter{
             $article = $this->resourceManager->getArticle('chyba');
             $this->template->originalUrl = $url;
         }
-        if (!($this->user->isInRole('administrator') || $article->requestable)){
+        if (!($this->user->isInRole('admin') || $article->requestable)) {
             $article = $this->resourceManager->getArticle('chyba');
         }
         $this->template->article = $article; //Předá článek do šablony

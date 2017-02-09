@@ -13,19 +13,20 @@ use Nette\Security\Permission;
 
 class AuthorizatorManager extends Permission
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->addRole('guest');
         $this->addRole('registered', 'guest');
-        $this->addRole('administrator', 'registered');
+        $this->addRole('editor', 'registered');
+        $this->addRole('admin', 'editor');
 
         $this->addResource('article');
         $this->addResource('user');
-        $this->addResource('comment');
+        $this->addResource('web');
 
         $this->allow('guest', ['article', 'user', 'comment'], 'view');
-        $this->allow('registered', 'comment', 'add');
-        $this->allow('administrator', ['article', 'comment'], ['edit', 'add']);
-        $this->allow('administrator', 'user', 'remove');
+        $this->allow('editor', 'article', 'add');
+        $this->allow('admin', ['article', 'web'], 'edit');
+        $this->allow('admin', 'user', 'remove');
     }
-
 }
