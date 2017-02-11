@@ -24,7 +24,7 @@ class AuthorizatorManager extends Permission
         $this->addResource('user');
         $this->addResource('web');
 
-        $this->allow('guest', ['article', 'user', 'comment'], 'view');
+        $this->allow('guest', ['article', 'user'], 'view');
         $this->allow('editor', 'article', 'add');
         $this->allow('admin', ['article', 'web'], 'edit');
         $this->allow('admin', 'user', 'remove');
