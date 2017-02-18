@@ -10,7 +10,6 @@ namespace App\Model;
 
 use Nette\Database\Context;
 use Nette\Object;
-use Nette\Security\User;
 
 /**
  * Description of BaseManager
@@ -18,22 +17,21 @@ use Nette\Security\User;
  * @package App\Model
  * @author matyas
  */
-abstract class BaseManager extends Object{
-    
-    /** @var Content Instance třídy pro práci s databází */
+abstract class BaseManager extends Object
+{
+
+    /** @var Content Instance of class to work with DB */
     protected $database;
+    /** @var DatabaseHelper Instance of class to help with DB */
+    protected $databaseHelper;
+
     /**
-     * @var User instance třídy pro authentikaci uživatelů
+     * @param Context $database automatically injected class to work with DB
+     * @param DatabaseHelper $databaseHelper automatically injected class to help with DB
      */
-    protected $user;
-    
-    
-    /**
-     * 
-     * @param Context $database automaticky injektovaná třída pro práci s databází
-     */
-    public function __construct(Context $database, User $user) {
+    public function __construct(Context $database, DatabaseHelper $databaseHelper)
+    {
         $this->database = $database;
-        $this->user = $user;
+        $this->databaseHelper = $databaseHelper;
     }
 }

@@ -2,6 +2,7 @@
     "name":"krouma/Ctyriadvacitka",
     "require": {
         "nette/nette": "~2.4.0",
-        "instante/bootstrap-3-renderer": "2.0.0-alpha"
+        "instante/bootstrap-3-renderer": "2.0.0-alpha",
+        "doctrine/dbal": "v2.5.12"
     }
 }

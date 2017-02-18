@@ -9,18 +9,19 @@
 namespace App\CoreModule\Model;
 
 
+use App\Model\DatabaseHelper;
 use Nette\Database\Context;
-use Nette\Security\User;
 
 /**
  * Service to work with News
  * Class NewsManager
  * @package App\CoreModule\Model
  */
-class NewsManager extends ResourceManager{
-    public function __construct(Context $database, User $user)
+class NewsManager extends ResourceManager
+{
+    public function __construct(Context $database, DatabaseHelper $databaseHelper)
     {
-        parent::__construct($database, $user);
+        parent::__construct($database, $databaseHelper);
         $this->tableName = 'news';
         $this->columnID = 'news_id';
     }

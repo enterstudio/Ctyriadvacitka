@@ -8,18 +8,19 @@
 
 namespace App\CoreModule\Model;
 
+use App\Model\DatabaseHelper;
 use Nette\Database\Context;
-use Nette\Security\User;
 
 /**
  * Třída poskytuje metody pro správu článků v RS
  * @package App\CoreModule\Module
  * @author matyas
  */
-class ArticleManager extends ResourceManager{
-    public function __construct(Context $database, User $user)
+class ArticleManager extends ResourceManager
+{
+    public function __construct(Context $database, DatabaseHelper $databaseHelper)
     {
-        parent::__construct($database, $user);
+        parent::__construct($database, $databaseHelper);
         $this->columnID = 'article_id';
         $this->tableName = 'article';
     }

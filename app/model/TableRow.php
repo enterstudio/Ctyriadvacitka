@@ -10,13 +10,14 @@ namespace app\CoreModule\model;
 
 
 use Nette\Database\Table\ActiveRow;
+use Nette\Object;
 
 /**
  * Simplified row of table
  * Class TableRow
  * @package app\CoreModule\model
  */
-class TableRow
+class TableRow extends Object
 {
     public
         $news_id,
