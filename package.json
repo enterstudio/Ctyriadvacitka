@@ -23,7 +23,7 @@
     "clean": "shx rm -rf temp/ www/css/",
     "postclean": "shx mkdir -p temp/cache www/css",
     "serve": "browser-sync start -p 'ctyriadvacitka.vagrant' www/css -f www/css -b firefox --port 4000 --no-notify",
-    "build:css": "node-sass www/scss/style.scss www/css/style.css",
+    "build:css": "node-sass --output-style compressed www/scss/style.scss www/css/style.css",
     "build": "npm run clean && run-p build:css",
     "watch:css": "onchange www/scss -- npm run build:css",
     "watch": "run-p watch:css serve",
