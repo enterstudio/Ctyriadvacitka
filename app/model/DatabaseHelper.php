@@ -48,7 +48,6 @@ class DatabaseHelper
             ->addColumn('nickname', 'string', 255)
             ->addColumn('email', 'string', 255)->addToUniques();
         $this->tables = [$tableArticles, $tableNews, $tableUsers];
-        print_r($this->generateInstallQueries());
     }
 
     /**
