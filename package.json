@@ -1,0 +1,32 @@
+{
+  "name": "ctyriadvacitka",
+  "version": "0.5.0",
+  "description": "Own CMS based on Nette",
+  "main": "www/index.php",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krouma/Ctyriadvacitka.git"
+  },
+  "author": "krouma",
+  "bugs": {
+    "url": "https://github.com/krouma/Ctyriadvacitka/issues"
+  },
+  "homepage": "https://github.com/krouma/Ctyriadvacitka#readme",
+  "devDependencies": {
+    "browser-sync": "latest",
+    "node-sass": "latest",
+    "npm-run-all": "latest",
+    "onchange": "latest",
+    "shx": "latest"
+  },
+  "scripts": {
+    "clean": "shx rm -rf temp/ www/css/",
+    "postclean": "shx mkdir -p temp/cache www/css",
+    "serve": "browser-sync start -p 'ctyriadvacitka.vagrant' www/css -f www/css -b firefox --port 4000 --no-notify",
+    "build:css": "node-sass www/scss/style.scss www/css/style.css",
+    "build": "npm run clean && run-p build:css",
+    "watch:css": "onchange www/scss -- npm run build:css",
+    "watch": "run-p watch:css serve",
+    "start": "npm run build && composer update && npm run watch"
+  }
+}
