@@ -102,12 +102,15 @@ class SessionPresenter extends BasePresenter {
     public function signUpFormSucceeded($form, ArrayHash $values){
         $username = $values['username'];
         $password = Passwords::hash($values['password']);
-        $user = array($username, $password, 'registered');
-        if ($this->userManager->userExists($username)){
+        $user = array(
+            'username' => $username,
+            'password' => $password,
+            'role' => 'registered');
+        if ($this->userManager->entityExists($username)) {
             $this->flashMessage('Uživatel s tímto přihlašovacím jménem již existuje.', 'warning');
         }
         else{
-            $this->userManager->saveUser($user);
+            $this->userManager->saveEntity($user);
             $this->flashMessage('Registrace proběhla úspěšně, nyní se přihlašte.', 'success');
             $this->redirect(':Core:Session:signIn');
         }

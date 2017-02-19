@@ -39,12 +39,12 @@ class ArticlePresenter extends BasePresenter{
             $url = self::DEFAULT_ARTICLE_URL;
         
         //Pokusí se načíst článek s danou URL a pokud nebude nalezen, vyhodí chybu 404
-        if (!($article = $this->entityManager->getEntity($url))) {
-            $article = $this->entityManager->getEntity('chyba');
+        if (!($article = $this->entityManager->getEntityByUnique($url))) {
+            $article = $this->entityManager->getEntityByUnique('chyba');
             $this->template->originalUrl = $url;
         }
         if (!($this->user->isInRole('admin') || $article->requestable)) {
-            $article = $this->entityManager->getEntity('chyba');
+            $article = $this->entityManager->getEntityByUnique('chyba');
         }
         $this->template->article = $article; //Předá článek do šablony
     }
@@ -73,7 +73,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionEditor(string $url = NULL){
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
-        if ($url && $article = $this->entityManager->getEntity($url)) {
+        if ($url && $article = $this->entityManager->getEntityByUnique($url)) {
             $this['editorForm']->setDefaults($article);
         } else if ($url) {
             $this->flashMessage('Článek nebyl nalezen, bude vytvořen nový.', 'info');

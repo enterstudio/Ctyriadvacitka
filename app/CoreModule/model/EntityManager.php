@@ -26,6 +26,7 @@ abstract class EntityManager extends BaseManager
 
     protected $tableName;
     protected $primaryKey;
+    protected $uniques;
     protected $columns;
 
     /**
@@ -38,16 +39,11 @@ abstract class EntityManager extends BaseManager
     {
         parent::__construct($database, $databaseHelper);
         $this->tableName = $tableName;
-        $this->primaryKey = $this->databaseHelper->getTable($tableName)->getPrimaryKey();
-        $this->columns = $this->databaseHelper->getTable($tableName)->getComlumnNames();
+        $table = $this->databaseHelper->getTable($tableName);
+        $this->primaryKey = $table->getPrimaryKey();
+        $this->uniques = $table->getUniques();
+        $this->columns = $table->getComlumnNames();
     }
-
-    const
-        COLUMN_TITLE = 'title',
-        COLUMN_CONTENT = 'content',
-        COLUMN_URL = 'url',
-        COLUMN_DESCRIPTION = 'description',
-        COLUMN_REQUESTABLE = 'requestable';
 
     /**
      * @return mixed name of column with ID
@@ -58,7 +54,7 @@ abstract class EntityManager extends BaseManager
     }
 
     /**
-     * Vrátí seznam článků v databázi
+     * Returns entities from DB
      * @param int $limit amount of articles
      * @param int $offset first article to fetch
      * @return Selection seznam článků
@@ -70,53 +66,58 @@ abstract class EntityManager extends BaseManager
     }
 
     /**
-     * vrátí článek z databáze podle jeho URL
-     * @param string $url URL článku
+     * Returns entity from DB by url/name
+     * @param string $unique URL článku
      * @return bool|mixed|IRow první článek, který odpovídá URL nebo false při neúspěchu
      */
 
-    public function getEntity(string $url)
+    public function getEntityByUnique(string $unique)
     {
-        return $this->database->table($this->tableName)->where(self::COLUMN_URL, $url)->fetch();
+        return $this->database->table($this->tableName)->where($this->uniques[0], $unique)->fetch();
     }
 
     /**
-     * Uloží článek do systému. Pokud není nastaveno ID, vloží nový, jinak provede editaci.
-     * @param array|ArrayHash $article
+     * @param int $primaryKey
+     * @return IRow
      */
-    public function saveEntity(array $article)
+    public function getEntityByPrimaryKey(int $primaryKey): IRow
     {
-        if (empty($article[$this->primaryKey]))
-            $this->database->table($this->tableName)->insert(
-                array(
-                    self::COLUMN_TITLE => $article[self::COLUMN_TITLE],
-                    self::COLUMN_CONTENT => $article[self::COLUMN_CONTENT],
-                    self::COLUMN_URL => $article[self::COLUMN_URL],
-                    self::COLUMN_DESCRIPTION => $article[self::COLUMN_DESCRIPTION],
-                    self::COLUMN_REQUESTABLE => $article[self::COLUMN_REQUESTABLE]
-                )
-            );
-        else {
-            $this->database->table($this->tableName)->wherePrimary($article[$this->primaryKey])->update(
-                array(
-                    $this->primaryKey => $article[$this->primaryKey],
-                    self::COLUMN_TITLE => $article[self::COLUMN_TITLE],
-                    self::COLUMN_CONTENT => $article[self::COLUMN_CONTENT],
-                    self::COLUMN_URL => $article[self::COLUMN_URL],
-                    self::COLUMN_DESCRIPTION => $article[self::COLUMN_DESCRIPTION],
-                    self::COLUMN_REQUESTABLE => $article[self::COLUMN_REQUESTABLE]
-                )
-            );
+        return $this->database->table($this->tableName)->wherePrimary($primaryKey)->fetch();
+    }
+
+    /**
+     * Saves entity to DB. If not set ID, creates new, otherwise edits existing one
+     * @param array|ArrayHash $entityData
+     */
+    public function saveEntity(array $entityData)
+    {
+        if (empty($entityData[$this->primaryKey])) {
+            $entityData[$this->primaryKey] = null;
+            $this->database->table($this->tableName)->insert($entityData);
+        } else {
+            $this->database->table($this->tableName)->wherePrimary($entityData[$this->primaryKey])->update($entityData);
         }
     }
 
     /**
-     * Odstraní článek
-     * @param string $url URL článku
+     * Removes entity from DB
+     * @param string $unique URL článku
      */
-    public function deleteEntity(string $url)
+    public function deleteEntity(string $unique)
     {
-        $this->database->table($this->tableName)->where(self::COLUMN_URL, $url)->delete();
+        $this->database->table($this->tableName)->where($this->uniques[0], $unique)->delete();
+    }
+
+    /**
+     * @param string $unique
+     * @return bool
+     */
+    public function entityExists(string $unique): bool
+    {
+        if ($this->getEntityByUnique($unique) != false)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -125,5 +126,14 @@ abstract class EntityManager extends BaseManager
     public function getTable()
     {
         return $this->database->table($this->tableName);
+    }
+
+    /**
+     * Vrátí databázi
+     * @return \App\Model\Content|\Nette\Database\Context databáze
+     */
+    public function getDatabase()
+    {
+        return $this->database;
     }
 }

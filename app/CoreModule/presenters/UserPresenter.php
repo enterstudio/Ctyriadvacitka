@@ -36,7 +36,7 @@ class UserPresenter extends BasePresenter
             }
         }
         //Pokusí se najít uživatele s daným jménem, pokud nebude nalezen, vyhodí chybu 404
-        if (!($user = $this->userManager->getUserByUsername($username))) {
+        if (!($user = $this->userManager->getEntityByUnique($username))) {
             $this->flashMessage('Uživatel nebyl nalezen.', 'warning');
             $this->redirect(':Core:Article:');
         }
@@ -55,7 +55,7 @@ class UserPresenter extends BasePresenter
             $this->flashMessage('Nemůžete mazat uživatele!', 'danger');
             $this->redirect(':Core:User:', $username);
         }
-        $this->userManager->removeUser($username);
+        $this->userManager->deleteEntity($username);
         $this->flashMessage('Uživatel byl úspěšně odstraněn.', 'success');
         $this->redirect(':Core:User:list');
     }
@@ -68,11 +68,11 @@ class UserPresenter extends BasePresenter
     {
         $this->logInRequired();
         //Pokud bylo zadáno jméno, pokusí se uživatele načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
-        if ($username) ($user = $this->userManager->getUserByUsername($username)) ? $this['userEditorForm']->setDefaults($user) : $this->flashMessage('Uživatel nebyl nalezen');
+        if ($username) ($user = $this->userManager->getEntityByUnique($username)) ? $this['userEditorForm']->setDefaults($user) : $this->flashMessage('Uživatel nebyl nalezen');
 
         //Pokud je přihášen uživatel, ale nevyplní paremetr username, bude editovat sebe
         if (!$username && $this->user->isLoggedIn()) {
-            $user = $this->userManager->getUserByID($this->user->getId());
+            $user = $this->userManager->getEntityByPrimaryKey($this->user->getId());
             $this['userEditorForm']->setDefaults($user);
         }
 
@@ -89,7 +89,7 @@ class UserPresenter extends BasePresenter
     public function actionList()
     {
         //Načte uživatele z databáze a předá je šabloně
-        $users = $this->userManager->getUsers();
+        $users = $this->userManager->getEntities();
         $this->template->users = $users;
     }
 
@@ -121,7 +121,7 @@ class UserPresenter extends BasePresenter
     public function userEditorFormSucceeded($form, array $values)
     {
         try {
-            $this->userManager->saveUser($values);
+            $this->userManager->saveEntity($values);
             $this->flashMessage('Uživatel byl úspěšně editován.', 'success');
             $this->redirect(':Core:User:', $values['username']);
         } catch (UniqueConstraintViolationException $exception) {
