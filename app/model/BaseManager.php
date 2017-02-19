@@ -34,4 +34,12 @@ abstract class BaseManager extends Object
         $this->database = $database;
         $this->databaseHelper = $databaseHelper;
     }
+
+    /**
+     * @return DatabaseHelper
+     */
+    public function getDatabaseHelper(): DatabaseHelper
+    {
+        return $this->databaseHelper;
+    }
 }

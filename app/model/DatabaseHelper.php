@@ -94,7 +94,7 @@ class DatabaseHelper
             $schema->getTable($table->getName())
                 ->setPrimaryKey([$table->getPrimaryKey()])
                 ->addUniqueIndex($table->getUniques())
-                ->addOption('engine', 'MyISAM')
+                ->addOption('engine', 'InnoDB')
                 ->addOption('collate', 'utf8_czech_ci');
         }
         return $schema->toSql(new MySqlPlatform());
