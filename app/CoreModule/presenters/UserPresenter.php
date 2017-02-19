@@ -10,6 +10,7 @@ namespace App\CoreModule\Presenters;
 
 
 use App\Presenters\BasePresenter;
+use Nette\Database\UniqueConstraintViolationException;
 use Nette\Forms\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Utils\ArrayHash;
@@ -125,7 +126,7 @@ class UserPresenter extends BasePresenter
             $this->flashMessage('Uživatel byl úspěšně editován.', 'success');
             $this->redirect(':Core:User:', $values['username']);
         } catch (UniqueConstraintViolationException $exception) {
-            $this->flashMessage('Uživatel s tímto jménem již existuje.', 'warning');
+            $this->flashMessage('Uživatel s tímto jménem nebo emailem již existuje.', 'warning');
         }
     }
 
