@@ -16,7 +16,7 @@ class Table extends Object
     /** @var array */
     private $columns;
     private $name;
-    private $primary;
+    private $primaryKey;
     private $uniques;
     private $autoIncrement;
 
@@ -43,9 +43,9 @@ class Table extends Object
      * @return $this|Table
      * @internal param string $primary
      */
-    public function setPrimary(): Table
+    public function setPrimaryKey(): Table
     {
-        $this->primary = end($this->columns)->name;
+        $this->primaryKey = end($this->columns)->name;
         return $this;
     }
 
@@ -77,6 +77,19 @@ class Table extends Object
     }
 
     /**
+     * @return array
+     */
+    public function getComlumnNames(): array
+    {
+        $names = [];
+        /** @var TableColumn $column */
+        foreach ($this->columns as $column) {
+            $names[] = $column->getName();
+        }
+        return $names;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -87,9 +100,9 @@ class Table extends Object
     /**
      * @return string
      */
-    public function getPrimary(): string
+    public function getPrimaryKey(): string
     {
-        return $this->primary;
+        return $this->primaryKey;
     }
 
     /**

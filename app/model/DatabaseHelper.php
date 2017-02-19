@@ -23,7 +23,7 @@ class DatabaseHelper
     {
         $tableArticles = new Table('article');
         $tableArticles
-            ->addColumn('article_id', 'integer', 11)->setPrimary()->setAutoIncrement()
+            ->addColumn('article_id', 'integer', 11)->setPrimaryKey()->setAutoIncrement()
             ->addColumn('title', 'string', 255)
             ->addColumn('content', 'text')
             ->addColumn('url', 'string', 255)->addToUniques()
@@ -31,7 +31,7 @@ class DatabaseHelper
             ->addColumn('requestable', 'boolean');
         $tableNews = new Table('news');
         $tableNews
-            ->addColumn('news_id', 'integer', 11)->setPrimary()->setAutoIncrement()
+            ->addColumn('news_id', 'integer', 11)->setPrimaryKey()->setAutoIncrement()
             ->addColumn('title', 'string', 255)
             ->addColumn('content', 'text')
             ->addColumn('url', 'string', 255)->addToUniques()
@@ -39,7 +39,7 @@ class DatabaseHelper
             ->addColumn('requestable', 'boolean');
         $tableUsers = new Table('user');
         $tableUsers
-            ->addColumn('user_id', 'integer', 11)->setPrimary()->setAutoIncrement()
+            ->addColumn('user_id', 'integer', 11)->setPrimaryKey()->setAutoIncrement()
             ->addColumn('username', 'string', 255)->addToUniques()
             ->addColumn('password', 'string', 255)
             ->addColumn('role', 'string', 255)
@@ -47,7 +47,11 @@ class DatabaseHelper
             ->addColumn('surname', 'string', 255)
             ->addColumn('nickname', 'string', 255)
             ->addColumn('email', 'string', 255)->addToUniques();
-        $this->tables = [$tableArticles, $tableNews, $tableUsers];
+        $this->tables = [
+            $tableArticles->getName() => $tableArticles,
+            $tableNews->getName() => $tableNews,
+            $tableUsers->getName() => $tableUsers
+        ];
     }
 
     /**
@@ -56,6 +60,15 @@ class DatabaseHelper
     public function getTables(): array
     {
         return $this->tables;
+    }
+
+    /**
+     * @param string $tableName
+     * @return Table
+     */
+    public function getTable(string $tableName): Table
+    {
+        return $this->tables[$tableName];
     }
 
     /**
@@ -73,13 +86,13 @@ class DatabaseHelper
             foreach ($table->getColumns() as $column) {
                 $schema->getTable($table->getName())
                     ->addColumn($column->getName(), $column->getType(), array(
-                            $column->getProperties(), 'autoincrement' => ($column->getName() == $table->getPrimary()) ? true : false)
+                            $column->getProperties(), 'autoincrement' => ($column->getName() == $table->getPrimaryKey()) ? true : false)
                     )
                     ->setNotnull(false);
             }
 
             $schema->getTable($table->getName())
-                ->setPrimaryKey([$table->getPrimary()])
+                ->setPrimaryKey([$table->getPrimaryKey()])
                 ->addUniqueIndex($table->getUniques())
                 ->addOption('engine', 'MyISAM')
                 ->addOption('collate', 'utf8_czech_ci');

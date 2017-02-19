@@ -26,7 +26,7 @@ class ArticlePresenter extends BasePresenter{
     public function startup()
     {
         parent::startup();
-        $this->resourceManager = $this->articleManager;
+        $this->entityManager = $this->articleManager;
         $this->presenter = ':Core:Article:';
     }
 
@@ -39,12 +39,12 @@ class ArticlePresenter extends BasePresenter{
             $url = self::DEFAULT_ARTICLE_URL;
         
         //Pokusí se načíst článek s danou URL a pokud nebude nalezen, vyhodí chybu 404
-        if (!($article = $this->resourceManager->getArticle($url))) {
-            $article = $this->resourceManager->getArticle('chyba');
+        if (!($article = $this->entityManager->getEntity($url))) {
+            $article = $this->entityManager->getEntity('chyba');
             $this->template->originalUrl = $url;
         }
         if (!($this->user->isInRole('admin') || $article->requestable)) {
-            $article = $this->resourceManager->getArticle('chyba');
+            $article = $this->entityManager->getEntity('chyba');
         }
         $this->template->article = $article; //Předá článek do šablony
     }
@@ -62,7 +62,7 @@ class ArticlePresenter extends BasePresenter{
             $this->flashMessage('Nemůžete mazat články!', 'danger');
             $this->redirect($this->presenter, $url);
         }
-        $this->resourceManager->deleteArticle($url);
+        $this->entityManager->deleteEntity($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.', 'success');
         $this->redirect($this->presenter . 'list');
     }
@@ -73,7 +73,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionEditor(string $url = NULL){
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
-        if ($url && $article = $this->resourceManager->getArticle($url)) {
+        if ($url && $article = $this->entityManager->getEntity($url)) {
             $this['editorForm']->setDefaults($article);
         } else if ($url) {
             $this->flashMessage('Článek nebyl nalezen, bude vytvořen nový.', 'info');
@@ -96,7 +96,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function actionList(){
         //Načte články z databáze a předá je šabloně
-        $articles = $this->resourceManager->getArticles();
+        $articles = $this->entityManager->getEntities();
         $this->template->articles = $articles;
     }
 
@@ -106,7 +106,7 @@ class ArticlePresenter extends BasePresenter{
      */
     protected function createComponentEditorForm():Form{
         $form = $this->formFactory->create();
-        $form->addHidden($this->resourceManager->getColumnID());
+        $form->addHidden($this->entityManager->getPrimaryKey());
         $form->addText('title', 'Titilek')->setRequired();
         $form->addText('url', 'URL')->setRequired();
         $form->addText('description', 'Popisek')->setRequired();
@@ -125,7 +125,7 @@ class ArticlePresenter extends BasePresenter{
      */
     public function editorFormSucceeded($form, array $values){
         try{
-            $this->resourceManager->saveArticle($values);
+            $this->entityManager->saveEntity($values);
             $this->flashMessage('Článek byl úspěšně uložen.', 'success');
             $this->redirect($this->presenter, $values['url']);
         }

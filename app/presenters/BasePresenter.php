@@ -5,8 +5,8 @@ namespace App\Presenters;
 use App\CoreModule\Model\ArticleManager;
 use App\CoreModule\Model\AuthenticatorManager;
 use App\CoreModule\Model\AuthorizatorManager;
+use App\CoreModule\Model\EntityManager;
 use App\CoreModule\Model\NewsManager;
-use App\CoreModule\Model\ResourceManager;
 use App\CoreModule\Model\UserManager;
 use Instante\Bootstrap3Renderer\BootstrapFormFactory;
 use Nette\Application\UI\Presenter;
@@ -28,8 +28,8 @@ abstract class BasePresenter extends Presenter
     protected $articleManager;
     /** @var  NewsManager instance of NewsManager */
     protected $newsManager;
-    /** @var  ResourceManager instance of ResourceManager */
-    protected $resourceManager;
+    /** @var  EntityManager instance of ResourceManager */
+    protected $entityManager;
     /** @var  BootstrapFormFactory FormFactory which supports Bootstrap 3 */
     protected $formFactory;
 

@@ -17,12 +17,15 @@ use Nette\Database\Context;
  * Class NewsManager
  * @package App\CoreModule\Model
  */
-class NewsManager extends ResourceManager
+class NewsManager extends EntityManager
 {
+    /**
+     * NewsManager constructor.
+     * @param Context $database
+     * @param DatabaseHelper $databaseHelper
+     */
     public function __construct(Context $database, DatabaseHelper $databaseHelper)
     {
-        parent::__construct($database, $databaseHelper);
-        $this->tableName = 'news';
-        $this->columnID = 'news_id';
+        parent::__construct($database, $databaseHelper, 'news');
     }
 }

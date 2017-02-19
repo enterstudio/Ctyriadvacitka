@@ -16,12 +16,15 @@ use Nette\Database\Context;
  * @package App\CoreModule\Module
  * @author matyas
  */
-class ArticleManager extends ResourceManager
+class ArticleManager extends EntityManager
 {
+    /**
+     * ArticleManager constructor.
+     * @param Context $database
+     * @param DatabaseHelper $databaseHelper
+     */
     public function __construct(Context $database, DatabaseHelper $databaseHelper)
     {
-        parent::__construct($database, $databaseHelper);
-        $this->columnID = 'article_id';
-        $this->tableName = 'article';
+        parent::__construct($database, $databaseHelper, 'article');
     }
 }

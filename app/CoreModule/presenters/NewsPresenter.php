@@ -7,7 +7,8 @@
  */
 
 namespace App\CoreModule\Presenters;
-use App\CoreModule\Model\ResourceManager;
+
+use App\CoreModule\Model\EntityManager;
 use app\CoreModule\model\TableRow;
 use Nette\Utils\Strings;
 
@@ -22,7 +23,7 @@ class NewsPresenter extends ArticlePresenter
     public function startup()
     {
         parent::startup();
-        $this->resourceManager = $this->newsManager;
+        $this->entityManager = $this->newsManager;
         $this->presenter = ':Core:News:';
     }
 
@@ -31,7 +32,7 @@ class NewsPresenter extends ArticlePresenter
      * @param int $page page of list
      */
     public function renderPagedList(int $page = 1){
-        $news = $this->resourceManager->getArticles()->where(ResourceManager::COLUMN_REQUESTABLE, 1);
+        $news = $this->entityManager->getEntities()->where(EntityManager::COLUMN_REQUESTABLE, 1);
         $offset = ($page - 1) * 4;
         $pages = ceil($news->count()/4);
 

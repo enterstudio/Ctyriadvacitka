@@ -10,6 +10,8 @@ namespace App\CoreModule\Model;
 
 
 use App\Model\BaseManager;
+use App\Model\DatabaseHelper;
+use Nette\Database\Context;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\ArrayHash;
@@ -19,33 +21,51 @@ use Nette\Utils\ArrayHash;
  * Class ResourceManager
  * @package App\CoreModule\Model
  */
-class ResourceManager extends BaseManager
+abstract class EntityManager extends BaseManager
 {
 
     protected $tableName;
-    protected $columnID;
+    protected $primaryKey;
+    protected $columns;
 
     /**
-     * @return mixed name of column with ID
+     * EntityManager constructor.
+     * @param Context $database
+     * @param DatabaseHelper $databaseHelper
+     * @param $tableName
      */
-    public function getColumnID()
+    public function __construct(Context $database, DatabaseHelper $databaseHelper, $tableName)
     {
-        return $this->columnID;
+        parent::__construct($database, $databaseHelper);
+        $this->tableName = $tableName;
+        $this->primaryKey = $this->databaseHelper->getTable($tableName)->getPrimaryKey();
+        $this->columns = $this->databaseHelper->getTable($tableName)->getComlumnNames();
     }
+
     const
         COLUMN_TITLE = 'title',
         COLUMN_CONTENT = 'content',
         COLUMN_URL = 'url',
         COLUMN_DESCRIPTION = 'description',
         COLUMN_REQUESTABLE = 'requestable';
+
+    /**
+     * @return mixed name of column with ID
+     */
+    public function getPrimaryKey()
+    {
+        return $this->primaryKey;
+    }
+
     /**
      * Vrátí seznam článků v databázi
-     * @param $limit amount of articles
-     * @param $offset first article to fetch
+     * @param int $limit amount of articles
+     * @param int $offset first article to fetch
      * @return Selection seznam článků
      */
-    public function getArticles(int $limit = null, int $offset = null):Selection{
-        return $this->database->table($this->tableName)->order($this->columnID . " " . 'DESC')
+    public function getEntities(int $limit = null, int $offset = null): Selection
+    {
+        return $this->database->table($this->tableName)->order($this->primaryKey . " " . 'DESC')
             ->limit($limit, $offset);
     }
 
@@ -55,7 +75,8 @@ class ResourceManager extends BaseManager
      * @return bool|mixed|IRow první článek, který odpovídá URL nebo false při neúspěchu
      */
 
-    public function getArticle(string $url){
+    public function getEntity(string $url)
+    {
         return $this->database->table($this->tableName)->where(self::COLUMN_URL, $url)->fetch();
     }
 
@@ -63,8 +84,9 @@ class ResourceManager extends BaseManager
      * Uloží článek do systému. Pokud není nastaveno ID, vloží nový, jinak provede editaci.
      * @param array|ArrayHash $article
      */
-    public function saveArticle(array $article){
-        if (empty($article[$this->columnID]))
+    public function saveEntity(array $article)
+    {
+        if (empty($article[$this->primaryKey]))
             $this->database->table($this->tableName)->insert(
                 array(
                     self::COLUMN_TITLE => $article[self::COLUMN_TITLE],
@@ -75,9 +97,9 @@ class ResourceManager extends BaseManager
                 )
             );
         else {
-            $this->database->table($this->tableName)->wherePrimary($article[$this->columnID])->update(
+            $this->database->table($this->tableName)->wherePrimary($article[$this->primaryKey])->update(
                 array(
-                    $this->columnID => $article[$this->columnID],
+                    $this->primaryKey => $article[$this->primaryKey],
                     self::COLUMN_TITLE => $article[self::COLUMN_TITLE],
                     self::COLUMN_CONTENT => $article[self::COLUMN_CONTENT],
                     self::COLUMN_URL => $article[self::COLUMN_URL],
@@ -92,14 +114,16 @@ class ResourceManager extends BaseManager
      * Odstraní článek
      * @param string $url URL článku
      */
-    public function deleteArticle(string $url){
+    public function deleteEntity(string $url)
+    {
         $this->database->table($this->tableName)->where(self::COLUMN_URL, $url)->delete();
     }
 
     /**
      * @return Selection table which belongs to presenter
      */
-    public function getTable(){
+    public function getTable()
+    {
         return $this->database->table($this->tableName);
     }
 }
