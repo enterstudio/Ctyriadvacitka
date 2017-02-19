@@ -1,6 +1,6 @@
 {
   "name": "ctyriadvacitka",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Own CMS based on Nette",
   "main": "www/index.php",
   "repository": {
