@@ -4,80 +4,45 @@
  *}
 <!DOCTYPE html>
 <html>
-    <head>
-	<meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
 
-	    <title>Čtyřiadvacítka | {include title|stripHtml}</title>
+    <title>Čtyřiadvacítka | {include title|stripHtml}</title>
 
-        {block css}
-            <link rel="stylesheet" href="{$basePath}/css/style.css" type="text/css" />
-        {/block}
+    {block css}
+        <link rel="stylesheet" href="{$basePath}/css/style.css" type="text/css"/>
+    {/block}
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript"
-                src="{$basePath}/vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
-        <script type="text/javascript" src="{$basePath}/vendor/nette/forms/src/assets/netteForms.js"></script>
-	    <meta name="viewport" content="width=device-width">
-	{block head}{/block}
-    </head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="{$basePath}/vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{$basePath}/vendor/nette/forms/src/assets/netteForms.js"></script>
+    <meta name="viewport" content="width=device-width">
+    {block head}{/block}
+</head>
 
-    <body class="container">
-        <header class="header_body">
-            <a n:href=":Core:Article:"><img src="../../www/images/top.jpg" class="img-responsive"></a>
-            <!--<a n:href=":Core:Article:"><img src="../../www/images/Loga/Logo5-barevne.png"></a>-->
-        </header>
+<body class="container">
+{include header}
 
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div id="navbar" class="{*collapse navbar-collapse*}">
-                    <ul class="nav navbar-nav">
-                        <li><a n:href=":Core:News:pagedList">Novinky</a></li>
-                        <li><a href="/terminy">Termíny</a></li>
-                        <li><a href="/fotky">Fotky</a></li>
-                        <li><a href="/caste-dotazy">Časté dotazy</a></li>
-                        <li><a href="/pro-rodice">Pro rodiče</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Tábor<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="/tabor-informace">Informace</a></li>
-                                <li><a href="/tabor-materialy">Materiály</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/odkazy">Odkazy</a></li>
-                        <li><a n:href=":Core:Contact:">Kontakty</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        {if !$isLoggedIn}
-                            <li><a n:href=":Core:Session:signIn">Přihlásit</a></li>
-                            <li><a n:href=":Core:Session:signUp">Registrovat</a></li>
-                        {else}
-                            <li><a n:href=":Core:User: $loggedUser->username">{$loggedUser->username}</a></li>
-                        {/if}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+{* Výpis zpráv.*}
+{foreach $flashes as $flash}
+    <p class="alert alert-{$flash->type}">{$flash->message}</p>
+{/foreach}
 
-        {* Výpis zpráv.*}
-        {foreach $flashes as $flash}
-            <p class="alert alert-{$flash->type}">{$flash->message}</p>
-        {/foreach}
+<article>
+    <header class="header_article">
+        <h1>{include title}</h1>
+    </header>
+    <section>
+        {include content} {* Vložení obsahu do šablony *}
+    </section>
+</article>
 
-        <article>
-            <header class="header_article">
-                <h1>{include title}</h1>
-            </header>
-            <section>
-                {include content} {* Vložení obsahu do šablony *}
-            </section>
-        </article>
-
-        <footer>
-            <p>
-                Webové stránky 24. skautského oddílu Hradce Králové
-            </p>
-        </footer>
-        {block scripts}{/block}
-    </body>
+<footer>
+    <p>
+        Webové stránky 24. skautského oddílu Hradce Králové
+    </p>
+</footer>
+{block scripts}{/block}
+</body>
 </html>
