@@ -37,7 +37,7 @@ class ArticlePresenter extends BasePresenter{
     public function renderDefault(string $url = NULL){
         if (!$url)
             $url = self::DEFAULT_ARTICLE_URL;
-        
+
         //Pokusí se načíst článek s danou URL a pokud nebude nalezen, vyhodí chybu 404
         if (!($article = $this->entityManager->getEntityByUnique($url))) {
             $article = $this->entityManager->getEntityByUnique('chyba');
