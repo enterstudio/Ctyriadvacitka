@@ -18,6 +18,7 @@ session:
 services:
 	router: App\RouterFactory::createRouter
 	- App\Model\DatabaseHelper
+	- App\Model\ProjectManager
 
 # Vložení konfiguračních souborů z jednotlivých modulů.
 includes:

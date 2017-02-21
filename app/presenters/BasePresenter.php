@@ -8,6 +8,7 @@ use App\CoreModule\Model\AuthorizatorManager;
 use App\CoreModule\Model\EntityManager;
 use App\CoreModule\Model\NewsManager;
 use App\CoreModule\Model\UserManager;
+use App\Model\ProjectManager;
 use Instante\Bootstrap3Renderer\BootstrapFormFactory;
 use Nette\Application\UI\Presenter;
 use Nette\Security\User;
@@ -32,6 +33,8 @@ abstract class BasePresenter extends Presenter
     protected $entityManager;
     /** @var  BootstrapFormFactory FormFactory which supports Bootstrap 3 */
     protected $formFactory;
+    /** @var  ProjectManager */
+    protected $projectManager;
 
     /**
      * Gets instances of Services from DI
@@ -39,13 +42,20 @@ abstract class BasePresenter extends Presenter
      * @param ArticleManager $articleManager instance of ArticleManager
      * @param NewsManager $newsManager instance of ArticleManager
      * @param BootstrapFormFactory $formFactory instance of FormFactory
+     * @param ProjectManager $projectManager
      */
-    public function injectServices(UserManager $userManager, ArticleManager $articleManager, NewsManager $newsManager, BootstrapFormFactory $formFactory)
+    public function injectServices(
+        UserManager $userManager,
+        ArticleManager $articleManager,
+        NewsManager $newsManager,
+        BootstrapFormFactory $formFactory,
+        ProjectManager $projectManager)
     {
         $this->userManager = $userManager;
         $this->articleManager = $articleManager;
         $this->newsManager = $newsManager;
         $this->formFactory = $formFactory;
+        $this->projectManager = $projectManager;
     }
 
     public function startup()
@@ -66,6 +76,8 @@ abstract class BasePresenter extends Presenter
         if (!empty($this->presenter)) {
             $this->template->presenter = $this->presenter;
         }
+
+        $this->template->projectName = $this->projectManager->getProjectName();
     }
 
     public function logInRequired()
