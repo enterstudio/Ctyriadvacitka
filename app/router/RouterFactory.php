@@ -19,6 +19,16 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
+        $router[] = new Route('instalace/[<action>]', array(
+            'presenter' => 'Install:Install',
+            'action' => array(
+                Route::VALUE => 'projectProperties',
+                Route::FILTER_TABLE => array(
+                    'vlastnosti' => 'projectProperties'
+                ),
+                Route::FILTER_STRICT => true
+            )
+        ));
         $router[] = new Route('kontakt/', 'Core:Contact:default');
         $router[] = new Route('administrace/', 'Core:Administration:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');
