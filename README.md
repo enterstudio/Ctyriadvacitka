@@ -47,3 +47,8 @@ https://drive.google.com/file/d/0B3gkX69GnkCqSzd6N1BMR1E1eDA/view?usp=sharing
 
 ## Changelog Vagrantboxu
 - v2.3 - Aktualizováno PHP na verzi 7.0.16
+
+## Licence
+
+MIT
+
