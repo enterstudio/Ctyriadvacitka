@@ -8,6 +8,11 @@ V aplikaci se vyskytují 3 druhy webových stránek
 3. Novinka - speciální druh článku, který se ukládá do vlastní tabulky databáze (např. informace o nadcházející
    výpravě)   
 
+## Potřeby
+1. Composer a NPM v systémové PATH
+2. Vagrant, VirtualBox
+3. doporučené: Git
+
 ## Instalace
 ### 1. Vytvoření složky projektu   
     mkdir Ctyriadvacitka   
@@ -22,7 +27,7 @@ V aplikaci se vyskytují 3 druhy webových stránek
 ##### 4.1.a Fedora, RHEL, CentOS   
     sudo dnf install vagrant VirtualBox    
 #### 4.2 Stažení boxu    
-https://drive.google.com/file/d/0B3gkX69GnkCqRnEyWXZhenpOQms/view?usp=sharing   
+https://drive.google.com/file/d/0B3gkX69GnkCqSzd6N1BMR1E1eDA/view?usp=sharing
 #### 4.3 Přidání boxu do Vagrantu
     vagrant box add --name ctyriadvacitka cesta/k/jmeno_boxu.box   
 ### 5. Přidání souboru s přístupovými údaji k databázi   
@@ -39,3 +44,6 @@ https://drive.google.com/file/d/0B3gkX69GnkCqRnEyWXZhenpOQms/view?usp=sharing
     vagrant up   
     
 ### 2. Web je přístupný z adresy ctyriadvacitka.vagrant
+
+## Changelog Vagrantboxu
+- v2.3 - Aktualizováno PHP na verzi 7.0.16
