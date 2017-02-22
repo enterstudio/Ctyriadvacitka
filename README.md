@@ -46,7 +46,7 @@ https://drive.google.com/file/d/0B3gkX69GnkCqSzd6N1BMR1E1eDA/view?usp=sharing
 ### 2. Web je přístupný z adresy ctyriadvacitka.vagrant
 
 ## Changelog Vagrantboxu
-- v2.3 - Aktualizováno PHP na verzi 7.0.16
+- v2.3 - Aktualizováno PHP na verzi 7.0.15
 
 ## Licence
 
