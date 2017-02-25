@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
 
     config.vm.provider "virtualbox"
-    config.vm.box = "ctyriadvacitka"
+    config.vm.box = "fedora/25-cloud-base"
     config.vm.network "private_network", ip: "192.168.33.24"
     config.vm.hostname = "Ctyriadvacitka"
 
