@@ -15,6 +15,7 @@ use Nette\Utils\Json;
 class ProjectManager extends BaseManager
 {
     private $settingsFilePath;
+    private $table;
 
     /**
      * @param Context $database automatically injected class to work with DB
@@ -24,6 +25,7 @@ class ProjectManager extends BaseManager
     {
         parent::__construct($database, $databaseHelper);
         $this->settingsFilePath = "../project.json";
+        $this->table = $this->database->table('parameters');
     }
 
     /**
@@ -48,5 +50,24 @@ class ProjectManager extends BaseManager
         $values = Json::decode($text);
         $values->projectName = $name;
         fwrite($file, Json::encode($values));
+    }
+
+    public function saveParameterer(array $parameter)
+    {
+        if ($this->isParameterInDB($parameter['key'])) {
+            $this->table->where('key', $parameter['key'])->update($parameter);
+        } else {
+            $this->table->insert($parameter);
+        }
+    }
+
+    public function isParameterInDB($key): bool
+    {
+        $value = $this->table->where('key', $key)->fetch();
+        if ($value) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
