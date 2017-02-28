@@ -22,16 +22,22 @@ V aplikaci se vyskytují 3 druhy webových stránek
     git clone git@github.com:krouma/Ctyriadvacitka.git   
 ### 3. Stažení knihoven, vytvoření potřebných souborů a složek   
     npm run install    
-### 4. Přidání souboru s přístupovými údaji k databázi   
-#### 4.1. Zkopírování souboru do app/cofig/config.local.neon   
+### 4. Nainstalování Vagrant pluginu   
+Použitý Vagrant box v sobě bohužel nemá nainstalované tzv. Guest additions a je proto nutné je ručně
+doinstalovat příkazem:
+   
+    vagrant plugin install vagrant-vbguest   
+
+### 5. Přidání souboru s přístupovými údaji k databázi   
+#### 5.1. Zkopírování souboru do app/cofig/config.local.neon   
     cp config.local.neon app/config/   
-#### 4.2. Upravení souboru app/config/config.local.neon na skutečné údaje   
-#### 4.3. Soubor app/config/config.local.neon nepřidávat do Gitu
-### 5. Přidání záznamu do lokálního DNS serveru.   
+#### 5.2. Upravení souboru app/config/config.local.neon na skutečné údaje   
+#### 5.3. Soubor app/config/config.local.neon nepřidávat do Gitu
+### 6. Přidání záznamu do lokálního DNS serveru.   
 ##### V Linuxu do souboru /etc/hosts přidat řádek   
     192.168.33.24 ctyriadvacitka.vagrant   
 
-## Spuštění webu ve Vagrantu
+## Spuštění webu
 ### 1. Ve kořenové složce projektu spustit příkaz   
     vagrant up   
 při prvním spuštění možná budete muset přidat parametr --provider virtualbox    
