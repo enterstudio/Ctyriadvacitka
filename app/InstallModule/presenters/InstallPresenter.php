@@ -42,7 +42,7 @@ class InstallPresenter extends BasePresenter
      */
     public function projectPropertiesFormSucceeded(Form $form, ArrayHash $values)
     {
-        $this->projectManager->setProjectName($values->name);
+        $this->projectManager->saveParameter('webName', $values['name']);
         $this->redirect(':Core:Article:');
     }
 }

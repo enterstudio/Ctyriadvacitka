@@ -10,11 +10,13 @@ namespace App\Model;
 
 
 use Nette\Database\Context;
-use Nette\Utils\Json;
 
+/**
+ * Class ProjectManager
+ * @package App\Model
+ */
 class ProjectManager extends BaseManager
 {
-    private $settingsFilePath;
     private $table;
 
     /**
@@ -24,43 +26,40 @@ class ProjectManager extends BaseManager
     public function __construct(Context $database, DatabaseHelper $databaseHelper)
     {
         parent::__construct($database, $databaseHelper);
-        $this->settingsFilePath = "../project.json";
         $this->table = $this->database->table('parameters');
     }
 
     /**
-     * @return string Name of web
+     * @param $key
+     * @param $value
+     * @internal param array $parameter
      */
-    public function getProjectName(): string
+    public function saveParameter($key, $value)
     {
-        $file = fopen($this->settingsFilePath, 'r');
-        $text = fread($file, filesize($this->settingsFilePath));
-        $values = Json::decode($text);
-        return $values->projectName;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setProjectName(string $name)
-    {
-        $file = fopen($this->settingsFilePath, 'r+');
-        $text = fread($file, filesize($this->settingsFilePath));
-        $file = fopen($this->settingsFilePath, 'w');
-        $values = Json::decode($text);
-        $values->projectName = $name;
-        fwrite($file, Json::encode($values));
-    }
-
-    public function saveParameterer(array $parameter)
-    {
-        if ($this->isParameterInDB($parameter['key'])) {
-            $this->table->where('key', $parameter['key'])->update($parameter);
+        $parameter = array(
+            'key' => $key,
+            'value' => $value
+        );
+        if ($this->isParameterInDB($key)) {
+            $this->table->where('key', $key)->update($parameter);
         } else {
             $this->table->insert($parameter);
         }
     }
 
+    /**
+     * @param $key
+     * @return string|mixed|null
+     */
+    public function getParameter($key)
+    {
+        return $this->table->where('key', $key)->fetch()->value;
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
     public function isParameterInDB($key): bool
     {
         $value = $this->table->where('key', $key)->fetch();
