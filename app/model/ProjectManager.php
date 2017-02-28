@@ -40,10 +40,11 @@ class ProjectManager extends BaseManager
             'key' => $key,
             'value' => $value
         );
+        $table = clone $this->table;
         if ($this->isParameterInDB($key)) {
-            $this->table->where('key', $key)->update($parameter);
+            $table->where('key', $key)->update($parameter);
         } else {
-            $this->table->insert($parameter);
+            $table->insert($parameter);
         }
     }
 
@@ -53,7 +54,8 @@ class ProjectManager extends BaseManager
      */
     public function getParameter($key)
     {
-        return $this->table->where('key', $key)->fetch()->value;
+        $table = clone $this->table;
+        return $table->where('key', $key)->fetch()->value;
     }
 
     /**
@@ -62,7 +64,8 @@ class ProjectManager extends BaseManager
      */
     public function isParameterInDB($key): bool
     {
-        $value = $this->table->where('key', $key)->fetch();
+        $table = clone $this->table;
+        $value = $table->where('key', $key)->fetch();
         if ($value) {
             return true;
         } else {

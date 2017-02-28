@@ -31,6 +31,7 @@ class InstallPresenter extends BasePresenter
     {
         $form = $this->formFactory->create();
         $form->addText('name', 'Jméno stránek');
+        $form->addText('description', 'Popis stránek');
         $form->addSubmit('submit', 'Uložit');
         $form->onSuccess[] = [$this, 'projectPropertiesFormSucceeded'];
         return $form;
@@ -43,6 +44,7 @@ class InstallPresenter extends BasePresenter
     public function projectPropertiesFormSucceeded(Form $form, ArrayHash $values)
     {
         $this->projectManager->saveParameter('webName', $values['name']);
+        $this->projectManager->saveParameter('webDescription', $values['description']);
         $this->redirect(':Core:Article:');
     }
 }

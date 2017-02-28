@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>{$projectName} | {include title|stripHtml}</title>
+    <title>{$webName} | {include title|stripHtml}</title>
 
     {block css}
         <link rel="stylesheet" href="{$basePath}/css/style.css" type="text/css"/>
@@ -36,7 +36,7 @@
 
 <footer>
     <p>
-        Webové stránky 24. skautského oddílu Hradce Králové
+        {$webDescription}
     </p>
 </footer>
 {block scripts}

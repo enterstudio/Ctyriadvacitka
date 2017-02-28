@@ -77,7 +77,8 @@ abstract class BasePresenter extends Presenter
             $this->template->presenter = $this->presenter;
         }
 
-        $this->template->projectName = $this->projectManager->getParameter('webName');
+        $this->template->webName = $this->projectManager->getParameter('webName');
+        $this->template->webDescription = $this->projectManager->getParameter('webDescription');
     }
 
     public function logInRequired()
