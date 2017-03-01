@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "Ctyriadvacitka"
 
     config.vm.provision :shell, path: "provision.sh"
+    config.vm.provision "shell", inline: "systemctl restart httpd", run: "always"
 
     config.vm.synced_folder ".", "/var/www", :mount_options => ["dmode=777", "fmode=666"]
 
