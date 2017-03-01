@@ -48,9 +48,6 @@ při prvním spuštění možná budete muset přidat parametr --provider virtua
     
 ### 3. Web je přístupný z adresy ctyriadvacitka.vagrant
 
-## Changelog Vagrantboxu
-- v2.3 - Aktualizováno PHP na verzi 7.0.15
-
 ## Licence
 
 MIT
