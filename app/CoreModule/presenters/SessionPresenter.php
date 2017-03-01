@@ -88,7 +88,7 @@ class SessionPresenter extends BasePresenter {
         $form = $this->formFactory->create();
         $form->addText('username', 'Přihlašovací jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
-        $form->addPassword('password_again', 'Heslo znovu')->setRequired()
+        $form->addPassword('passwordAgain', 'Heslo znovu')->setRequired()
             ->addRule(Form::EQUAL, 'Hesla se neschodují!', $form['password']);
         $form->addSubmit('submit', 'Registrovat');
         $form->onSuccess[] = [$this, 'signUpFormSucceeded'];

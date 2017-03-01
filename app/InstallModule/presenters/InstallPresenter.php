@@ -11,6 +11,7 @@ namespace App\InstallModule\Presenters;
 
 use App\Presenters\BasePresenter;
 use Nette\Forms\Form;
+use Nette\Security\Passwords;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -21,10 +22,12 @@ class InstallPresenter extends BasePresenter
 {
     public function renderProjectProperties()
     {
-        if ($this->projectManager->getParameter('installationCompleted')) {
-            $this->flashMessage('Instalace již proběhla', 'warning');
-            $this->redirect(':Core:Article:');
-        }
+        $this->checkInstallation();
+    }
+
+    public function renderAdminAccount()
+    {
+        $this->checkInstallation();
     }
 
     /**
@@ -48,7 +51,49 @@ class InstallPresenter extends BasePresenter
     {
         $this->projectManager->saveParameter('webName', $values['name']);
         $this->projectManager->saveParameter('webDescription', $values['description']);
+        $this->redirect(':Install:Install:adminAccount');
+    }
+
+    /**
+     * @return Form
+     */
+    public function createComponentAdminAccountForm(): Form
+    {
+        $form = $this->formFactory->create();
+        $form->addText('username', 'Uživatelské jméno')
+            ->setRequired();
+        $form->addPassword('password', 'Heslo')
+            ->setRequired();
+        $form->addPassword('passwordAgain', 'Heslo znovu')
+            ->addRule(Form::EQUAL, 'Hesla se neschodují', $form['password'])
+            ->setRequired();
+        $form->addSubmit('submit', 'Uložit');
+        $form->onSuccess[] = [$this, 'adminAccountFormSucceeded'];
+        return $form;
+    }
+
+    /**
+     * @param Form $form
+     * @param array $values
+     */
+    public function adminAccountFormSucceeded(Form $form, array $values)
+    {
+        $username = $values['username'];
+        $password = Passwords::hash($values['password']);
+        $user = array(
+            'username' => $username,
+            'password' => $password,
+            'role' => 'admin');
+        $this->userManager->saveEntity($user);
         $this->projectManager->saveParameter('installationCompleted', true);
         $this->redirect(':Core:Article:');
+    }
+
+    public function checkInstallation()
+    {
+        if ($this->projectManager->getParameter('installationCompleted')) {
+            $this->flashMessage('Instalace již proběhla', 'warning');
+            $this->redirect(':Core:Article:');
+        }
     }
 }

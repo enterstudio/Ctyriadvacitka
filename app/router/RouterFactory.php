@@ -24,7 +24,8 @@ class RouterFactory
             'action' => array(
                 Route::VALUE => 'projectProperties',
                 Route::FILTER_TABLE => array(
-                    'vlastnosti' => 'projectProperties'
+                    'vlastnosti' => 'projectProperties',
+                    'admin' => 'adminAccount'
                 ),
                 Route::FILTER_STRICT => true
             )
