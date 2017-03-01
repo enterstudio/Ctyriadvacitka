@@ -55,7 +55,11 @@ class ProjectManager extends BaseManager
     public function getParameter($key)
     {
         $table = clone $this->table;
-        return $table->where('key', $key)->fetch()->value;
+        $row = $table->where('key', $key)->fetch();
+        if ($row == null) {
+            return false;
+        }
+        return $row->value;
     }
 
     /**

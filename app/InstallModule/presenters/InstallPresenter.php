@@ -21,7 +21,10 @@ class InstallPresenter extends BasePresenter
 {
     public function renderProjectProperties()
     {
-
+        if ($this->projectManager->getParameter('installationCompleted')) {
+            $this->flashMessage('Instalace již proběhla', 'warning');
+            $this->redirect(':Core:Article:');
+        }
     }
 
     /**
@@ -45,6 +48,7 @@ class InstallPresenter extends BasePresenter
     {
         $this->projectManager->saveParameter('webName', $values['name']);
         $this->projectManager->saveParameter('webDescription', $values['description']);
+        $this->projectManager->saveParameter('installationCompleted', true);
         $this->redirect(':Core:Article:');
     }
 }
