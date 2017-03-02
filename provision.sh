@@ -42,7 +42,7 @@ systemctl restart httpd
 #MySQL#
 #######
 dnf install -y https://dev.mysql.com/get/mysql57-community-release-fc25-9.noarch.rpm
-dnf install -y mysql-community-server
+dnf install -y mysql-community-server wget
 
 systemctl enable mysqld
 systemctl start mysqld
@@ -50,7 +50,14 @@ systemctl start mysqld
 CURRENT="$(grep 'temporary password' /var/log/mysqld.log | awk '{print $11}')"
 echo "Current password is $CURRENT"
 
+wget https://gist.githubusercontent.com/krouma/9f1c01ae144ed514869bcb9bde2521bd/raw/6a61ac17d76d9acac085aa1274752003d62400fc/lamp.sql
+
 cat << EOF | mysql -uroot --connect-expired-password -p"$CURRENT" #log as root
 ALTER USER 'root'@'localhost' IDENTIFIED BY "Lamp_001"; #change pass
+\. lamp.sql
 quit
 EOF
+
+rm lamp.sql
+
+echo "Provision completed"
