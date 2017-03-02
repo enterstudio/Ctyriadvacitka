@@ -1,10 +1,10 @@
 parameters:
 
 # Template for database connection
-# Copy this to app/config and edit
+# Copy this to app/config and edit (only in manual installation)
 database:
-	dsn: 'mysql:host=server;dbname=jmeno_databaze'
-	user: 'uzivatel'
-	password: 'heslo'
+	dsn: 'mysql:host=localhost;dbname=lamp'
+	user: 'lamp'
+	password: 'Lamp_001'
 	options:
 		lazy: yes
