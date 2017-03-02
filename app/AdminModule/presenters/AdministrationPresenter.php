@@ -6,7 +6,7 @@
  * Time: 11:59
  */
 
-namespace App\CoreModule\Presenters;
+namespace App\AdminModule\Presenters;
 
 
 use App\Presenters\BasePresenter;

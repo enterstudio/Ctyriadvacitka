@@ -31,7 +31,7 @@ class RouterFactory
             )
         ));
         $router[] = new Route('kontakt/', 'Core:Contact:default');
-        $router[] = new Route('administrace/', 'Core:Administration:default');
+        $router[] = new Route('administrace/', 'Admin:Administration:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');
         $router[] = new Route('odhlasit', 'Core:Session:signOut');
         $router[] = new Route('registrovat', 'Core:Session:signUp');
