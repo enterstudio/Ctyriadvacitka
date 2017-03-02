@@ -14,11 +14,12 @@ V aplikaci se vyskytují 3 druhy webových stránek
 
 ### Závislosti
 1. Composer a NPM v systémové PATH
-2. Vagrant, VirtualBox
-3. doporučené: Git
+2. Vagrant, VirtualBox   
+3. doporučené: Git   
+
 ### 1. Nainstalování Vagrant pluginu   
 Použitý Vagrant box v sobě bohužel nemá nainstalované tzv. Guest additions a je proto nutné je ručně
-doinstalovat příkazem:
+doinstalovat příkazem:   
    
     vagrant plugin install vagrant-vbguest   
 
