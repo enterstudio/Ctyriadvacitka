@@ -89,4 +89,19 @@ abstract class BasePresenter extends Presenter
         }
     }
 
+    public function editorPermissionsRequired()
+    {
+        if (!$this->user->isInRole('editor')) {
+            $this->flashMessage('Na tuto akci musíte být redaktor.', 'warning');
+            $this->redirect(':Core:User:');
+        }
+    }
+
+    public function adminPermissionsRequired()
+    {
+        if (!$this->user->isInRole('admin')) {
+            $this->flashMessage('Na tuto akci musíte být administrátor.', 'warning');
+            $this->redirect(':Core:User:');
+        }
+    }
 }

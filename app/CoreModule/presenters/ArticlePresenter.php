@@ -18,7 +18,8 @@ use Nette\Utils\ArrayHash;
  * @package App\CoreModule\Presenters
  * @author matyas
  */
-class ArticlePresenter extends BasePresenter{
+class ArticlePresenter extends BasePresenter
+{
     /** Konstanta s hodnotou URL výchozího článku */
     const DEFAULT_ARTICLE_URL = 'uvod';
     protected $presenter;
@@ -34,7 +35,8 @@ class ArticlePresenter extends BasePresenter{
      * Načte a vykreslí článek do šablony podle jeho URL
      * @param string $url URL článku
      */
-    public function renderDefault(string $url = NULL){
+    public function renderDefault(string $url = NULL)
+    {
         if (!$url)
             $url = self::DEFAULT_ARTICLE_URL;
 
@@ -53,15 +55,11 @@ class ArticlePresenter extends BasePresenter{
      * Odstraní článek
      * @param string $url
      */
-    public function actionRemove(string $url){
-        if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!', 'warning');
-            $this->redirect(':Core:Session:signIn');
-        }
-        if (!$this->user->isAllowed('article', 'edit')){
-            $this->flashMessage('Nemůžete mazat články!', 'danger');
-            $this->redirect($this->presenter, $url);
-        }
+    public function actionRemove(string $url)
+    {
+        $this->logInRequired();
+        $this->editorPermissionsRequired();
+
         $this->entityManager->deleteEntity($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.', 'success');
         $this->redirect($this->presenter . 'list');
@@ -71,7 +69,11 @@ class ArticlePresenter extends BasePresenter{
      * Vykresluje editaci článku podle jeho URL
      * @param string $url URL adresa článku, který editujeme, pokud není zadána, vytoří se nový
      */
-    public function actionEditor(string $url = NULL){
+    public function actionEditor(string $url = NULL)
+    {
+        $this->logInRequired();
+        $this->editorPermissionsRequired();
+
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($url && $article = $this->entityManager->getEntityByUnique($url)) {
             $this['editorForm']->setDefaults($article);
@@ -81,20 +83,13 @@ class ArticlePresenter extends BasePresenter{
             $article->url = $url;
             $this['editorForm']->setDefaults($article);
         }
-        if (!$this->user->isLoggedIn()){
-            $this->flashMessage('Nejste přihlášen!', 'warning');
-            $this->redirect(':Core:Session:signIn');
-        }
-        if (!$this->user->isAllowed('article', 'edit')){
-            $this->flashMessage('Nemůžete upravovat články!', 'danger');
-            $this->redirect($this->presenter, $url);
-        }
     }
 
     /**
      * Načte články z databáze
      */
-    public function actionList(){
+    public function actionList()
+    {
         //Načte články z databáze a předá je šabloně
         $articles = $this->entityManager->getEntities();
         $this->template->articles = $articles;
@@ -104,7 +99,8 @@ class ArticlePresenter extends BasePresenter{
      * Vrátí formulář pro editor článků.
      * @return Form formulář pro editor článků
      */
-    protected function createComponentEditorForm():Form{
+    protected function createComponentEditorForm(): Form
+    {
         $form = $this->formFactory->create();
         $form->addHidden($this->entityManager->getPrimaryKey());
         $form->addText('title', 'Titilek')->setRequired();
@@ -113,7 +109,7 @@ class ArticlePresenter extends BasePresenter{
         $form->addCheckbox('requestable', 'Zobrazovat v seznamu');
         $form->addTextArea('content', 'Obsah')->setRequired();
         $form->addSubmit('submit', 'Uložit článek');
-        $form->onSuccess[] = [$this,'editorFormSucceeded'];
+        $form->onSuccess[] = [$this, 'editorFormSucceeded'];
         return $form;
 
     }
@@ -123,13 +119,13 @@ class ArticlePresenter extends BasePresenter{
      * @param Form $form formulář editoru
      * @param ArrayHash $values odeslané hodnoty formuláře
      */
-    public function editorFormSucceeded($form, array $values){
-        try{
+    public function editorFormSucceeded($form, array $values)
+    {
+        try {
             $this->entityManager->saveEntity($values);
             $this->flashMessage('Článek byl úspěšně uložen.', 'success');
             $this->redirect($this->presenter, $values['url']);
-        }
-        catch (UniqueConstraintViolationException $exception){
+        } catch (UniqueConstraintViolationException $exception) {
             $this->flashMessage('Článek s touto URL adresou již existuje.', 'warning');
         }
     }
