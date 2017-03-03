@@ -2,20 +2,20 @@
 {define description}Seznam všech registrovaných uživatelů{/define}
 {block content}
 <table class="table table-hover table-striped table-condensed table-responsive">
-    <tr n:foreach="$users as $user">
+    <tr n:foreach="$users as $u">
         <td>
-            <h2>{$user->username}</h2>
+            <h2>{$u->username}</h2>
         </td><td>
-            <a n:href=":Core:User: $user->username" class="btn btn-default">Zobrazit</a>
+            <a n:href=":Core:User: $u->username" class="btn btn-default">Zobrazit</a>
         </td>
-        {if $loggedUser->username == $user->username}
+        {if $loggedUser->username == $u->username}
             <td>
-                <a n:href=":Core:User:editor $user->username" class="btn btn-primary">Editovat</a>
+                <a n:href=":Core:User:editor $u->username" class="btn btn-primary">Editovat</a>
             </td>
         {/if}
-        {if ($loggedUser->username == $user->username)||$isUserAdmin}
+        {if ($loggedUser->username == $u->username)||$isUserAdmin}
             <td>
-                <a n:href=":Core:User:remove $user->username" class="btn btn-danger">Odstranit</a>
+                <a n:href=":Core:User:remove $u->username" class="btn btn-danger">Odstranit</a>
             </td>
         {/if}
     </tr>
