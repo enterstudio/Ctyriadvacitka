@@ -12,13 +12,13 @@ use Nette\Application\Routers\RouteList;
  */
 class RouterFactory
 {
-	/**
-	 * Vytváří router pro aplikaci.
-	 * @return RouteList výsledný router pro aplikaci
-	 */
-	public static function createRouter()
-	{
-		$router = new RouteList();
+    /**
+     * Vytváří router pro aplikaci.
+     * @return RouteList výsledný router pro aplikaci
+     */
+    public static function createRouter()
+    {
+        $router = new RouteList();
         $router[] = new Route('instalace/[<action>]', array(
             'presenter' => 'Install:Install',
             'action' => array(
@@ -30,12 +30,13 @@ class RouterFactory
                 Route::FILTER_STRICT => true
             )
         ));
-        $router[] = new Route('kontakt/', 'Core:Contact:default');
-        $router[] = new Route('administrace/', 'Admin:Administration:default');
+        $router[] = new Route('administrace', 'Admin:Administration:default');
+        $router[] = new Route('administrace/uzivatele', 'Admin:User:management');
+        $router[] = new Route('kontakt', 'Core:Contact:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');
         $router[] = new Route('odhlasit', 'Core:Session:signOut');
         $router[] = new Route('registrovat', 'Core:Session:signUp');
-        $router[] = new Route('seznam-uzivatelu/', 'Core:User:list');
+        $router[] = new Route('seznam-uzivatelu', 'Core:User:list');
         $router[] = new Route('novinky/seznam', 'Core:News:list');
         $router[] = new Route('profil/[<action>/][<username>]', array(
             'presenter' => 'Core:User',
@@ -52,7 +53,7 @@ class RouterFactory
             'username' => null,
         ));
         $router[] = new Route('profil/[<username>]', 'Core:User:default');
-        $router[] = new Route('novinky/[<page [0-9]+>]', 'Core:News:pagedList');
+        $router[] = new Route('novinky[/<page [0-9]+>]', 'Core:News:pagedList');
         $router[] = new Route('novinky/[<action>/][<url>]', array(
             'presenter' => 'Core:News',
             'action' => array(
@@ -81,7 +82,7 @@ class RouterFactory
             ),
             'url' => null,
         ));
-		$router[] = new Route('[<url>]', 'Core:Article:default');
-		return $router;
-	}
+        $router[] = new Route('[<url>]', 'Core:Article:default');
+        return $router;
+    }
 }

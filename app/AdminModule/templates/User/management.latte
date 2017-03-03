@@ -1,0 +1,22 @@
+{define title}Oprávnění uživatelů{/define}
+{define description}Umožní nastavení oprávnění uživatelů{/define}
+{block content}
+    <table class="table table-hover table-striped table-condensed table-responsive">
+        <tr n:foreach="$users as $u">
+            <td>
+                <h2>{$u->username}</h2>
+            </td>
+            <td>
+                <a n:href=":Core:User: $u->username" class="btn btn-default">Zobrazit</a>
+            </td>
+            <td>
+                <a n:href=":Core:User:remove $u->username" class="btn btn-danger">Odstranit</a>
+            </td>
+            <td>
+                <a href="" class="btn {if ($u->role == 'registered')}btn-success{else}btn-default{/if}">Uživatel</a>
+                <a href="" class="btn {if ($u->role == 'editor')}btn-success{else}btn-default{/if}">Redaktor</a>
+                <a href="" class="btn {if ($u->role == 'admin')}btn-success{else}btn-default{/if}">Administrátor</a>
+            </td>
+        </tr>
+    </table>
+{/block}

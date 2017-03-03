@@ -18,5 +18,10 @@ use App\Presenters\BasePresenter;
  */
 class AdministrationPresenter extends BasePresenter
 {
+    public function startup()
+    {
+        parent::startup();
+        $this->logInRequired();
 
+    }
 }
