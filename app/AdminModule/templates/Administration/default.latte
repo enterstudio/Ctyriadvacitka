@@ -3,7 +3,7 @@
 {block content}
 <p>Vítejte v administraci</p>
 <h3>Akce:</h3>
-{if $isUserAdmin}
+{if $isUserEditor}
     <a n:href=":Core:Article:editor" class="btn btn-success">Přidat článek</a>
     <a n:href=":Core:News:editor" class="btn btn-success">Přidat novinku</a>
 {/if}

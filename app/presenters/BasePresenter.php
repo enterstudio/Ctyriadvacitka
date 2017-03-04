@@ -73,6 +73,7 @@ abstract class BasePresenter extends Presenter
             $this->template->loggedUser = $this->user->getIdentity();
         }
         $this->template->isUserAdmin = $this->user->isInRole('admin');
+        $this->template->isUserEditor = $this->user->isInRole('editor');
         if (!empty($this->presenter)) {
             $this->template->presenter = $this->presenter;
         }
@@ -91,7 +92,7 @@ abstract class BasePresenter extends Presenter
 
     public function editorPermissionsRequired()
     {
-        if (!$this->user->isInRole('editor')) {
+        if (!$this->user->isInRole('editor') && !$this->user->isInRole('admin')) {
             $this->flashMessage('Na tuto akci musíte být redaktor.', 'warning');
             $this->redirect(':Core:User:');
         }

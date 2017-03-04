@@ -22,6 +22,6 @@ class AdministrationPresenter extends BasePresenter
     {
         parent::startup();
         $this->logInRequired();
-
+        $this->editorPermissionsRequired();
     }
 }
