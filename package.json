@@ -13,11 +13,11 @@
   },
   "homepage": "https://github.com/krouma/Ctyriadvacitka#readme",
   "devDependencies": {
-    "browser-sync": "latest",
-    "node-sass": "latest",
-    "npm-run-all": "latest",
-    "onchange": "latest",
-    "shx": "latest"
+    "browser-sync": "2.18.8",
+    "node-sass": "4.5.0",
+    "npm-run-all": "4.0.1",
+    "onchange": "3.2.1",
+    "shx": "0.2.2"
   },
   "scripts": {
     "clean": "shx rm -rf temp/ www/css/",
