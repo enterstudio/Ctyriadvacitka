@@ -30,7 +30,7 @@ class RouterFactory
                 Route::FILTER_STRICT => true
             )
         ));
-        $router[] = new Route('administrace', 'Admin:Administration:default');
+        $router[] = new Route('administrace', 'Admin:Web:default');
         $router[] = new Route('administrace/uzivatele', 'Admin:User:management');
         $router[] = new Route('kontakt', 'Core:Contact:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');

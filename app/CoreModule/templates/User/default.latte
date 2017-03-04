@@ -10,7 +10,3 @@
     <a n:href=":Core:User:changePassword $user->username" class="btn btn-default">Změnit heslo</a>
     <a n:href=":Core:Session:signOut" class="btn btn-default">Odhlásit</a>
 {/if}
-
-{if $isUserAdmin && $loggedUser->username == $user->username}
-    <a n:href=":Admin:Administration:" class="btn btn-primary">Administrace webu</a>
-{/if}

@@ -32,6 +32,9 @@
                     {else}
                         <li><a n:href=":Core:User: $loggedUser->username">{$loggedUser->username}</a></li>
                     {/if}
+                    {if $isUserEditor}
+                        <li><a n:href=":Admin:Web:">Administrace</a></li>
+                    {/if}
                 </ul>
             </div>
         </div>

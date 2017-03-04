@@ -16,12 +16,12 @@ use App\Presenters\BasePresenter;
  * Class AdministrationPresenter
  * @package App\CoreModule\Presenters
  */
-class AdministrationPresenter extends BasePresenter
+class WebPresenter extends BasePresenter
 {
     public function startup()
     {
         parent::startup();
         $this->logInRequired();
-        $this->editorPermissionsRequired();
+        $this->adminPermissionsRequired();
     }
 }
