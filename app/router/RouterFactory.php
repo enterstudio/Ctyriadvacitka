@@ -19,6 +19,16 @@ class RouterFactory
     public static function createRouter()
     {
         $router = new RouteList();
+        $router[] = new Route('administrace', 'Admin:Web:default');
+        $router[] = new Route('kontakt', 'Core:Contact:default');
+        $router[] = new Route('prihlasit', 'Core:Session:signIn');
+        $router[] = new Route('odhlasit', 'Core:Session:signOut');
+        $router[] = new Route('registrovat', 'Core:Session:signUp');
+        $router[] = new Route('seznam-uzivatelu', 'Core:User:list');
+        $router[] = new Route('novinky/seznam', 'Core:News:list');
+        $router[] = new Route('administrace/uzivatele', 'Admin:User:management');
+
+        $router[] = new Route('administrace/zmen-roli/<role>/<username>', 'Admin:User:changeRole');
         $router[] = new Route('instalace/[<action>]', array(
             'presenter' => 'Install:Install',
             'action' => array(
@@ -30,14 +40,6 @@ class RouterFactory
                 Route::FILTER_STRICT => true
             )
         ));
-        $router[] = new Route('administrace', 'Admin:Web:default');
-        $router[] = new Route('administrace/uzivatele', 'Admin:User:management');
-        $router[] = new Route('kontakt', 'Core:Contact:default');
-        $router[] = new Route('prihlasit', 'Core:Session:signIn');
-        $router[] = new Route('odhlasit', 'Core:Session:signOut');
-        $router[] = new Route('registrovat', 'Core:Session:signUp');
-        $router[] = new Route('seznam-uzivatelu', 'Core:User:list');
-        $router[] = new Route('novinky/seznam', 'Core:News:list');
         $router[] = new Route('profil/[<action>/][<username>]', array(
             'presenter' => 'Core:User',
             'action' => array(

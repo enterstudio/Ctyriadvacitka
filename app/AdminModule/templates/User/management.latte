@@ -13,9 +13,12 @@
                 <a n:href=":Core:User:remove $u->username" class="btn btn-danger">Odstranit</a>
             </td>
             <td>
-                <a href="" class="btn {if ($u->role == 'registered')}btn-success{else}btn-default{/if}">Uživatel</a>
-                <a href="" class="btn {if ($u->role == 'editor')}btn-success{else}btn-default{/if}">Redaktor</a>
-                <a href="" class="btn {if ($u->role == 'admin')}btn-success{else}btn-default{/if}">Administrátor</a>
+                <a n:href=":Admin:User:changeRole 'registered', $u->username"
+                        class="btn {if ($u->role == 'registered')}btn-success{else}btn-default{/if}">Uživatel</a>
+                <a n:href=":Admin:User:changeRole 'editor', $u->username"
+                        class="btn {if ($u->role == 'editor')}btn-success{else}btn-default{/if}">Redaktor</a>
+                <a n:href=":Admin:User:changeRole 'admin', $u->username"
+                        class="btn {if ($u->role == 'admin')}btn-success{else}btn-default{/if}">Administrátor</a>
             </td>
         </tr>
     </table>
