@@ -25,10 +25,34 @@ class RouterFactory
         $router[] = new Route('odhlasit', 'Core:Session:signOut');
         $router[] = new Route('registrovat', 'Core:Session:signUp');
         $router[] = new Route('seznam-uzivatelu', 'Core:User:list');
+        $router[] = new Route('clanky', 'Core:Article:list');
+        $router[] = new Route('novinky', 'Core:News:pagedList');
         $router[] = new Route('novinky/seznam', 'Core:News:list');
         $router[] = new Route('administrace/uzivatele', 'Admin:User:management');
 
         $router[] = new Route('administrace/zmen-roli/<role>/<username>', 'Admin:User:changeRole');
+        $router[] = new Route('administrace/clanky/<action>[/<url>]', array(
+            'presenter' => 'Admin:Article',
+            'action' => array(
+                Route::FILTER_TABLE => array(
+                    'editor' => 'editor',
+                    'odstranit' => 'remove'
+                ),
+                Route::FILTER_STRICT => true
+            )
+        ));
+        $router[] = new Route('administrace/novinky/<action>/[<url>]', array(
+            'presenter' => 'Admin:News',
+            'action' => array(
+                Route::FILTER_TABLE => array(
+                    //řetězec v URL=> akce presenteru
+                    'editor' => 'editor',
+                    'odstranit' => 'remove'
+                ),
+                Route::FILTER_STRICT => true
+            ),
+            'url' => null
+        ));
         $router[] = new Route('instalace/[<action>]', array(
             'presenter' => 'Install:Install',
             'action' => array(
@@ -56,34 +80,7 @@ class RouterFactory
         ));
         $router[] = new Route('profil/[<username>]', 'Core:User:default');
         $router[] = new Route('novinky[/<page [0-9]+>]', 'Core:News:pagedList');
-        $router[] = new Route('novinky/[<action>/][<url>]', array(
-            'presenter' => 'Core:News',
-            'action' => array(
-                Route::VALUE => 'list',
-                Route::FILTER_TABLE => array(
-                    //řetězec v URL=> akce presenteru
-                    'editor' => 'editor',
-                    'odstranit' => 'remove'
-                ),
-                Route::FILTER_STRICT => true
-            ),
-            'username' => null,
-        ));
         $router[] = new Route('novinky/[<url>]', 'Core:News:default');
-        $router[] = new Route('[<action>/][<url>]', array(
-            'presenter' => 'Core:Article',
-            'action' => array(
-                Route::VALUE => 'default',
-                Route::FILTER_TABLE => array(
-                    //řetězec v URL=> akce presenteru
-                    'seznam-clanku' => 'list',
-                    'editor' => 'editor',
-                    'odstranit' => 'remove'
-                ),
-                Route::FILTER_STRICT => true
-            ),
-            'url' => null,
-        ));
         $router[] = new Route('[<url>]', 'Core:Article:default');
         return $router;
     }

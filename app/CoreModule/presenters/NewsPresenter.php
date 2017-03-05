@@ -23,7 +23,7 @@ class NewsPresenter extends ArticlePresenter
     {
         parent::startup();
         $this->entityManager = $this->newsManager;
-        $this->presenter = ':Core:News:';
+        $this->presenter = ':News:';
     }
 
     /**

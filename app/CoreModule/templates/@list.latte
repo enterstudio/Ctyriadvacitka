@@ -8,13 +8,13 @@
             {$article->description}
         </td>
         <td>
-            <a n:href="{$presenter} $article->url" class="btn btn-default">Zobrazit</a>
+            <a n:href=":Core{$presenter} $article->url" class="btn btn-default">Zobrazit</a>
         </td>
         {if $isUserAdmin}
             <td>
-                <a n:href="{$presenter}editor $article->url" class="btn btn-primary">Editovat</a>
+                <a n:href=":Admin{$presenter}editor $article->url" class="btn btn-primary">Editovat</a>
             </td><td>
-            <a n:href="{$presenter}remove $article->url" class="btn btn-danger">Odstranit</a>
+            <a n:href=":Admin{$presenter}remove $article->url" class="btn btn-danger">Odstranit</a>
         </td>
         {/if}
     </tr>
