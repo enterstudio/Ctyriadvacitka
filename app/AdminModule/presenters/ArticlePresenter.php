@@ -29,7 +29,6 @@ class ArticlePresenter extends BasePresenter
         $this->presenter = ':Article:';
 
         $this->logInRequired();
-        $this->editorPermissionsRequired();
     }
 
     /**
@@ -38,6 +37,7 @@ class ArticlePresenter extends BasePresenter
      */
     public function actionRemove(string $url)
     {
+        $this->articlePermissionRequired($url);
         $this->entityManager->deleteEntity($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.', 'success');
         $this->redirect(':Core' . $this->presenter . 'list');
@@ -49,6 +49,7 @@ class ArticlePresenter extends BasePresenter
      */
     public function renderEditor(string $url = NULL)
     {
+        $this->articlePermissionRequired($url);
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($url && $article = $this->entityManager->getEntityByUnique($url)) {
             $this['editorForm']->setDefaults($article);

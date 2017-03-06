@@ -20,6 +20,7 @@ class RouterFactory
     {
         $router = new RouteList();
         $router[] = new Route('administrace', 'Admin:Web:default');
+        $router[] = new Route('administrace/redaktor', 'Admin:Web:view');
         $router[] = new Route('kontakt', 'Core:Contact:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');
         $router[] = new Route('odhlasit', 'Core:Session:signOut');

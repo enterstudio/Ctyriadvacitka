@@ -10,7 +10,7 @@
         <td>
             <a n:href=":Core{$presenter} $article->url" class="btn btn-default">Zobrazit</a>
         </td>
-        {if $isUserAdmin}
+        {if $isUserAdmin || ($loggedUser->username == $article->author)}
             <td>
                 <a n:href=":Admin{$presenter}editor $article->url" class="btn btn-primary">Editovat</a>
             </td><td>

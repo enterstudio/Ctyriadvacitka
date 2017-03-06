@@ -4,30 +4,30 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div id="navbar">
-                {if $isUserAdmin}
-                    <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    {if $isUserAdmin}
                         <li><a n:href=":Admin:Web:">Web</a></li>
                         <li><a n:href=":Admin:User:management">Uživatelé</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                Články<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a n:href=":Core:Article:list">Seznam</a></li>
-                                <li><a n:href=":Admin:Article:editor">Přidat</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                Novinky<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a n:href=":Core:News:list">Seznam</a></li>
-                                <li><a n:href=":Admin:News:editor">Přidat</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                {/if}
+                    {/if}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            Články<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a n:href=":Core:Article:list">Seznam</a></li>
+                            <li><a n:href=":Admin:Article:editor">Přidat</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            Novinky<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a n:href=":Core:News:list">Seznam</a></li>
+                            <li><a n:href=":Admin:News:editor">Přidat</a></li>
+                        </ul>
+                    </li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a n:href=":Core:Article:">Zpět</a></li>
                 </ul>

@@ -23,14 +23,19 @@ class WebPresenter extends BasePresenter
     {
         parent::startup();
         $this->logInRequired();
-        $this->adminPermissionsRequired();
     }
 
     public function renderDefault()
     {
+        $this->adminPermissionsRequired();
         $properties['webName'] = $this->projectManager->getParameter('webName');
         $properties['webDescription'] = $this->projectManager->getParameter('webDescription');
         $this['webPropertiesForm']->setDefaults($properties);
+    }
+
+    public function renderView()
+    {
+        $this->editorPermissionsRequired();
     }
 
     /**
