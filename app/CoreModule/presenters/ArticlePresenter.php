@@ -42,7 +42,7 @@ class ArticlePresenter extends BasePresenter
             $article = $this->entityManager->getEntityByUnique('chyba');
             $this->template->originalUrl = $url;
         }
-        if (!($this->user->isInRole('admin') || $article->requestable)) {
+        if (!($this->user->isInRole('admin') || $this->user->isInRole('editor') || $article->requestable)) {
             $article = $this->entityManager->getEntityByUnique('chyba');
         }
         $this->template->article = $article; //Předá článek do šablony
