@@ -110,12 +110,17 @@ abstract class BasePresenter extends Presenter
      * Editors can only edit their articles/news and admins every article/news
      * @param string $url
      */
-    public function articlePermissionRequired(string $url)
+    public function articlePermissionRequired(string $url = null)
     {
-        $article = $this->entityManager->getEntityByUnique($url);
-        if (!($this->user->isInRole('admin') || $this->user->getIdentity()->username == $article->author)) {
-            $this->flashMessage('Na tuto akci potřebujete oprávnění administrátora nebo redaktora a vlastnit tento článek.');
-            $this->redirect(":Core$this->presenter", $url);
+        $this->editorPermissionsRequired();
+        if (isset($url) && $this->entityManager->entityExists($url)) {
+            $article = $this->entityManager->getEntityByUnique($url);
+            if (!($this->user->isInRole('admin') ||
+                ($this->user->getIdentity()->username == $article->author && $this->user->isInRole('editor')))
+            ) {
+                $this->flashMessage('Na tuto akci potřebujete oprávnění administrátora nebo redaktora a vlastnit tento článek.');
+                $this->redirect(":Core$this->presenter", $url);
+            }
         }
     }
 }
