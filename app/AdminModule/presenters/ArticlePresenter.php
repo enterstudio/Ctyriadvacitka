@@ -88,7 +88,9 @@ class ArticlePresenter extends BasePresenter
     public function editorFormSucceeded($form, array $values)
     {
         try {
-            $values['author'] = $this->user->getIdentity()->username;
+            if (!$this->entityManager->entityExists($values['url'])) {
+                $values['author'] = $this->user->getIdentity()->username;
+            }
             $this->entityManager->saveEntity($values);
             $this->flashMessage('Článek byl úspěšně uložen.', 'success');
             $this->redirect(':Core' . $this->presenter, $values['url']);
