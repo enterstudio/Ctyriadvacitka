@@ -9,8 +9,10 @@
 namespace App\AdminModule\Presenters;
 
 
+use App\Factories\HeaderPicturesForm;
 use App\Presenters\BasePresenter;
 use Nette\Forms\Form;
+use Nette\Utils\ArrayHash;
 
 /**
  * Zpracovává vykreslování administrační sekce
@@ -19,6 +21,9 @@ use Nette\Forms\Form;
  */
 class WebPresenter extends BasePresenter
 {
+    /** @var  HeaderPicturesForm @inject */
+    public $headerPicturesFormFactory;
+
     public function startup()
     {
         parent::startup();
@@ -36,6 +41,11 @@ class WebPresenter extends BasePresenter
     public function renderView()
     {
         $this->editorPermissionsRequired();
+    }
+
+    public function renderHeaderPictures()
+    {
+        $this->adminPermissionsRequired();
     }
 
     /**
@@ -63,5 +73,26 @@ class WebPresenter extends BasePresenter
             $this->projectManager->saveParameter($key, $value);
         }
         $this->flashMessage('Údaje byly upraveny', 'success');
+    }
+
+    /**
+     * @return Form
+     */
+    public function createComponentAddHeaderPicturesForm(): Form
+    {
+        $form = $this->headerPicturesFormFactory->create();
+        $form->onSuccess[] = function (Form $form) {
+            $this->redirect('this');
+        };
+        return $form;
+    }
+
+    /**
+     * @param Form $form
+     * @param ArrayHash $values
+     */
+    public function addHeaderPicturesFormSucceeded(Form $form, ArrayHash $values)
+    {
+
     }
 }

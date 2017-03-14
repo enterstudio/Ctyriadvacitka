@@ -19,6 +19,7 @@ services:
 	router: App\RouterFactory::createRouter
 	- App\Model\DatabaseHelper
 	- App\Model\ProjectManager
+	- App\Factories\HeaderPicturesForm
 
 # Vložení konfiguračních souborů z jednotlivých modulů.
 includes:
