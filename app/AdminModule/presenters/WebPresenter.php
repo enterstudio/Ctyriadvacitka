@@ -12,7 +12,6 @@ namespace App\AdminModule\Presenters;
 use App\Factories\HeaderPicturesForm;
 use App\Presenters\BasePresenter;
 use Nette\Forms\Form;
-use Nette\Utils\ArrayHash;
 
 /**
  * Zpracovává vykreslování administrační sekce
@@ -85,14 +84,5 @@ class WebPresenter extends BasePresenter
             $this->redirect('this');
         };
         return $form;
-    }
-
-    /**
-     * @param Form $form
-     * @param ArrayHash $values
-     */
-    public function addHeaderPicturesFormSucceeded(Form $form, ArrayHash $values)
-    {
-
     }
 }

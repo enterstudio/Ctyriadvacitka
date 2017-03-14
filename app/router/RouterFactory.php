@@ -61,7 +61,8 @@ class RouterFactory
                 Route::VALUE => 'projectProperties',
                 Route::FILTER_TABLE => array(
                     'vlastnosti' => 'projectProperties',
-                    'admin' => 'adminAccount'
+                    'admin' => 'adminAccount',
+                    'obrazky-zahlavi' => 'headerPictures'
                 ),
                 Route::FILTER_STRICT => true
             )
