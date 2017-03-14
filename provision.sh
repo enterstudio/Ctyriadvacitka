@@ -50,7 +50,7 @@ systemctl start mysqld
 CURRENT="$(grep 'temporary password' /var/log/mysqld.log | awk '{print $11}')"
 echo "Current password is $CURRENT"
 
-wget https://gist.githubusercontent.com/krouma/9f1c01ae144ed514869bcb9bde2521bd/raw/6a61ac17d76d9acac085aa1274752003d62400fc/lamp.sql
+wget https://gist.githubusercontent.com/krouma/9f1c01ae144ed514869bcb9bde2521bd/raw/04326e0fb1fb53df3b62303ff45186c060c8eae1/lamp.sql
 
 cat << EOF | mysql -uroot --connect-expired-password -p"$CURRENT" #log as root
 ALTER USER 'root'@'localhost' IDENTIFIED BY "Lamp_001"; #change pass
