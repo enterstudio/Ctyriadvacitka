@@ -63,7 +63,7 @@ class HeaderPicturesForm extends BaseManager
 
         /** @var FileUpload $image */
         foreach ($images as $image) {
-            $image->move(__DIR__ . '/../../www/img/' . $image->name);
+            $image->move(__DIR__ . '/../../www/img/top/' . $image->name);
         }
     }
 }
