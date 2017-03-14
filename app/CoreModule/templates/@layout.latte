@@ -1,13 +1,12 @@
 {layout '../../templates/@layout.latte'}
 {block header}
     <header class="header_body">
-        <a n:href=":Core:Article:"><img src="../../www/images/top.jpg" class="img-responsive"></a>
-        <!--<a n:href=":Core:Article:"><img src="../../www/images/Loga/Logo5-barevne.png"></a>-->
+        <a n:href=":Core:Article:"><img src="../../www/img/top/{$headerPicture}" class="img-responsive"></a>
     </header>
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div id="navbar" class="{*collapse navbar-collapse*}">
+            <div id="navbar" class="">
                 <ul class="nav navbar-nav">
                     <li><a n:href=":Core:News:pagedList">Novinky</a></li>
                     <li><a href="/terminy">Termíny</a></li>

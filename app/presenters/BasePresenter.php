@@ -80,6 +80,21 @@ abstract class BasePresenter extends Presenter
 
         $this->template->webName = $this->projectManager->getParameter('webName');
         $this->template->webDescription = $this->projectManager->getParameter('webDescription');
+
+        //header picture
+        $dir = opendir(__DIR__ . '/../../www/img/top/');
+        $images = [];
+        $i = 0;
+
+        while ($soubor = readdir($dir)) {
+            if ($soubor != '..' && $soubor != '.') {
+                $images[] = $soubor;
+            }
+            $i++;
+        }
+
+        $topRandom = rand(0, count($images) - 1);
+        $this->template->headerPicture = $images[$topRandom];
     }
 
     public function logInRequired()
