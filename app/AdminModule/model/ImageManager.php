@@ -32,4 +32,13 @@ class ImageManager extends BaseManager
         }
         return $images;
     }
+
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public function deleteImage(string $path): bool
+    {
+        return unlink($path);
+    }
 }

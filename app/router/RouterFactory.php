@@ -21,7 +21,7 @@ class RouterFactory
         $router = new RouteList();
         $router[] = new Route('administrace', 'Admin:Web:default');
         $router[] = new Route('administrace/redaktor', 'Admin:Web:view');
-        $router[] = new Route('administrace/obrazky-zahlavi', 'Admin:Web:headerImages');
+        $router[] = new Route('administrace/obrazky-zahlavi', 'Admin:HeaderImages:default');
         $router[] = new Route('kontakt', 'Core:Contact:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');
         $router[] = new Route('odhlasit', 'Core:Session:signOut');
@@ -32,6 +32,7 @@ class RouterFactory
         $router[] = new Route('novinky/seznam', 'Core:News:list');
         $router[] = new Route('administrace/uzivatele', 'Admin:User:management');
 
+        $router[] = new Route('administrace/obrazky-zahlavi/odstranit/<name>/', 'Admin:HeaderImages:remove');
         $router[] = new Route('administrace/zmen-roli/<role>/<username>', 'Admin:User:changeRole');
         $router[] = new Route('administrace/clanky/<action>[/<url>]', array(
             'presenter' => 'Admin:Article',

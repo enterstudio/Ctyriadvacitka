@@ -42,12 +42,6 @@ class WebPresenter extends BasePresenter
         $this->editorPermissionsRequired();
     }
 
-    public function renderHeaderImages()
-    {
-        $this->adminPermissionsRequired();
-        $this->template->headerImages = $this->imageManager->getHeaderImageNames();
-    }
-
     /**
      * @return Form
      */
@@ -73,17 +67,5 @@ class WebPresenter extends BasePresenter
             $this->projectManager->saveParameter($key, $value);
         }
         $this->flashMessage('Údaje byly upraveny', 'success');
-    }
-
-    /**
-     * @return Form
-     */
-    public function createComponentAddHeaderImagesForm(): Form
-    {
-        $form = $this->headerImagesFormFactory->create();
-        $form->onSuccess[] = function (Form $form) {
-            $this->redirect('this');
-        };
-        return $form;
     }
 }
