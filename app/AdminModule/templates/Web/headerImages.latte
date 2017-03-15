@@ -1,4 +1,16 @@
 {define title}Obrázky záhlaví{/define}
 {define description}Obrázky, které se zobrazí na navigací{/define}
 {block content}
+<table class="table table-responsive table-striped table-hover">
+    <tr n:foreach="$headerImages as $image">
+        <td>
+            <img src="/www/img/top/{$image}" alt="{$image}" class="img-thumbnail">
+        </td>
+        <td>
+            <p>{$image}</p>
+            <a class="btn btn-danger" href="#">Odstranit</a>
+        </td>
+    </tr>
+</table>
+<h2>Přidat nové obrázky</h2>
 {control addHeaderImagesForm}

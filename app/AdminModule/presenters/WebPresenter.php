@@ -45,6 +45,7 @@ class WebPresenter extends BasePresenter
     public function renderHeaderImages()
     {
         $this->adminPermissionsRequired();
+        $this->template->headerImages = $this->imageManager->getHeaderImageNames();
     }
 
     /**
