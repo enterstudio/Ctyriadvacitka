@@ -20,6 +20,7 @@ services:
 	- App\Model\DatabaseHelper
 	- App\Model\ProjectManager
 	- App\Factories\HeaderImagesForm
+	- App\AdminModule\Model\ImageManager
 
 # Vložení konfiguračních souborů z jednotlivých modulů.
 includes:

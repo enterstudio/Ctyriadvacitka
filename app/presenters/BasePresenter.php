@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\AdminModule\Model\ImageManager;
 use App\CoreModule\Model\ArticleManager;
 use App\CoreModule\Model\AuthenticatorManager;
 use App\CoreModule\Model\AuthorizatorManager;
@@ -33,6 +34,8 @@ abstract class BasePresenter extends Presenter
     protected $entityManager;
     /** @var  BootstrapFormFactory FormFactory which supports Bootstrap 3 */
     protected $formFactory;
+    /** @var  ImageManager */
+    protected $imageManager;
     /** @var  ProjectManager */
     protected $projectManager;
 
@@ -43,19 +46,22 @@ abstract class BasePresenter extends Presenter
      * @param NewsManager $newsManager instance of ArticleManager
      * @param BootstrapFormFactory $formFactory instance of FormFactory
      * @param ProjectManager $projectManager
+     * @param ImageManager $imageManager
      */
     public function injectServices(
         UserManager $userManager,
         ArticleManager $articleManager,
         NewsManager $newsManager,
         BootstrapFormFactory $formFactory,
-        ProjectManager $projectManager)
+        ProjectManager $projectManager,
+        ImageManager $imageManager)
     {
         $this->userManager = $userManager;
         $this->articleManager = $articleManager;
         $this->newsManager = $newsManager;
         $this->formFactory = $formFactory;
         $this->projectManager = $projectManager;
+        $this->imageManager = $imageManager;
     }
 
     public function startup()
@@ -82,15 +88,7 @@ abstract class BasePresenter extends Presenter
         $this->template->webDescription = $this->projectManager->getParameter('webDescription');
 
         //header picture
-        $dir = opendir(__DIR__ . '/../../www/img/top/');
-        $images = [];
-
-        while ($soubor = readdir($dir)) {
-            if ($soubor != '..' && $soubor != '.') {
-                $images[] = $soubor;
-            }
-        }
-
+        $images = $this->imageManager->getHeaderImageNames();
         $topRandom = rand(0, count($images) - 1);
         $this->template->headerPicture = $images[$topRandom];
     }
