@@ -17,15 +17,15 @@ use Nette\Forms\Form;
 use Nette\Http\FileUpload;
 
 /**
- * Class HeaderPicturesForm
+ * Class HeaderImagesForm
  * @package App\Model
  */
-class HeaderPicturesForm extends BaseManager
+class HeaderImagesForm extends BaseManager
 {
     private $formFactory;
 
     /**
-     * HeaderPicturesForm constructor.
+     * HeaderImagesForm constructor.
      * @param Context $database
      * @param DatabaseHelper $databaseHelper
      * @param BootstrapFormFactory $formFactory

@@ -21,7 +21,7 @@ class RouterFactory
         $router = new RouteList();
         $router[] = new Route('administrace', 'Admin:Web:default');
         $router[] = new Route('administrace/redaktor', 'Admin:Web:view');
-        $router[] = new Route('administrace/obrazky-zahlavi', 'Admin:Web:headerPictures');
+        $router[] = new Route('administrace/obrazky-zahlavi', 'Admin:Web:headerImages');
         $router[] = new Route('kontakt', 'Core:Contact:default');
         $router[] = new Route('prihlasit', 'Core:Session:signIn');
         $router[] = new Route('odhlasit', 'Core:Session:signOut');
@@ -62,7 +62,7 @@ class RouterFactory
                 Route::FILTER_TABLE => array(
                     'vlastnosti' => 'projectProperties',
                     'admin' => 'adminAccount',
-                    'obrazky-zahlavi' => 'headerPictures'
+                    'obrazky-zahlavi' => 'headerImages'
                 ),
                 Route::FILTER_STRICT => true
             )

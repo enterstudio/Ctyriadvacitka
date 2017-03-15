@@ -84,13 +84,11 @@ abstract class BasePresenter extends Presenter
         //header picture
         $dir = opendir(__DIR__ . '/../../www/img/top/');
         $images = [];
-        $i = 0;
 
         while ($soubor = readdir($dir)) {
             if ($soubor != '..' && $soubor != '.') {
                 $images[] = $soubor;
             }
-            $i++;
         }
 
         $topRandom = rand(0, count($images) - 1);

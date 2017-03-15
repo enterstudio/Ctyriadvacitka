@@ -9,7 +9,7 @@
 namespace App\InstallModule\Presenters;
 
 
-use App\Factories\HeaderPicturesForm;
+use App\Factories\HeaderImagesForm;
 use App\Presenters\BasePresenter;
 use Nette\Forms\Form;
 use Nette\Security\Passwords;
@@ -21,8 +21,8 @@ use Nette\Utils\ArrayHash;
  */
 class InstallPresenter extends BasePresenter
 {
-    /** @var  HeaderPicturesForm @inject */
-    public $headerPicturesFormFactory;
+    /** @var  HeaderImagesForm @inject */
+    public $headerImagesFormFactory;
 
     public function startup()
     {
@@ -85,15 +85,15 @@ class InstallPresenter extends BasePresenter
             'password' => $password,
             'role' => 'admin');
         $this->userManager->saveEntity($user);
-        $this->redirect(':Install:Install:headerPictures');
+        $this->redirect(':Install:Install:headerImages');
     }
 
     /**
      * @return Form
      */
-    public function createComponentAddHeaderPicturesForm(): Form
+    public function createComponentAddHeaderImagesForm(): Form
     {
-        $form = $this->headerPicturesFormFactory->create();
+        $form = $this->headerImagesFormFactory->create();
         $form->onSuccess[] = function (Form $form) {
             $this->projectManager->saveParameter('installationCompleted', true);
             $this->redirect(':Core:Article:');

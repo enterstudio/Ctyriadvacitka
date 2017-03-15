@@ -9,7 +9,7 @@
 namespace App\AdminModule\Presenters;
 
 
-use App\Factories\HeaderPicturesForm;
+use App\Factories\HeaderImagesForm;
 use App\Presenters\BasePresenter;
 use Nette\Forms\Form;
 
@@ -20,8 +20,8 @@ use Nette\Forms\Form;
  */
 class WebPresenter extends BasePresenter
 {
-    /** @var  HeaderPicturesForm @inject */
-    public $headerPicturesFormFactory;
+    /** @var  HeaderImagesForm @inject */
+    public $headerImagesFormFactory;
 
     public function startup()
     {
@@ -42,7 +42,7 @@ class WebPresenter extends BasePresenter
         $this->editorPermissionsRequired();
     }
 
-    public function renderHeaderPictures()
+    public function renderHeaderImages()
     {
         $this->adminPermissionsRequired();
     }
@@ -77,9 +77,9 @@ class WebPresenter extends BasePresenter
     /**
      * @return Form
      */
-    public function createComponentAddHeaderPicturesForm(): Form
+    public function createComponentAddHeaderImagesForm(): Form
     {
-        $form = $this->headerPicturesFormFactory->create();
+        $form = $this->headerImagesFormFactory->create();
         $form->onSuccess[] = function (Form $form) {
             $this->redirect('this');
         };
