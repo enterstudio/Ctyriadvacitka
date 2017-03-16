@@ -1,0 +1,22 @@
+{
+  "name": "ctyriadvacitka",
+  "description": "Own CMS based on Nette",
+  "main": "www/index.php",
+  "authors": [
+    "krouma"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/krouma/Ctyriadvacitka",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "nittro-essentials": "^2.0.4",
+    "jquery": "^3.1.1",
+    "bootstrap-sass": "^3.3.7"
+  }
+}

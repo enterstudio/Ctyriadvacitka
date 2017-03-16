@@ -27,8 +27,8 @@
     "build": "npm run clean && run-p build:css",
     "watch:css": "onchange www/scss -- npm run build:css",
     "watch": "run-p watch:css serve",
-    "update": "composer update && npm update",
-    "postinstall": "composer install",
+    "update": "composer update && npm update && bower update",
+    "postinstall": "composer install && bower install",
     "start": "npm install && npm run build && npm run watch"
   }
 }

@@ -31,10 +31,11 @@ echo "Added domain $domain"
 
 cp config.local.neon app/config
 
-echo "Installed project dependencies"
-
 vagrant up --provider virtualbox
 echo "Installed guest machine dependencies"
+
+npm install -D -g bower
 npm start
+echo "Installed project dependencies"
 
 echo "Your vagrant box is ready, you can test it on http://$domain"
