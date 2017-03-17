@@ -19,6 +19,9 @@ class DatabaseHelper
 {
     private $tables;
 
+    /**
+     * DatabaseHelper constructor.
+     */
     public function __construct()
     {
         $tableArticles = new Table('article');
@@ -70,34 +73,4 @@ class DatabaseHelper
     {
         return $this->tables[$tableName];
     }
-
-    /**
-     *
-     */
-    public function generateInstallQueries(): array
-    {
-        $schema = new Schema();
-
-        /** @var Table $table */
-        foreach ($this->tables as $table) {
-            $schema->createTable($table->getName());
-
-            /** @var TableColumn $column */
-            foreach ($table->getColumns() as $column) {
-                $schema->getTable($table->getName())
-                    ->addColumn($column->getName(), $column->getType(), array(
-                            $column->getProperties(), 'autoincrement' => ($column->getName() == $table->getPrimaryKey()) ? true : false)
-                    )
-                    ->setNotnull(false);
-            }
-
-            $schema->getTable($table->getName())
-                ->setPrimaryKey([$table->getPrimaryKey()])
-                ->addUniqueIndex($table->getUniques())
-                ->addOption('engine', 'InnoDB')
-                ->addOption('collate', 'utf8_czech_ci');
-        }
-        return $schema->toSql(new MySqlPlatform());
-    }
-
 }
