@@ -36,7 +36,9 @@
 
 <footer>
     <p>
-        {$webDescription}
+        {snippet webDescription}
+            {$webDescription}
+        {/snippet}
     </p>
 </footer>
 {block scripts}
@@ -45,7 +47,9 @@
             type="text/javascript"
             src="{$basePath}/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js">
     </script>
+    <script type="text/javascript" src="{$basePath}/bower_components/nette.ajax.js/nette.ajax.js"></script>
     <script type="text/javascript" src="{$basePath}/vendor/nette/forms/src/assets/netteForms.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 {/block}
 </body>
 </html>

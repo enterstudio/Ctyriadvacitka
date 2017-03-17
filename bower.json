@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "jquery": "^3.1.1",
-    "bootstrap-sass": "^3.3.7"
+    "bootstrap-sass": "^3.3.7",
+    "nette.ajax.js": "^2.3.0"
   }
 }
