@@ -48,6 +48,7 @@ class WebPresenter extends BasePresenter
     public function createComponentWebPropertiesForm(): Form
     {
         $form = $this->formFactory->create();
+        $form->getElementPrototype()->setAttribute('class', 'ajax');
         $form->addText('webName', 'Jméno webu')
             ->setRequired();
         $form->addText('webDescription', 'Popis webu')
@@ -67,5 +68,10 @@ class WebPresenter extends BasePresenter
             $this->projectManager->saveParameter($key, $value);
         }
         $this->flashMessage('Údaje byly upraveny', 'success');
+        if ($this->isAjax()) {
+            $this->redrawControl();
+        } else {
+            $this->redirect('this');
+        }
     }
 }

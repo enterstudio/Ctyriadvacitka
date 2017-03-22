@@ -21,9 +21,11 @@
 {include header}
 
 {* Výpis zpráv.*}
-{foreach $flashes as $flash}
-    <p class="alert alert-{$flash->type}">{$flash->message}</p>
-{/foreach}
+{snippet flashes}
+    {foreach $flashes as $flash}
+        <p class="alert alert-{$flash->type}">{$flash->message}</p>
+    {/foreach}
+{/snippet}
 
 <article>
     <header class="header_article">
