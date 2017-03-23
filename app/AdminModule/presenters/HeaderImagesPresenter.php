@@ -35,16 +35,14 @@ class HeaderImagesPresenter extends BasePresenter
     }
 
     /**
-     * @param string $name
+     * @action default
+     * @param $name
      */
-    public function actionRemove(string $name)
+    public function handleRemove($name)
     {
-        if ($this->imageManager->deleteImage($_SERVER["DOCUMENT_ROOT"] . "/www/img/top/$name")) {
-            $this->flashMessage('Obrázek odstraněn', 'success');
-        } else {
-            $this->flashMessage('Obrázek se nepodařilo odstranit', 'danger');
-        }
-        $this->redirect(':Admin:HeaderImages:');
+        $this->imageManager->deleteImage($_SERVER['DOCUMENT_ROOT'] . "/www/img/top/$name");
+        $this->flashMessage('Obrázek odstraněn.', 'success');
+        $this->redirectAjax('this');
     }
 
     /**
@@ -54,7 +52,8 @@ class HeaderImagesPresenter extends BasePresenter
     {
         $form = $this->headerImagesFormFactory->create();
         $form->onSuccess[] = function (Form $form) {
-            $this->redirect('this');
+            $this->flashMessage('Obrázek přidán.', 'success');
+            $this->redirectAjax('this');
         };
         return $form;
     }

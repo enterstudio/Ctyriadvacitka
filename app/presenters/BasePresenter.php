@@ -134,4 +134,22 @@ abstract class BasePresenter extends Presenter
             }
         }
     }
+
+    /**
+     * @param string $code
+     * @param null $destination
+     * @param array|null $snippets
+     */
+    public function redirectAjax(string $code, $destination = null, array $snippets = null)
+    {
+        if ($this->isAjax()) {
+            $this->redrawControl($snippets);
+        } else {
+            if ($destination === null) {
+                $this->redirect($code);
+            } else {
+                $this->redirect($code, $destination);
+            }
+        }
+    }
 }

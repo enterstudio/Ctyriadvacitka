@@ -42,6 +42,7 @@ class HeaderImagesForm extends BaseManager
     public function create(): Form
     {
         $form = $this->formFactory->create();
+        $form->getElementPrototype()->setAttribute('class', 'ajax');
 
         $form->addMultiUpload('newPictures', 'Přidat nové obrázky (lze více najednou)')
             ->setRequired("Musíte vybrat nejméně 1 obrázek!")
