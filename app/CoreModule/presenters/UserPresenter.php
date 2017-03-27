@@ -26,6 +26,7 @@ class UserPresenter extends BasePresenter
     /**
      * Načte a vykreslí uživatele do šablony podle username
      * @param string|null $username jméno uživatele
+     * @throws \Nette\Application\AbortException
      */
     public function renderDefault(string $username = null)
     {
@@ -48,6 +49,7 @@ class UserPresenter extends BasePresenter
     /**
      * Odstraní uživatele
      * @param string $username jméno uživatele
+     * @throws \Nette\Application\AbortException
      */
     public function actionRemove(string $username)
     {
@@ -64,6 +66,7 @@ class UserPresenter extends BasePresenter
     /**
      * Vykresluje editaci uživatele podle jeho username
      * @param string $username jméno uživatele, kterého editujeme
+     * @throws \Nette\Application\AbortException
      */
     public function actionEditor(string $username = NULL)
     {
@@ -118,6 +121,7 @@ class UserPresenter extends BasePresenter
      * Funkce se vykoná při úspěšném odeslání formuláře; zpracuje hodnoty formuláře.
      * @param Form $form formulář editoru
      * @param ArrayHash $values odeslané hodnoty formuláře
+     * @throws \Nette\Application\AbortException
      */
     public function userEditorFormSucceeded($form, array $values)
     {
@@ -133,6 +137,7 @@ class UserPresenter extends BasePresenter
     /**
      * Changes password of user
      * @param $username
+     * @throws \Nette\Application\AbortException
      */
     public function renderChangePassword($username)
     {
@@ -165,6 +170,7 @@ class UserPresenter extends BasePresenter
     /**
      * @param Form $form succeeded form
      * @param array $values values of form
+     * @throws \Nette\Application\AbortException
      */
     public function changePasswordFormSucceeded(Form $form, array $values)
     {

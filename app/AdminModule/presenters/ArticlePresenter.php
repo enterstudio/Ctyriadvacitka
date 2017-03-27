@@ -34,6 +34,7 @@ class ArticlePresenter extends BasePresenter
     /**
      * Odstraní článek
      * @param string $url
+     * @throws \Nette\Application\AbortException
      */
     public function actionRemove(string $url)
     {
@@ -84,6 +85,7 @@ class ArticlePresenter extends BasePresenter
      * Funkce se vykoná při úspěšném odeslání formuláře; zpracuje hodnoty formuláře.
      * @param Form $form formulář editoru
      * @param array|ArrayHash $values odeslané hodnoty formuláře
+     * @throws \Nette\Application\AbortException
      */
     public function editorFormSucceeded($form, array $values)
     {

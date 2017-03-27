@@ -49,6 +49,7 @@ class SessionPresenter extends BasePresenter
     /**
      * @param $form instance formuláře
      * @param ArrayHash $values data z formuláře
+     * @throws \Nette\Application\AbortException
      */
     public function signInFormSucceeded($form, ArrayHash $values)
     {
@@ -63,6 +64,7 @@ class SessionPresenter extends BasePresenter
 
     /**
      * Odhlásí uživatele
+     * @throws \Nette\Application\AbortException
      */
     public function actionSignOut()
     {
@@ -105,6 +107,7 @@ class SessionPresenter extends BasePresenter
     /**
      * @param $form instance formuláře
      * @param ArrayHash $values hodnoty z formuláře
+     * @throws \Nette\Application\AbortException
      */
     public function signUpFormSucceeded($form, ArrayHash $values)
     {
@@ -127,6 +130,7 @@ class SessionPresenter extends BasePresenter
 
     /**
      * It will redirect to user profile if user is logged in
+     * @throws \Nette\Application\AbortException
      */
     public function redirectIfLoggedUser()
     {

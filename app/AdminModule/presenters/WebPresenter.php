@@ -61,6 +61,7 @@ class WebPresenter extends BasePresenter
     /**
      * @param Form $form
      * @param array $values
+     * @throws \Nette\Application\AbortException
      */
     public function webPropertiesFormSucceeded(Form $form, array $values)
     {

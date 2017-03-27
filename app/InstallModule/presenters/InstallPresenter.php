@@ -46,6 +46,7 @@ class InstallPresenter extends BasePresenter
     /**
      * @param Form $form
      * @param ArrayHash $values
+     * @throws \Nette\Application\AbortException
      */
     public function projectPropertiesFormSucceeded(Form $form, ArrayHash $values)
     {
@@ -75,6 +76,7 @@ class InstallPresenter extends BasePresenter
     /**
      * @param Form $form
      * @param array $values
+     * @throws \Nette\Application\AbortException
      */
     public function adminAccountFormSucceeded(Form $form, array $values)
     {
@@ -90,6 +92,7 @@ class InstallPresenter extends BasePresenter
 
     /**
      * @return Form
+     * @throws \Nette\Application\AbortException
      */
     public function createComponentAddHeaderImagesForm(): Form
     {

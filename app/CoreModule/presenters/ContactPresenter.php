@@ -45,6 +45,7 @@ class ContactPresenter extends BasePresenter {
      * Funkce se vykoná při úspěšném odeslání kontaktního formuláře a odeěle e-mail.
      * @param Form $form kontaktní formulář
      * @param ArrayHash $values odeslané hodnoty formuláře
+     * @throws \Nette\Application\AbortException
      */
     public function contactFormSucceeded(Form $form, ArrayHash $values){
         try{

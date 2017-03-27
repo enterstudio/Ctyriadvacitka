@@ -29,6 +29,7 @@ class NewsPresenter extends ArticlePresenter
     /**
      * Renders list of news on pages. There are 4 news in ine page
      * @param int $page page of list
+     * @throws \Nette\Application\AbortException
      */
     public function renderPagedList(int $page = 1){
         $news = $this->entityManager->getEntities()->where('requestable', 1);

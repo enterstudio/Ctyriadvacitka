@@ -33,6 +33,7 @@ class UserPresenter extends BasePresenter
     /**
      * @param string $role
      * @param string $username
+     * @throws \Nette\Application\AbortException
      */
     public function actionChangeRole(string $role, string $username)
     {

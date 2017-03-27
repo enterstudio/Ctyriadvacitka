@@ -120,6 +120,7 @@ abstract class BasePresenter extends Presenter
     /**
      * Editors can only edit their articles/news and admins every article/news
      * @param string $url
+     * @throws \Nette\Application\AbortException
      */
     public function articlePermissionRequired(string $url = null)
     {
@@ -139,6 +140,7 @@ abstract class BasePresenter extends Presenter
      * @param string $code
      * @param null $destination
      * @param array|null $snippets
+     * @throws \Nette\Application\AbortException
      */
     public function redirectAjax(string $code, $destination = null, array $snippets = null)
     {
