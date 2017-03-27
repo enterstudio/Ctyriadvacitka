@@ -56,7 +56,7 @@ class ProjectManager extends BaseManager
     {
         $table = clone $this->table;
         $row = $table->where('key', $key)->fetch();
-        if ($row == null) {
+        if ($row === null) {
             return false;
         }
         return $row->value;

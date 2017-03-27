@@ -26,7 +26,7 @@ class ImageManager extends BaseManager
         $images = [];
 
         while ($soubor = readdir($dir)) {
-            if ($soubor != '..' && $soubor != '.') {
+            if ($soubor !== '..' && $soubor !== '.') {
                 $images[] = $soubor;
             }
         }

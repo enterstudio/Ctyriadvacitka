@@ -127,7 +127,7 @@ abstract class BasePresenter extends Presenter
         if (isset($url) && $this->entityManager->entityExists($url)) {
             $article = $this->entityManager->getEntityByUnique($url);
             if (!($this->user->isInRole('admin') ||
-                ($this->user->getIdentity()->username == $article->author && $this->user->isInRole('editor')))
+                ($this->user->getIdentity()->username === $article->author && $this->user->isInRole('editor')))
             ) {
                 $this->flashMessage('Na tuto akci potřebujete oprávnění administrátora nebo redaktora a vlastnit tento článek.');
                 $this->redirect(":Core$this->presenter", $url);

@@ -114,7 +114,7 @@ abstract class EntityManager extends BaseManager
      */
     public function entityExists(string $unique): bool
     {
-        if ($this->getEntityByUnique($unique) != false)
+        if ($this->getEntityByUnique($unique) !== false)
             return true;
         else
             return false;

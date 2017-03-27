@@ -77,7 +77,7 @@ class UserPresenter extends BasePresenter
             $this['userEditorForm']->setDefaults($user);
         }
 
-        if ($this->user->id != $user['user_id']) {
+        if ($this->user->id !== $user['user_id']) {
             $this->flashMessage('Nemůžete upravovat jiné uživatele!', 'danger');
             $this->redirect(':Core:User:', $this->user->getIdentity()->username);
         }
@@ -137,7 +137,7 @@ class UserPresenter extends BasePresenter
     public function renderChangePassword($username)
     {
         $this->logInRequired();
-        if ($this->user->getIdentity()->username != $username) {
+        if ($this->user->getIdentity()->username !== $username) {
             $this->flashMessage('Změna hesla je možná jen u sebe.');
             $this->redirect(':Core:User:', $username);
         }
