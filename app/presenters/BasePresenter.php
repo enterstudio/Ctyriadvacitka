@@ -80,7 +80,7 @@ abstract class BasePresenter extends Presenter
         }
         $this->template->isUserAdmin = $this->user->isInRole('admin');
         $this->template->isUserEditor = $this->user->isInRole('editor') || $this->user->isInRole('admin');
-        if (!empty($this->presenter)) {
+        if ($this->presenter !== null) {
             $this->template->presenter = $this->presenter;
         }
 
