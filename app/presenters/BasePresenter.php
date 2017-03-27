@@ -89,7 +89,7 @@ abstract class BasePresenter extends Presenter
 
         //header picture
         $images = $this->imageManager->getHeaderImageNames();
-        $topRandom = rand(0, count($images) - 1);
+        $topRandom = random_int(0, count($images) - 1);
         $this->template->headerPicture = $images[$topRandom];
     }
 
