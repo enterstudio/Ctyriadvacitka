@@ -47,6 +47,7 @@ class ArticlePresenter extends BasePresenter
     /**
      * Vykresluje editaci článku podle jeho URL
      * @param string $url URL adresa článku, který editujeme, pokud není zadána, vytoří se nový
+     * @throws \Nette\Application\AbortException
      */
     public function renderEditor(string $url = NULL)
     {

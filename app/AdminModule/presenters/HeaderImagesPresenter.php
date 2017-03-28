@@ -37,6 +37,7 @@ class HeaderImagesPresenter extends BasePresenter
     /**
      * @action default
      * @param $name
+     * @throws \Nette\Application\AbortException
      */
     public function handleRemove($name)
     {
@@ -47,6 +48,7 @@ class HeaderImagesPresenter extends BasePresenter
 
     /**
      * @return Form
+     * @throws \Nette\Application\AbortException
      */
     public function createComponentAddHeaderImagesForm(): Form
     {

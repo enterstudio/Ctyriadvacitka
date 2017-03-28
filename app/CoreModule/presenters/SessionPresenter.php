@@ -26,6 +26,7 @@ class SessionPresenter extends BasePresenter
 
     /**
      * Přihlásí uživatele, pokud je někdo přihlášen, přesměruje ho na jeho profil
+     * @throws \Nette\Application\AbortException
      */
     public function renderSignIn()
     {
@@ -81,6 +82,7 @@ class SessionPresenter extends BasePresenter
 
     /**
      * Zaregistruje nového uživatele
+     * @throws \Nette\Application\AbortException
      */
     public function actionSignUp()
     {
