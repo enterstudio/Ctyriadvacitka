@@ -40,7 +40,7 @@ class HeaderImagesPresenter extends BasePresenter
      */
     public function handleRemove($name)
     {
-        $this->imageManager->deleteImage($_SERVER['DOCUMENT_ROOT'] . "/www/img/top/$name");
+        $this->imageManager->deleteImage($this->projectManager->getWwwDir() . "/img/top/$name");
         $this->flashMessage('Obrázek odstraněn.', 'success');
         $this->redirectAjax('this');
     }

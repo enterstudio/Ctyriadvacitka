@@ -18,9 +18,10 @@ session:
 services:
 	router: App\RouterFactory::createRouter
 	- App\Model\DatabaseHelper
-	- App\Model\ProjectManager
+	- App\Model\ProjectManager(%wwwDir%)
 	- App\Factories\HeaderImagesForm
-	- App\AdminModule\Model\ImageManager
+	- App\AdminModule\Model\ImageManager(%wwwDir%)
+	- Nette\Http\Url
 
 # Vložení konfiguračních souborů z jednotlivých modulů.
 includes:

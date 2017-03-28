@@ -18,15 +18,18 @@ use Nette\Database\Context;
 class ProjectManager extends BaseManager
 {
     private $table;
+    private $wwwDir;
 
     /**
+     * @param string $wwwDir
      * @param Context $database automatically injected class to work with DB
      * @param DatabaseHelper $databaseHelper automatically injected class to help with DB
      */
-    public function __construct(Context $database, DatabaseHelper $databaseHelper)
+    public function __construct(string $wwwDir, Context $database, DatabaseHelper $databaseHelper)
     {
         parent::__construct($database, $databaseHelper);
         $this->table = $this->database->table('parameters');
+        $this->wwwDir = $wwwDir;
     }
 
     /**
@@ -72,8 +75,15 @@ class ProjectManager extends BaseManager
         $value = $table->where('key', $key)->fetch();
         if ($value) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWwwDir(): string
+    {
+        return $this->wwwDir;
     }
 }
