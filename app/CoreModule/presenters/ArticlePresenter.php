@@ -51,16 +51,6 @@ class ArticlePresenter extends BasePresenter
     }
 
     /**
-     * Načte články z databáze
-     */
-    public function actionList()
-    {
-        //Načte články z databáze a předá je šabloně
-        $articles = $this->entityManager->getEntities();
-        $this->template->articles = $articles;
-    }
-
-    /**
      * Renders list of news on pages. There are 4 news in ine page
      * @param int $page page of list
      * @throws \Nette\Application\AbortException

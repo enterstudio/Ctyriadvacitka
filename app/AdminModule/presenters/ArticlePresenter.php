@@ -39,6 +39,7 @@ class ArticlePresenter extends BasePresenter
     public function actionRemove(string $url)
     {
         $this->articlePermissionRequired($url);
+
         $this->entityManager->deleteEntity($url);
         $this->flashMessage('Článek byl úspěšně odstraněn.', 'success');
         $this->redirect(':Core' . $this->presenter . 'list');
@@ -52,6 +53,7 @@ class ArticlePresenter extends BasePresenter
     public function renderEditor(string $url = NULL)
     {
         $this->articlePermissionRequired($url);
+
         //Pokud byla zadána URL, pokusí se článek načíst a předat jeho hodnoty do editačního formuláře, jinak vypíše chybovou hlášku
         if ($url && $article = $this->entityManager->getEntityByUnique($url)) {
             $this['editorForm']->setDefaults($article);
@@ -61,6 +63,18 @@ class ArticlePresenter extends BasePresenter
             $article->url = $url;
             $this['editorForm']->setDefaults($article);
         }
+    }
+
+    /**
+     * Načte články z databáze
+     */
+    public function renderList()
+    {
+        $this->editorPermissionsRequired();
+
+        //Načte články z databáze a předá je šabloně
+        $articles = $this->entityManager->getEntities();
+        $this->template->articles = $articles;
     }
 
     /**
