@@ -8,7 +8,9 @@
 
 namespace App\CoreModule\Presenters;
 
+use app\CoreModule\model\TableRow;
 use App\Presenters\BasePresenter;
+use Nette\Utils\Strings;
 
 /**
  * Zpracovává vykreslování článků
@@ -56,5 +58,35 @@ class ArticlePresenter extends BasePresenter
         //Načte články z databáze a předá je šabloně
         $articles = $this->entityManager->getEntities();
         $this->template->articles = $articles;
+    }
+
+    /**
+     * Renders list of news on pages. There are 4 news in ine page
+     * @param int $page page of list
+     * @throws \Nette\Application\AbortException
+     */
+    public function renderPagedList(int $page = 1)
+    {
+        $news = $this->entityManager->getEntities()->where('requestable', 1);
+        $offset = ($page - 1) * 4;
+        $pages = ceil($news->count() / 4);
+
+        if ($page > $pages) {
+            $this->flashMessage('Tolik stránek tu nemáme.', 'warning');
+            $this->redirect(':Core' . $this->presenter . 'pagedList');
+        }
+
+        $news = $news->limit(4, $offset);
+        $tableRows = [];
+
+        foreach ($news as $new) {
+            $tableRow = new TableRow($new, $this->entityManager->getColumns());
+            $tableRow->setContent(Strings::truncate($tableRow->getContent(), 80));
+            $tableRows[] = $tableRow;
+        }
+
+        $this->template->articles = $tableRows;
+        $this->template->activePage = $page;
+        $this->template->pages = $pages;
     }
 }

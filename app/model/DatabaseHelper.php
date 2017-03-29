@@ -31,7 +31,8 @@ class DatabaseHelper
             ->addColumn('content', 'text')
             ->addColumn('url', 'string', 255)->addToUniques()
             ->addColumn('description', 'string', 255)
-            ->addColumn('requestable', 'boolean');
+            ->addColumn('requestable', 'boolean')
+            ->addColumn('author', 'string', '255');
         $tableNews = new Table('news');
         $tableNews
             ->addColumn('news_id', 'integer', 11)->setPrimaryKey()->setAutoIncrement()
@@ -39,7 +40,8 @@ class DatabaseHelper
             ->addColumn('content', 'text')
             ->addColumn('url', 'string', 255)->addToUniques()
             ->addColumn('description', 'string', 255)
-            ->addColumn('requestable', 'boolean');
+            ->addColumn('requestable', 'boolean')
+            ->addColumn('author', 'string', '255');
         $tableUsers = new Table('user');
         $tableUsers
             ->addColumn('user_id', 'integer', 11)->setPrimaryKey()->setAutoIncrement()

@@ -136,4 +136,12 @@ abstract class EntityManager extends BaseManager
     {
         return $this->database;
     }
+
+    /**
+     * @return array
+     */
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
 }

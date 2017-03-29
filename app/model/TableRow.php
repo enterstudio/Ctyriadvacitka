@@ -21,15 +21,22 @@ class TableRow extends Object
 {
     public
         $news_id,
+        $article_id,
         $title,
         $content,
         $url,
         $description,
-        $requestable;
+        $requestable,
+        $author;
 
-    public function __construct(ActiveRow $row){
-        $columns = get_object_vars($this);
-        foreach ($columns as $column => $value){
+    /**
+     * TableRow constructor.
+     * @param ActiveRow $row
+     * @param array $columns
+     */
+    public function __construct(ActiveRow $row, array $columns)
+    {
+        foreach ($columns as $column) {
             $this->{$column} = $row->{$column};
         }
     }

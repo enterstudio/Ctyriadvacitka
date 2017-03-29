@@ -1,0 +1,28 @@
+{layout '@layout.latte'}
+{block content}
+<div class="container-fluid">
+    <div n:foreach="$articles as $article" class="col-lg-6" n:if="$article->requestable || $isUserAdmin">
+        <a n:href=":Core{$presenter} $article->url">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>{$article->title}</h3>
+                    {$article->description}
+                </div>
+                <div class="panel-body">
+                    {$article->content|noescape}
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<ul class="pagination">
+    <li {if $activePage == 1}class="disabled"{/if}>
+        <a n:href=":Core{$presenter}pagedList">&laquo;</a>
+    </li>
+    <li n:for="$i = 1; $i <= $pages; $i++" {if $activePage == $i}class="active"{/if}>
+        <a n:href=":Core{$presenter}pagedList $i">{$i}</a>
+    </li>
+    <li {if $activePage == $pages}class="disabled"{/if}>
+        <a n:href=":Core{$presenter}pagedList $pages">&raquo;</a>
+    </li>
+</ul>
